@@ -55,6 +55,7 @@ function ListView() {
           reviews={reviews}
           prevPrice={prevPrice}
           newPrice={newPrice}
+          className="w-full h-full" /
         />
       )
     );
@@ -70,7 +71,7 @@ function ListView() {
       <div className="w-full lg:w-3/4 p-4">
         <Navigation query={query} handleInputChange={handleInputChange} />
         <Recommended handleClick={handleClick} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {result}
         </div>
       </div>
