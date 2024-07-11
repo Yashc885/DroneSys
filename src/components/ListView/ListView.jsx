@@ -46,7 +46,7 @@ function ListView() {
     }
 
     return filteredProducts.map(
-      ({ img, title, star, reviews, prevPrice, newPrice }) => (
+      ({ img, title, star, reviews, prevPrice, newPrice , move }) => (
         <Card
           key={Math.random()}
           img={img}
@@ -55,7 +55,8 @@ function ListView() {
           reviews={reviews}
           prevPrice={prevPrice}
           newPrice={newPrice}
-          className="w-full h-full" /
+          move={move}
+          className="w-full h-full" 
         />
       )
     );
