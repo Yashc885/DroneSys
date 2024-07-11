@@ -40,7 +40,7 @@ const RegisterVendor = () => {
 
     setError("");
     toast.success("Registration successful");
-    router.push("/login");
+    router.push("/register/vendor2");
   };
 
   return (
