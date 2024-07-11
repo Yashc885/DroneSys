@@ -1,9 +1,9 @@
 'use client';
 import { useState } from "react";
-import Card from "./Card";
+import Card from "./Card.jsx";
 import products from "./db/data";
-import Sidebar from "./Sidebar/Sidebar";
-import Navigation from "./Navigation/Nav";
+import Sidebar from "./Sidebar/Sidebar.jsx";
+import Navigation from "./Navigation/Nav.jsx";
 import Recommended from "./Recommended/Recommended.jsx";
 
 function ListView() {

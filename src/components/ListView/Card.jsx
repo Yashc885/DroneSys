@@ -1,41 +1,36 @@
-import React from "react";
+import { BsFillBagFill } from "react-icons/bs";
 import Image from "next/image";
 
-function Card({ img, title, star, reviews, prevPrice, newPrice }) {
+const Card = ({ img, title, star, reviews, prevPrice, newPrice }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="relative h-56">
-        <Image
-          src={img}
-          alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-t-lg"
-        />
-      </div>
-      <div className="p-4">
-        <h2 className="text-gray-900 font-bold text-lg">{title}</h2>
-        <div className="flex items-center mt-1">
-          <svg
-            className="w-4 h-4 fill-current text-yellow-500"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2.3l1.4 3.6h4.5l-3.6 2.7 1.4 3.6-3-2.3-3 2.3 1.4-3.6-3.6-2.7h4.5z"></path>
-          </svg>
-          <span className="text-gray-700 ml-1">
-            {star} ({reviews})
-          </span>
+    <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+      <Image
+        src={img}
+        alt={title}
+        className="w-full h-48 object-cover"
+        width={500}
+        height={300}
+      />
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+        <div className="flex items-center mb-2">
+          {[...Array(4)].map((_, index) => (
+            <span key={index} className="text-yellow-500">{star}</span>
+          ))}
+          <span className="ml-2 text-gray-600">({reviews})</span>
         </div>
-        <div className="mt-2">
-          <span className="text-gray-700">{prevPrice}</span>
-          <span className="ml-1 text-gray-600 line-through">{newPrice}</span>
+        <div className="flex items-center justify-between">
+          <div className="text-lg">
+            <span className="line-through text-gray-500 mr-2">{prevPrice}</span>
+            <span className="text-red-500 font-bold">{newPrice}</span>
+          </div>
+          <div className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors duration-300">
+            <BsFillBagFill className="text-gray-700" />
+          </div>
         </div>
-        <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          View Details
-        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Card;
