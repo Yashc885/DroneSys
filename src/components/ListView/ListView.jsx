@@ -66,10 +66,10 @@ function ListView() {
 
   return (
     <div className="flex flex-wrap">
-      <div className="w-full lg:w-1/4">
+      <div className="w-full lg:w-1/6">
         <Sidebar handleChange={handleChange} />
       </div>
-      <div className="w-full lg:w-3/4 p-4">
+      <div className="w-full lg:w-5/6 p-2 pl-4 pr-4 ">
         <Navigation query={query} handleInputChange={handleInputChange} />
         <Recommended handleClick={handleClick} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
