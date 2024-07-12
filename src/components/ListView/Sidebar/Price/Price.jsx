@@ -3,7 +3,7 @@ import Input from "../../Input";
 
 const Price = ({ handleChange }) => {
   return (
-    <div className=""> 
+    <div className="pl-8 "> 
       <h2 className="sidebar-title text-xl md:text-2xl font-bold price-title mt-5">Price</h2>
 
       <label className="block mt-4">
