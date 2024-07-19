@@ -134,7 +134,7 @@ const LoginVendor = () => {
               <div className="py-2 ">
                 <div className="text-center text-md md:text-lg ">
                     <h3 className="text-black">Don't have an account ? 
-                    <Link href="/register/user">
+                    <Link href="/register/vendor">
                         <span className="text-blue-300 cursor-pointer"> Register</span>
                     </Link>
                     </h3>
