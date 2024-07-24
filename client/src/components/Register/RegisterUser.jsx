@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const RegisterUser = () => {
   const [error, setError] = useState("");
@@ -14,11 +14,11 @@ const RegisterUser = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
-    const confirmPassword = e.target[2].value;
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -32,23 +32,49 @@ const RegisterUser = () => {
       return;
     }
 
-    if (confirmPassword !== password) {
-      setError("Passwords are not equal");
-      toast.error("Passwords are not equal");
-      return;
-    }
-
     setError("");
-    toast.success("Registration successful");
-    router.push("/login");
+    
+    try {
+      console.log(name , email , password);
+      const response = await axios.post('/api/register', {
+        name,
+        email,
+        password,
+        role: 'customer' 
+      });
+      
+      toast.success("Registration successful");
+      router.push("/");
+    } catch (err) {
+      toast.error(err.response?.data?.msg || "Registration failed");
+    }
   };
 
   return (
     <div className="flex min-h-screen flex-1 flex-col justify-center  sm:px-6 lg:px-8">
       <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
-        <h1 className="font-extrabold text-2xl md:text-3xl  text-center">Register</h1>
-          <form className="space-y-6 py-4 " onSubmit={handleSubmit}>
+          <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register</h1>
+          <form className="space-y-6 py-4" onSubmit={handleSubmit}>
+          <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="name"
+                  name="name"
+                  type="name"
+                  autoComplete="name"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+
             <div>
               <label
                 htmlFor="email"
@@ -86,26 +112,6 @@ const RegisterUser = () => {
                 />
               </div>
             </div>
-
-            <div>
-              <label
-                htmlFor="confirmpassword"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Confirm password
-              </label>
-              <div className="mt-2">
-                <input
-                  id="confirmpassword"
-                  name="confirmpassword"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -134,6 +140,8 @@ const RegisterUser = () => {
                 {error && error}
               </p>
             </div>
+         
+         </div>
           </form>
           <h3 className="text-black">
             Already have an account? 

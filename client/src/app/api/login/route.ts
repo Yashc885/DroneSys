@@ -1,33 +1,39 @@
-import User from '../../../models/userModel.ts';  // Ensure path is correct
+import User from '../../../models/userModel';  // Ensure path is correct
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
-import connect from "./../../../Database/config";
+import connect from "../../../Database/config";
 
 export async function POST(req: Request) {
-    try{
-    connect();
-    const body = await req.json();
-    const {email, password } = body;
+    try {
+        await connect(); // Ensure the database connection is established
 
-    if ( !email || !password) {
-        return NextResponse.json({ msg: 'Invalid credentials' }, { status: 400 });
-    }
+        const body = await req.json();
+        const { email, password } = body;
 
-    const isUser = await User.findOne({ email });
-    if (!isUser) {
-        return NextResponse.json({ msg: 'Invalid credentials' }, { status: 409 });
-    }
-    const isMatch = await bcrypt.compare(password , isUser.password)
-      const name = isUser.name;
-      const token = jwt.sign({ name, email }, 'fgeduywhvdsuygsd');
+        if (!email || !password) {
+            return NextResponse.json({ msg: 'Invalid credentials' }, { status: 400 });
+        }
 
-      const response = NextResponse.json({ msg: 'User successfully login' }, { status: 201 });
-        response.cookies.set('token', token);
+        const user = await User.findOne({ email });
+        if (!user) {
+            return NextResponse.json({ msg: 'Invalid credentials' }, { status: 409 });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return NextResponse.json({ msg: 'Invalid credentials' }, { status: 401 });
+        }
+
+        const name = user.name;
+        const token = jwt.sign({ name, email }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '1h' });
+
+        const response = NextResponse.json({ msg: 'User successfully logged in' }, { status: 200 });
+        response.cookies.set('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
         return response;
     } catch (error) {
+        console.error('Login error:', error); // Log the error for debugging
         return NextResponse.json({ msg: 'Internal server error' }, { status: 500 });
     }
-    return NextResponse.json({msg: "ok"})
 }

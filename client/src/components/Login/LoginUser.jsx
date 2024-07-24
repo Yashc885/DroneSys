@@ -1,12 +1,10 @@
-// components/Login.jsx
-
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import Image from "next/image";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const LoginUser = () => {
   const router = useRouter();
@@ -17,7 +15,7 @@ const LoginUser = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
@@ -34,34 +32,29 @@ const LoginUser = () => {
       return;
     }
 
-    // Dummy check for demonstration purposes
-    if (email === "test@example.com" && password === "password123") {
-      setError("");
-      toast.success("Successful login");
-      router.replace("/dashboard");
-    } else {
+    try {
+      const response = await axios.post("/api/login", { email, password });
+
+      if (response.status === 200) {
+        setError("");
+        toast.success("Successful login");
+        router.replace("/");
+      } else {
+        setError("Invalid email or password");
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
       setError("Invalid email or password");
       toast.error("Invalid email or password");
     }
   };
 
   return (
-    <div className="flex min-h-screen  flex-1 flex-col justify-center py-4 sm:px-4 lg:px-4">
-      {/* <div className="flex justify-center flex-col items-center">
-      <Image
-            src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.2116175301.1719187200&semt=sph"
-            alt="Logo"
-            width={60}
-            height={60}
-          />
-        <h2 className="mt-6 text-center text-2xl leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
-      </div> */}
-
-      <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div className="flex min-h-screen flex-1 flex-col justify-center py-4 sm:px-4 lg:px-4">
+      <div className="sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-4 shadow sm:rounded-lg sm:px-12">
-        <h1 className="font-extrabold text-2xl md:text-3xl  text-center">Login </h1>
+          <h1 className="font-extrabold text-2xl md:text-3xl text-center">Login</h1>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
@@ -131,13 +124,13 @@ const LoginUser = () => {
               >
                 Sign in
               </button>
-              <div className="py-2 ">
-                <div className="text-center text-md md:text-lg ">
-                    <h3 className="text-black">Don't have an account ? 
+              <div className="py-2">
+                <div className="text-center text-md md:text-lg">
+                  <h3 className="text-black">Don't have an account?
                     <Link href="/register/user">
-                        <span className="text-blue-300 cursor-pointer"> Register</span>
+                      <span className="text-blue-300 cursor-pointer"> Register</span>
                     </Link>
-                    </h3>
+                  </h3>
                 </div>
               </div>
             </div>
