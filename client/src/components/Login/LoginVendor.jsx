@@ -1,12 +1,10 @@
-// components/Login.jsx
-
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
-import Image from "next/image";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const LoginVendor = () => {
   const router = useRouter();
@@ -17,7 +15,7 @@ const LoginVendor = () => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
@@ -34,40 +32,32 @@ const LoginVendor = () => {
       return;
     }
 
-    // Dummy check for demonstration purposes
-    if (email === "test@example.com" && password === "password123") {
-      setError("");
-      toast.success("Successful login");
-      router.replace("/dashboard");
-    } else {
+    try {
+      const response = await axios.post("/api/vendor/login", { email, password });
+
+      if (response.status === 200) {
+        setError("");
+        toast.success("Successful login");
+        router.replace("/dashboard");
+      } else {
+        setError("Invalid email or password");
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
       setError("Invalid email or password");
       toast.error("Invalid email or password");
     }
   };
 
   return (
-    <div className="flex min-h-screen  flex-1 flex-col justify-center py-4 sm:px-4 lg:px-4">
-      {/* <div className="flex justify-center flex-col items-center">
-      <Image
-            src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.2116175301.1719187200&semt=sph"
-            alt="Logo"
-            width={60}
-            height={60}
-          />
-        <h2 className="mt-6 text-center text-2xl leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
-      </div> */}
-
-      <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div className="flex min-h-screen flex-1 flex-col justify-center py-4 sm:px-4 lg:px-4">
+      <div className="sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-4 shadow sm:rounded-lg sm:px-12">
-        <h1 className="font-extrabold text-2xl md:text-3xl  text-center">Login </h1>
+          <h1 className="font-extrabold text-2xl md:text-3xl text-center">Login</h1>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
               </label>
               <div className="mt-2">
@@ -83,10 +73,7 @@ const LoginVendor = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                 Password
               </label>
               <div className="mt-2">
@@ -109,10 +96,7 @@ const LoginVendor = () => {
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
                 />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-3 block text-sm leading-6 text-gray-900"
-                >
+                <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
                   Remember me
                 </label>
               </div>
@@ -131,13 +115,13 @@ const LoginVendor = () => {
               >
                 Sign in
               </button>
-              <div className="py-2 ">
-                <div className="text-center text-md md:text-lg ">
-                    <h3 className="text-black">Don't have an account ? 
+              <div className="py-2">
+                <div className="text-center text-md md:text-lg">
+                  <h3 className="text-black">Don't have an account?
                     <Link href="/register/vendor">
-                        <span className="text-blue-300 cursor-pointer"> Register</span>
+                      <span className="text-blue-300 cursor-pointer"> Register</span>
                     </Link>
-                    </h3>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -145,36 +129,25 @@ const LoginVendor = () => {
 
           <div>
             <div className="relative mt-10">
-              <div
-                className="absolute inset-0 flex items-center"
-                aria-hidden="true"
-              >
+              <div className="absolute inset-0 flex items-center" aria-hidden="true">
                 <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm font-medium leading-6">
-                <span className="bg-white px-6 text-gray-900">
-                  Or continue with
-                </span>
+                <span className="bg-white px-6 text-gray-900">Or continue with</span>
               </div>
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <button
-                onClick={() => {
-                  toast("Google sign-in is not configured");
-                }}
+                onClick={() => toast("Google sign-in is not configured")}
                 className="flex w-full items-center border border-gray-300 justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <FcGoogle />
-                <span className="text-sm font-semibold leading-6">
-                  Google
-                </span>
+                <span className="text-sm font-semibold leading-6">Google</span>
               </button>
 
               <button
-                onClick={() => {
-                  toast("GitHub sign-in is not configured");
-                }}
+                onClick={() => toast("GitHub sign-in is not configured")}
                 className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
               >
                 <svg
@@ -189,14 +162,10 @@ const LoginVendor = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm font-semibold leading-6">
-                  GitHub
-                </span>
+                <span className="text-sm font-semibold leading-6">GitHub</span>
               </button>
             </div>
-            <p className="text-red-600 text-center text-[16px] my-4">
-              {error && error}
-            </p>
+            <p className="text-red-600 text-center text-[16px] my-4">{error}</p>
           </div>
         </div>
       </div>
