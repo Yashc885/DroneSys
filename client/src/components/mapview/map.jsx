@@ -12,11 +12,10 @@ const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { 
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { ssr: false });
 
-const Map = () => {
+const Map = ({ selectedCity }) => {
   const [currentPosition, setCurrentPosition] = useState([28.6139, 77.2090]); // Default to Delhi
   const [error, setError] = useState(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
-  const router = useRouter();
 
   // Manually provide coordinates
   const [markers, setMarkers] = useState([
@@ -44,15 +43,13 @@ const Map = () => {
           console.error('Error getting location', error);
           setError('Unable to retrieve your location.');
           setPermissionGranted(false);
-          router.push('/error'); 
         }
       );
     } else {
       setError('Geolocation is not supported by this browser.');
       setPermissionGranted(false);
-      router.push('/error');
     }
-  }, [router]);
+  }, []);
 
   const clusterMarkers = (markers) => {
     const clusters = {};
@@ -76,13 +73,16 @@ const Map = () => {
     popupAnchor: [1, -34], 
   });
 
+  const selectedCityMarker = markers.find(marker => marker.title === selectedCity);
+  const mapCenter = selectedCityMarker ? [selectedCityMarker.x, selectedCityMarker.y] : currentPosition;
+
   if (!permissionGranted) {
     return <div className="text-center mt-4">Please allow geolocation access to view the map.</div>;
   }
 
   return (
     <div className="h-screen">
-      <MapContainer center={currentPosition} zoom={10} className="h-full">
+      <MapContainer center={mapCenter} zoom={10} className="h-full">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
