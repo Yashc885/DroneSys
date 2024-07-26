@@ -26,7 +26,6 @@
     "countryregionjs": "^1.1.4",
     "daisyui": "^4.12.10",
     "dotenv": "^16.4.5",
-    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.403.0",
     "mongoose": "^8.5.1",
@@ -48,6 +47,7 @@
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

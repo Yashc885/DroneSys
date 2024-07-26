@@ -1,17 +1,20 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'e1.pxfuel.com',
-        pathname: '/**', // This allows any path under the domain
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'encrypted-tbn0.gstatic.com',
-        pathname: '/images/**', // Adjust the path if needed
+        pathname: '/images/**',
       },
       {
         protocol: 'https',
@@ -33,8 +36,13 @@ const nextConfig = {
         hostname: 'm.media-amazon.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      }
     ],
   },
 };
 
-export default nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
