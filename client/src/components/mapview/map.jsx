@@ -43,7 +43,7 @@ const Map = () => {
 
   // Define custom icon
   const customIcon = new L.Icon({
-    iconUrl: './../../assets/marker.png', 
+    iconUrl: "https://static.thenounproject.com/png/335079-200.png", 
     iconSize: [25, 41],
     iconAnchor: [12, 41], 
     popupAnchor: [1, -34], 
@@ -62,7 +62,7 @@ const Map = () => {
               <Circle
                 key={index}
                 center={[marker.x, marker.y]}
-                radius={marker.count * 1000} // Adjust radius based on count
+                radius={marker.count * 1000} 
                 color="blue"
                 fillColor="blue"
                 fillOpacity={0.5}
