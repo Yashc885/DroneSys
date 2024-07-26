@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -126,7 +126,7 @@ const LoginUser = () => {
               </button>
               <div className="py-2">
                 <div className="text-center text-md md:text-lg">
-                  <h3 className="text-black">Don't have an account?
+                  <h3 className="text-black">Don&apos;t have an account? {/* Changed */}
                     <Link href="/register/user">
                       <span className="text-blue-300 cursor-pointer"> Register</span>
                     </Link>

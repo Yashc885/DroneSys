@@ -1,63 +1,29 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck, faAngleUp, faHeartPulse, faTruckMedical, faTooth, faCamera, faBuilding, faMountain } from "@fortawesome/free-solid-svg-icons";
-import "./index.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarCheck, faAngleUp, faHeartPulse, faTruckMedical, faTooth, faCamera, faBuilding, faMountain } from '@fortawesome/free-solid-svg-icons';
+import './index.css';
 
 // Mock customerReviews data for demonstration
 const customerReviews = [
   {
     name: "Esther Howard",
     location: "Texas, USA",
-    message: "Health Plus transformed my healthcare experience! The online consultations were so convenient, and the doctors were knowledgeable and caring."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "John Doe",
     location: "California, USA",
-    message: "I found the perfect specialist for my condition through Health Plus. The personalized treatment plan made all the difference. Thank you for prioritizing my health!"
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "Alice Smith",
     location: "New York, USA",
-    message: "Booking appointments was a breeze, and the service exceeded my expectations. The doctors truly listen and provide effective solutions. 5 stars!"
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
-  {
-    name: "Bob Johnson",
-    location: "Florida, USA",
-    message: "Health Plus is a game-changer! The emergency care saved me during a critical situation. Grateful for their quick and efficient support."
-  },
-  {
-    name: "Jane Brown",
-    location: "Washington, USA",
-    message: "I used to dread dental visits, but Health Plus made it a pleasant experience. The dentist was gentle and professional. I'll definitely be back!"
-  },
-  {
-    name: "Robert Wilson",
-    location: "Texas, USA",
-    message: "Finally, a healthcare platform that puts patients first! The heart disease service provided comprehensive care and regular follow-ups. Thank you, Health Plus!"
-  },
-  {
-    name: "Mary Lee",
-    location: "California, USA",
-    message: "I've been using Health Plus for a variety of health concerns, and each time, I received exceptional care. It's my go-to for all medical needs!"
-  },
-  {
-    name: "David Miller",
-    location: "Texas, USA",
-    message: "I highly recommend Health Plus for online consultations. It's convenient, secure, and the doctors are top-notch. Great job, team!"
-  },
-  {
-    name: "Sarah Johnson",
-    location: "Florida, USA",
-    message: "The convenience of accessing medical notes online was fantastic. Health Plus made managing my health records hassle-free! Best Healthcare services."
-  },
-  {
-    name: "Michael Brown",
-    location: "New York, USA",
-    message: "As a busy professional, Health Plus has been a lifesaver. Quick prescriptions and refills without compromising on quality care. Thank you!"
-  }
 ];
+
 
 const InformationCard = ({ title, description, icon }) => (
   <div className="info-cards">
@@ -75,7 +41,7 @@ const Photography = () => {
   const reviewsLength = customerReviews.length - 1;
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const backBtnClick = () => {
@@ -94,9 +60,9 @@ const Photography = () => {
         setGoUp(false);
       }
     };
-    window.addEventListener("scroll", onPageScroll);
+    window.addEventListener('scroll', onPageScroll);
     return () => {
-      window.removeEventListener("scroll", onPageScroll);
+      window.removeEventListener('scroll', onPageScroll);
     };
   }, []);
 
@@ -108,8 +74,8 @@ const Photography = () => {
       <div className="section-container">
         <div className="hero-section">
           <div className="text-section">
-            <h2 className="text-title text-center ">Elevate Your Shots with Drone Photography</h2>
-            <p className="text-descritpion">
+            <h2 className="text-title text-center">Elevate Your Shots with Drone Photography</h2>
+            <p className="text-description">
               Capture breathtaking aerial views and high-definition imagery with our drone services.
               Experience fast, professional drone photography for events, real estate, and more—delivered
               with cutting-edge technology and expert precision.
@@ -142,7 +108,7 @@ const Photography = () => {
         </div>
         <div
           onClick={scrollToTop}
-          className={`scroll-up ${goUp ? "show-scroll" : ""}`}
+          className={`scroll-up ${goUp ? 'show-scroll' : ''}`}
         >
           <FontAwesomeIcon icon={faAngleUp} />
         </div>
@@ -186,11 +152,11 @@ const Photography = () => {
           <p className="rw-text-title text-center items-center">
             More over <span className="rw-text-num">1500+ Customers</span>
           </p>
-          <p className="rw-text-desc text-center items-center">Don't believe us, Check clients' words</p>
+          <p className="rw-text-desc text-center items-center">Dont believe us, Check clients&apos; words</p>
           <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">''</span>
+          <span className="rw-text-quote1 text-2xl">[</span>
           <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">''</span>
+          <span className="rw-text-quote2 text-2xl">]</span>
           </p>
 
           <div className="rw-authors">

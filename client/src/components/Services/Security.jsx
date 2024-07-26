@@ -10,54 +10,20 @@ const customerReviews = [
   {
     name: "Esther Howard",
     location: "Texas, USA",
-    message: "Security Plus provided outstanding surveillance coverage for our property. The clarity and reliability of their cameras are top-notch."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "John Doe",
     location: "California, USA",
-    message: "With Security Plus, we were able to enhance our security measures significantly. Their systems are both effective and user-friendly."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "Alice Smith",
     location: "New York, USA",
-    message: "The security solutions offered by Security Plus have been a game-changer for our business. Highly recommended for their professional service."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
-  {
-    name: "Bob Johnson",
-    location: "Florida, USA",
-    message: "Security Plus provided us with excellent monitoring systems that have greatly improved our site security. Reliable and efficient service."
-  },
-  {
-    name: "Jane Brown",
-    location: "Washington, USA",
-    message: "The installation process was smooth, and the security system is performing beyond our expectations. Security Plus is a trustworthy partner."
-  },
-  {
-    name: "Robert Wilson",
-    location: "Texas, USA",
-    message: "Our property has never been more secure thanks to Security Plus. Their solutions are comprehensive and easy to manage."
-  },
-  {
-    name: "Mary Lee",
-    location: "California, USA",
-    message: "Security Plus offers exceptional service and support. Their systems provide us with peace of mind knowing that our property is well-protected."
-  },
-  {
-    name: "David Miller",
-    location: "Texas, USA",
-    message: "The advanced security features from Security Plus have greatly enhanced our safety protocols. We appreciate their expertise and customer service."
-  },
-  {
-    name: "Sarah Johnson",
-    location: "Florida, USA",
-    message: "We've been very satisfied with the security systems from Security Plus. Their technology is cutting-edge and their service is top-tier."
-  },
-  {
-    name: "Michael Brown",
-    location: "New York, USA",
-    message: "Security Plus delivered exactly what we needed for our security needs. Their systems are reliable and their team is very professional."
-  }
 ];
+
 
 const InformationCard = ({ title, description, icon }) => (
   <div className="info-cards">
@@ -183,9 +149,9 @@ const Security = () => {
           </p>
           <p className="rw-text-desc text-center items-center">Hear from our satisfied clients</p>
           <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">''</span>
+          <span className="rw-text-quote1 text-2xl">[</span>
           <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">''</span>
+          <span className="rw-text-quote2 text-2xl">]</span>
           </p>
 
           <div className="rw-authors">

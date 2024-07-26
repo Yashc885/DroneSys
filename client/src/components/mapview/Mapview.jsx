@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Select from 'react-select';
 import CountryRegion from "countryregionjs";
 import Map from "./map.jsx";
@@ -17,14 +17,9 @@ function Mapview() {
     const [selectedStateName, setSelectedStateName] = useState("");
 
     const ZERO = 0;
-    let countryRegion = null;
+    const countryRegion = new CountryRegion();
 
-    const getCountryRegionInstance = () => {
-        if (!countryRegion) {
-            countryRegion = new CountryRegion();
-        }
-        return countryRegion;
-    };
+    const getCountryRegionInstance = useCallback(() => countryRegion, []);
 
     useEffect(() => {
         const getCountries = async () => {
@@ -39,7 +34,7 @@ function Mapview() {
             }
         }
         getCountries();
-    }, []);
+    }, [getCountryRegionInstance]);
 
     useEffect(() => {
         const getStates = async () => {
@@ -57,8 +52,7 @@ function Mapview() {
         if (country) {
             getStates();
         }
-
-    }, [country]);
+    }, [country, getCountryRegionInstance]);
 
     useEffect(() => {
         const getLGAs = async () => {
@@ -76,8 +70,7 @@ function Mapview() {
         if (state) {
             getLGAs();
         }
-
-    }, [country, state]);
+    }, [country, state, getCountryRegionInstance]);
 
     const handleCountryChange = (event) => {
         const { value, label } = event;
@@ -124,11 +117,9 @@ function Mapview() {
         <>
             <main>
                 <section className="submain submain-one">
-
                     <section className="submain-zero-image-cover">
                         <Map selectedCity={selectedCity} />  {/* Pass selectedCity as a prop */}
                     </section>
-
                     <form className="submain-one-form" onSubmit={handleSubmit}>
                         <header className="submain-one-form-header">
                             <h1>Pick-A-Location</h1>

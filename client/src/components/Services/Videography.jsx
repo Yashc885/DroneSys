@@ -10,54 +10,20 @@ const customerReviews = [
   {
     name: "Esther Howard",
     location: "Texas, USA",
-    message: "Videography Pros captured our wedding day beautifully. The quality of the videos was exceptional, and the attention to detail was incredible."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "John Doe",
     location: "California, USA",
-    message: "We hired Videography Pros for our corporate event, and they delivered beyond our expectations. The promotional video they created was both professional and engaging."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "Alice Smith",
     location: "New York, USA",
-    message: "The event coverage from Videography Pros was top-notch. Their team was professional, and the final video captured every special moment perfectly."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
-  {
-    name: "Bob Johnson",
-    location: "Florida, USA",
-    message: "Videography Pros made our product launch event unforgettable. The video quality was fantastic, and the creative shots were exactly what we needed."
-  },
-  {
-    name: "Jane Brown",
-    location: "Washington, USA",
-    message: "The team at Videography Pros delivered an outstanding promotional video for our brand. Their creativity and expertise are unmatched."
-  },
-  {
-    name: "Robert Wilson",
-    location: "Texas, USA",
-    message: "From start to finish, working with Videography Pros was a great experience. The video they produced for our real estate listing was exceptional."
-  },
-  {
-    name: "Mary Lee",
-    location: "California, USA",
-    message: "Videography Pros provided excellent service for our music video project. The final product was stunning and exceeded our expectations."
-  },
-  {
-    name: "David Miller",
-    location: "Texas, USA",
-    message: "We are thrilled with the video content produced by Videography Pros. Their attention to detail and creativity were evident in every frame."
-  },
-  {
-    name: "Sarah Johnson",
-    location: "Florida, USA",
-    message: "Videography Pros delivered a professional video for our non-profit event. Their work helped us capture the essence of our cause beautifully."
-  },
-  {
-    name: "Michael Brown",
-    location: "New York, USA",
-    message: "The wedding video created by Videography Pros was amazing. They captured every special moment and created a beautiful keepsake for us."
-  }
 ];
+
 
 const InformationCard = ({ title, description, icon }) => (
   <div className="info-cards">
@@ -183,9 +149,9 @@ const Videography = () => {
           </p>
           <p className="rw-text-desc text-center items-center">See what our clients are saying</p>
           <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">''</span>
+          <span className="rw-text-quote1 text-2xl">[</span>
           <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">''</span>
+          <span className="rw-text-quote2 text-2xl">]</span>
           </p>
 
           <div className="rw-authors">

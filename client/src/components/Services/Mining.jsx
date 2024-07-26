@@ -10,54 +10,20 @@ const customerReviews = [
   {
     name: "Esther Howard",
     location: "Texas, USA",
-    message: "Mining Plus provided exceptional aerial shots of our mining site. The clarity and detail were unparalleled. Highly recommended!"
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "John Doe",
     location: "California, USA",
-    message: "The mining site inspections were made so much easier with Mining Plus's drone services. Efficient and professional throughout."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "Alice Smith",
     location: "New York, USA",
-    message: "Mining Plus captured our site with impressive detail. The aerial views are crucial for our project planning. Fantastic work!"
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
-  {
-    name: "Bob Johnson",
-    location: "Florida, USA",
-    message: "Incredible imagery from Mining Plus! Their drones provided invaluable data for our operations. A game-changer in site management."
-  },
-  {
-    name: "Jane Brown",
-    location: "Washington, USA",
-    message: "Mining Plus made our geological surveys so much easier with their high-definition drone footage. Excellent service!"
-  },
-  {
-    name: "Robert Wilson",
-    location: "Texas, USA",
-    message: "The drone footage from Mining Plus was crucial for our environmental impact assessments. Highly detailed and reliable."
-  },
-  {
-    name: "Mary Lee",
-    location: "California, USA",
-    message: "Mining Plus's aerial photography was perfect for documenting our mining progress. Their attention to detail is commendable."
-  },
-  {
-    name: "David Miller",
-    location: "Texas, USA",
-    message: "The precision in Mining Plus's drone images has been instrumental for our project development. Outstanding quality!"
-  },
-  {
-    name: "Sarah Johnson",
-    location: "Florida, USA",
-    message: "Managing our mining sites has never been easier with Mining Plus's advanced aerial imagery. Great service and support."
-  },
-  {
-    name: "Michael Brown",
-    location: "New York, USA",
-    message: "Mining Plus provided comprehensive aerial views for our new site. The detail and clarity were crucial for our operations."
-  }
 ];
+
 
 const InformationCard = ({ title, description, icon }) => (
   <div className="info-cards">
@@ -183,9 +149,9 @@ const Mining = () => {
           </p>
           <p className="rw-text-desc text-center items-center">Hear from our satisfied clients</p>
           <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">''</span>
+          <span className="rw-text-quote1 text-2xl">[</span>
           <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">''</span>
+          <span className="rw-text-quote2 text-2xl">]</span>
           </p>
 
           <div className="rw-authors">

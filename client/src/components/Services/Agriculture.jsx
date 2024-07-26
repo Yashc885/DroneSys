@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faVideo, faCameraRetro, faFilm, faCamera, faPlayCircle  , faLeaf ,faWater , faSeeds} from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp, faVideo, faCameraRetro, faFilm, faCamera, faPlayCircle, faLeaf, faWater } from "@fortawesome/free-solid-svg-icons";
 import "./index.css";
 
 // Mock customerReviews data for demonstration
@@ -10,54 +10,20 @@ const customerReviews = [
   {
     name: "Esther Howard",
     location: "Texas, USA",
-    message: "AgriTech Solutions revolutionized our farm management. Their technology provided valuable insights that helped us improve yield and efficiency."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "John Doe",
     location: "California, USA",
-    message: "With AgriTech Solutions, we were able to optimize our irrigation and crop management. Their support and technology are top-notch."
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
   {
     name: "Alice Smith",
     location: "New York, USA",
-    message: "The advanced agricultural tools provided by AgriTech Solutions have been instrumental in modernizing our farming practices. Highly recommended!"
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra, libero eget faucibus scelerisque, dolor felis cursus lorem, aliquet."
   },
-  {
-    name: "Bob Johnson",
-    location: "Florida, USA",
-    message: "AgriTech Solutions helped us implement precision farming techniques that have significantly increased our productivity. Great service and technology."
-  },
-  {
-    name: "Jane Brown",
-    location: "Washington, USA",
-    message: "The smart farming solutions from AgriTech Solutions have transformed our approach to agriculture. The data-driven insights are incredibly useful."
-  },
-  {
-    name: "Robert Wilson",
-    location: "Texas, USA",
-    message: "Our farm's efficiency has greatly improved thanks to AgriTech Solutions. Their technology is user-friendly and effective."
-  },
-  {
-    name: "Mary Lee",
-    location: "California, USA",
-    message: "AgriTech Solutions offers exceptional service and innovative solutions. Their technology has helped us better manage our crops and resources."
-  },
-  {
-    name: "David Miller",
-    location: "Texas, USA",
-    message: "The agricultural insights provided by AgriTech Solutions have been invaluable. We've seen a noticeable improvement in our yield and resource management."
-  },
-  {
-    name: "Sarah Johnson",
-    location: "Florida, USA",
-    message: "We are very satisfied with the smart farming solutions from AgriTech Solutions. Their technology is reliable and has enhanced our farming operations."
-  },
-  {
-    name: "Michael Brown",
-    location: "New York, USA",
-    message: "AgriTech Solutions delivered excellent results for our farm. Their tools and services are highly effective and have made a real difference."
-  }
 ];
+
 
 const InformationCard = ({ title, description, icon }) => (
   <div className="info-cards">
@@ -170,7 +136,7 @@ const Agriculture = () => {
           <InformationCard
             title="Crop Management"
             description="Utilize our crop management solutions to monitor and manage your crops effectively. From planting to harvest, our technology provides the data you need to make informed decisions and maximize your yield."
-            icon={faSeeds}
+            icon={faWater}
           />
         </div>
       </div>
@@ -183,9 +149,9 @@ const Agriculture = () => {
           </p>
           <p className="rw-text-desc text-center items-center">Hear from our satisfied clients</p>
           <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">''</span>
+          <span className="rw-text-quote1 text-2xl">[</span>
           <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">''</span>
+          <span className="rw-text-quote2 text-2xl">]</span>
           </p>
 
           <div className="rw-authors">
