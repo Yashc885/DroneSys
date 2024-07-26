@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -12,21 +13,47 @@ const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ss
 const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { ssr: false });
 
 const Map = () => {
+  const [currentPosition, setCurrentPosition] = useState([28.6139, 77.2090]); // Default to Delhi
+  const [error, setError] = useState(null);
+  const [permissionGranted, setPermissionGranted] = useState(false);
+  const router = useRouter();
+
   // Manually provide coordinates
   const [markers, setMarkers] = useState([
-    { id: 1, x: 28.6139, y: 77.2090, title: 'Delhi' },
-    { id: 2, x: 19.0760, y: 72.8777, title: 'Mumbai' },
-    { id: 3, x: 13.0827, y: 80.2707, title: 'Chennai' },
-    { id: 4, x: 12.9716, y: 77.5946, title: 'Bengaluru' },
-    { id: 5, x: 22.5726, y: 88.3639, title: 'Kolkata' },
-    { id: 6, x: 25.5941, y: 85.1376, title: 'Patna' },
-    { id: 7, x: 17.3850, y: 78.4867, title: 'Hyderabad' },
-    { id: 8, x: 30.7333, y: 76.7794, title: 'Chandigarh' },
-    { id: 9, x: 21.1702, y: 72.8311, title: 'Gandhinagar' },
-    { id: 10, x: 26.8467, y: 80.9462, title: 'Lucknow' }
+    { id: 1, x: 28.6139, y: 77.2090, title: 'Delhi', link: 'https://www.google.com/maps?q=28.6139,77.2090' },
+    { id: 2, x: 19.0760, y: 72.8777, title: 'Mumbai', link: 'https://www.google.com/maps?q=19.0760,72.8777' },
+    { id: 3, x: 13.0827, y: 80.2707, title: 'Chennai', link: 'https://www.google.com/maps?q=13.0827,80.2707' },
+    { id: 4, x: 12.9716, y: 77.5946, title: 'Bengaluru', link: 'https://www.google.com/maps?q=12.9716,77.5946' },
+    { id: 5, x: 22.5726, y: 88.3639, title: 'Kolkata', link: 'https://www.google.com/maps?q=22.5726,88.3639' },
+    { id: 6, x: 25.5941, y: 85.1376, title: 'Patna', link: 'https://www.google.com/maps?q=25.5941,85.1376' },
+    { id: 7, x: 17.3850, y: 78.4867, title: 'Hyderabad', link: 'https://www.google.com/maps?q=17.3850,78.4867' },
+    { id: 8, x: 30.7333, y: 76.7794, title: 'Chandigarh', link: 'https://www.google.com/maps?q=30.7333,76.7794' },
+    { id: 9, x: 21.1702, y: 72.8311, title: 'Gandhinagar', link: 'https://www.google.com/maps?q=21.1702,72.8311' },
+    { id: 10, x: 26.8467, y: 80.9462, title: 'Lucknow', link: 'https://www.google.com/maps?q=26.8467,80.9462' }
   ]);
 
-  // Aggregate markers that are close together
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentPosition([latitude, longitude]);
+          setPermissionGranted(true);
+        },
+        (error) => {
+          console.error('Error getting location', error);
+          setError('Unable to retrieve your location.');
+          setPermissionGranted(false);
+          router.push('/error'); 
+        }
+      );
+    } else {
+      setError('Geolocation is not supported by this browser.');
+      setPermissionGranted(false);
+      router.push('/error');
+    }
+  }, [router]);
+
   const clusterMarkers = (markers) => {
     const clusters = {};
     markers.forEach(marker => {
@@ -49,9 +76,13 @@ const Map = () => {
     popupAnchor: [1, -34], 
   });
 
+  if (!permissionGranted) {
+    return <div className="text-center mt-4">Please allow geolocation access to view the map.</div>;
+  }
+
   return (
     <div className="h-screen">
-      <MapContainer center={[28.6139, 77.2090]} zoom={10} className="h-full">
+      <MapContainer center={currentPosition} zoom={10} className="h-full">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -71,13 +102,18 @@ const Map = () => {
               </Circle>
             ) : (
               <Marker key={index} position={[marker.x, marker.y]} icon={customIcon}>
-                <Popup>{`Marker ${index + 1}`}</Popup>
+                <Popup>
+                  <a href={markers[index].link} target="_blank" rel="noopener noreferrer">
+                    {`Marker ${index + 1} - ${markers[index].title}`}
+                  </a>
+                </Popup>
               </Marker>
             )
           ))
         ) : (
           <div>Loading markers...</div>
         )}
+        {error && <div className="error">{error}</div>}
       </MapContainer>
     </div>
   );

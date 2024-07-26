@@ -20,42 +20,13 @@ function NavList({ setOpenNav, onLoginUser, onLoginVendor }) {
 
   return (
     <ul className="my-2 flex w-full flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
-      <Menu allowHover>
-        <MenuHandler>
-          <Typography as="li" variant="medium" color="black" className="p-1 font-medium cursor-pointer">
-            Service
-          </Typography>
-        </MenuHandler>
-        <MenuList className="p-1 bg-white shadow-lg rounded-lg">
-          <MenuItem>
-            <Link href="/listview" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              s1
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/mapview" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              s2
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/mapview" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              s3
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/mapview" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              s4
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/mapview" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              s5
-            </Link>
-          </MenuItem>
-        </MenuList>
-      </Menu>
       <Typography as="li" variant="small" color="blue-gray" className="p-1 font-smal">
-        <Link href="/spark_hub" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
+        <Link href="/services" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
+          Services
+        </Link>
+      </Typography>
+      <Typography as="li" variant="small" color="blue-gray" className="p-1 font-smal">
+        <Link href="/aboutus" className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
           About
         </Link>
       </Typography>
