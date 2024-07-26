@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "countryregionjs": "^1.1.4",
     "dotenv": "^16.4.5",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -37,6 +38,7 @@
     "react-leaflet": "^4.2.1",
     "react-rating": "^2.0.5",
     "react-router-dom": "^6.24.1",
+    "react-select": "^5.8.0",
     "react-tabs": "^6.0.2",
     "recharts": "^2.12.7",
     "tailwind-merge": "^2.4.0"
