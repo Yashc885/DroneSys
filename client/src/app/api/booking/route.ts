@@ -33,15 +33,21 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-    await connectToDatabase();
+    await connect();
 
     try {
-        const data = await request.json();
-        const { id } = data; // Assuming id is part of the request body
+        const url = new URL(request.url);
+        const id = url.searchParams.get('id'); // Extract ID from query parameters
+        if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+
+        const data = await request.json(); 
+        console.log('Updating booking with ID:', id); 
+
         const updatedBooking = await Booking.findByIdAndUpdate(id, data, { new: true });
         if (!updatedBooking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
         return NextResponse.json(updatedBooking, { status: 200 });
     } catch (error) {
+        console.error(error); 
         return NextResponse.json({ error: 'Error updating booking' }, { status: 400 });
     }
 }
@@ -51,7 +57,7 @@ export async function DELETE(request: Request) {
 
     try {
         const { searchParams } = new URL(request.url);
-        const id = searchParams.get('id'); // Extract id from the query string
+        const id = searchParams.get('id'); 
         const deletedBooking = await Booking.findByIdAndDelete(id);
         if (!deletedBooking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
         return NextResponse.json({ message: 'Booking deleted successfully' }, { status: 200 });
