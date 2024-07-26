@@ -1,4 +1,3 @@
-// app/api/vendor/route.ts
 import { NextResponse } from 'next/server';
 import Vendor from '../../../models/vendorModels'; // Adjust the path as needed
 import connect from '../../../Database/config'; // Ensure you have a database connection function
