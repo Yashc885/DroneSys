@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -12,12 +11,8 @@ const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { 
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { ssr: false });
 
-const Map = ({ selectedCity }) => {
-  const [currentPosition, setCurrentPosition] = useState([28.6139, 77.2090]); // Default to Delhi
-  const [error, setError] = useState(null);
-  const [permissionGranted, setPermissionGranted] = useState(false);
-
-  // Manually provide coordinates
+const Map = ({ latitude, longitude, selectedCity }) => {
+  const [mapCenter, setMapCenter] = useState([latitude, longitude]);
   const [markers, setMarkers] = useState([
     { id: 1, x: 28.6139, y: 77.2090, title: 'Delhi', link: 'https://www.google.com/maps?q=28.6139,77.2090' },
     { id: 2, x: 19.0760, y: 72.8777, title: 'Mumbai', link: 'https://www.google.com/maps?q=19.0760,72.8777' },
@@ -31,25 +26,10 @@ const Map = ({ selectedCity }) => {
     { id: 10, x: 26.8467, y: 80.9462, title: 'Lucknow', link: 'https://www.google.com/maps?q=26.8467,80.9462' }
   ]);
 
+  // Update map center if coordinates change
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentPosition([latitude, longitude]);
-          setPermissionGranted(true);
-        },
-        (error) => {
-          console.error('Error getting location', error);
-          setError('Unable to retrieve your location.');
-          setPermissionGranted(false);
-        }
-      );
-    } else {
-      setError('Geolocation is not supported by this browser.');
-      setPermissionGranted(false);
-    }
-  }, []);
+    setMapCenter([latitude, longitude]);
+  }, [latitude, longitude]);
 
   const clusterMarkers = (markers) => {
     const clusters = {};
@@ -74,11 +54,6 @@ const Map = ({ selectedCity }) => {
   });
 
   const selectedCityMarker = markers.find(marker => marker.title === selectedCity);
-  const mapCenter = selectedCityMarker ? [selectedCityMarker.x, selectedCityMarker.y] : currentPosition;
-
-  if (!permissionGranted) {
-    return <div className="text-center mt-4">Please allow geolocation access to view the map.</div>;
-  }
 
   return (
     <div className="h-screen">
@@ -107,13 +82,19 @@ const Map = ({ selectedCity }) => {
                     {`Marker ${index + 1} - ${markers[index].title}`}
                   </a>
                 </Popup>
-              </Marker>
+              </Marker> 
             )
           ))
         ) : (
           <div>Loading markers...</div>
         )}
-        {error && <div className="error">{error}</div>}
+        {selectedCityMarker && (
+          <Marker position={[selectedCityMarker.x, selectedCityMarker.y]} icon={customIcon}>
+            <Popup>
+              {selectedCityMarker.title}
+            </Popup>
+          </Marker>
+        )}
       </MapContainer>
     </div>
   );

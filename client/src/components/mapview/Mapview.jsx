@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Select from 'react-select';
 import CountryRegion from "countryregionjs";
-import Map from "./map.jsx";
+import Map from "./Map";
 import "./map.css";
 
 function Mapview() {
@@ -143,7 +143,7 @@ function Mapview() {
             <main>
                 <section className="submain submain-one">
                     <section className="submain-zero-image-cover">
-                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} selectedCity={selectedCity} />  
+                        <Map latitude={18.530488} longitude={73.8502228230239} selectedCity={selectedCity} />  
                     </section>
                     <form className="submain-one-form" onSubmit={handleSubmit}>
                         <header className="submain-one-form-header">
