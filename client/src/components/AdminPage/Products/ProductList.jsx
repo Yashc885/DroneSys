@@ -1,129 +1,186 @@
-'use client'
-import React, { Component } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ProductModal from './ProductModal';
-import ProductImg from './ProductImg';
-import Rating from 'react-rating';
-import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-import { calculateRating } from './utils.js';
+"use client";
 
-// Mock product list
-const mockProductList = [
-    { id: 1, name: 'Laptop', category: 'Electronics', imgUrl: '/images/laptop.jpg', brand: 'Brand A', price: 1000, stock: 10, rating: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 5 } },
-    { id: 2, name: 'T-Shirt', category: 'Clothing', imgUrl: '/images/tshirt.jpg', brand: 'Brand B', price: 20, stock: 50, rating: { 1: 0, 2: 0, 3: 0, 4: 3, 5: 2 } },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-class ProductList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-            isUpdate: false,
-            selectedProduct: null,
-            selectedCategory: "All",
-            productList: mockProductList
-        };
+const ProductList = () => {
+  const [droneServices, setDroneServices] = useState([]);
+  const [editService, setEditService] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchDroneServices = async () => {
+      try {
+        const response = await axios.get("/api/drone-services");
+        setDroneServices(response.data);
+      } catch (err) {
+        toast.error("Failed to fetch drone services");
+      }
+    };
+
+    fetchDroneServices();
+  }, []);
+
+  const handleEditClick = (service) => {
+    setEditService(service);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const { _id, user_id, drone_services_id, title, description, price_info } = editService;
+
+    if (!user_id || !drone_services_id || !title || !description || !price_info) {
+      setError("All fields are required");
+      toast.error("All fields are required");
+      return;
     }
 
-    handleClose = () => this.setState({ show: false });
-
-    openModal = () => {
-        this.setState({ show: true, isUpdate: false });
-    };
-
-    handleUpdate = (product) => {
-        if (product !== null) {
-            this.setState({ selectedProduct: product });
-            this.setState({ show: true, isUpdate: true });
-        }
-    };
-
-    handleFilter = () => {
-        let filteredProducts = [];
-        if (this.state.selectedCategory !== "All")
-            filteredProducts = this.state.productList.filter(product => product.category === this.state.selectedCategory);
-        else
-            filteredProducts = this.state.productList;
-
-        this.filtered = filteredProducts;
-    };
-
-    render() {
-        this.handleFilter();
-        return (
-            <div>
-                <div className='container d-flex justify-content-between border rounded p-2 shadow-sm align-items-center'>
-                    <button onClick={this.openModal} className="btn btn-dark bg-gradient">Add Product</button>
-                    <small className='text-muted d-none d-md-block'>Double click product to edit its properties.</small>
-                    <div className='d-flex justify-content-between'>
-                        <Dropdown onSelect={(value) => this.setState({ selectedCategory: value })} className='mx-1'>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                                {this.state.selectedCategory}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {["All", "Electronics", "Clothing", "Toys", "Food", "Sport", "Accessories", "Furniture", "Hobby and DIY", "Health & Beauty"].map((category) => (
-                                    <Dropdown.Item key={category} eventKey={category}>{category}</Dropdown.Item>
-                                ))}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-                </div>
-
-                {
-                    this.state.show && <ProductModal
-                        selectedProduct={this.state.selectedProduct}
-                        show={this.state.show}
-                        handleClose={this.handleClose}
-                        productList={this.state.productList}
-                        isUpdate={this.state.isUpdate}
-                        setProductList={(productList) => this.setState({ productList })}
-                    />
-                }
-                <div className="container border rounded mt-2 px-0 px-sm-2 shadow-sm ">
-                    <div className="table-responsive" style={{ maxHeight: '620px' }}>
-                        <div className='text-center text-muted'>
-                            <small className='d-md-none'>Double click product to edit its properties.</small>
-                        </div>
-                        {
-                            this.state.productList.length > 0 ? <table className="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className='px-1 px-sm-2'>Image</th>
-                                        <th scope="col" className='px-1 px-sm-2'>Product</th>
-                                        <th scope="col" className='text-center px-1 px-sm-2'>Price</th>
-                                        <th scope="col" className='text-center px-1px-sm-2'>Stock</th>
-                                        <th scope="col" className='text-center px-1 px-sm-2'>Rating</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        this.filtered.map((product) => {
-                                            return (
-                                                <tr key={product.id} onDoubleClick={() => this.handleUpdate(product)}>
-                                                    <td className='px-0 px-sm-2'><ProductImg src={product.imgUrl} className={'rounded border p-1'} style={{ objectFit: 'contain', width: '50px' }} /></td>
-                                                    <td className='px-0 px-sm-2'><div className='d-flex flex-column small'><strong>{product.brand}</strong>{product.name}</div></td>
-                                                    <td className='text-center px-1 px-sm-2'>{product.price}</td>
-                                                    <td className='text-center px-1 px-sm-2'>{product.stock}</td>
-                                                    <td className=' text-center px-1 px-sm-2'>
-                                                        <Rating
-                                                            emptySymbol={<AiOutlineStar size={18} />}
-                                                            fullSymbol={<AiFillStar size={18} />}
-                                                            readonly={true}
-                                                            initialRating={calculateRating(product.rating)}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })
-                                    }
-                                </tbody>
-                            </table> : <div className="alert alert-warning d-flex align-items-center justify-content-center h-100 m-3">There is no product.</div>
-                        }
-                    </div>
-                </div>
-            </div>
-        );
+    try {
+      await axios.put("/api/drone-services", {
+        _id,
+        user_id,
+        drone_services_id,
+        title,
+        description,
+        price_info,
+      });
+      toast.success("Drone service updated successfully");
+      setEditService(null);
+      // Refresh the list
+      const response = await axios.get("/api/drone-services");
+      setDroneServices(response.data);
+    } catch (err) {
+      toast.error(err.response?.data?.msg || "Update failed");
     }
-}
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/api/drone-services?_id=${id}`);
+      toast.success("Drone service deleted successfully");
+      // Refresh the list
+      const response = await axios.get("/api/drone-services");
+      setDroneServices(response.data);
+    } catch (err) {
+      toast.error(err.response?.data?.msg || "Delete failed");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-2xl font-bold mb-6">Drone Services</h1>
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {droneServices.map((service) => (
+          <div key={service._id} className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-4">{service.title}</h2>
+            <button
+              onClick={() => handleEditClick(service)}
+              className="block w-full text-center bg-blue-500 text-white p-2 rounded-md mb-2"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => handleDelete(service._id)}
+              className="block w-full text-center bg-red-500 text-white p-2 rounded-md"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+      {editService && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-4xl">
+            <h2 className="text-xl font-bold mb-4">Edit Drone Service</h2>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div>
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                  Title
+                </label>
+                <input
+                  id="title"
+                  type="text"
+                  value={editService.title}
+                  onChange={(e) => setEditService({ ...editService, title: e.target.value })}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="user_id" className="block text-sm font-medium text-gray-700">
+                  User ID
+                </label>
+                <input
+                  id="user_id"
+                  type="text"
+                  value={editService.user_id}
+                  onChange={(e) => setEditService({ ...editService, user_id: e.target.value })}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="drone_services_id" className="block text-sm font-medium text-gray-700">
+                  Drone Services ID
+                </label>
+                <input
+                  id="drone_services_id"
+                  type="text"
+                  value={editService.drone_services_id}
+                  onChange={(e) => setEditService({ ...editService, drone_services_id: e.target.value })}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={editService.description}
+                  onChange={(e) => setEditService({ ...editService, description: e.target.value })}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  rows="6"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="price_info" className="block text-sm font-medium text-gray-700">
+                  Price Info
+                </label>
+                <textarea
+                  id="price_info"
+                  value={editService.price_info}
+                  onChange={(e) => setEditService({ ...editService, price_info: e.target.value })}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  rows="4"
+                  required
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md w-full"
+                >
+                  Update
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEditService(null)}
+                className="bg-gray-500 text-white py-2 px-4 rounded-md w-full"
+              >
+                Cancel
+              </button>
+            </form>
+            {error && <p className="text-red-500 mt-4">{error}</p>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default ProductList;
