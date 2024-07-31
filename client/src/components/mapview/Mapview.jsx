@@ -15,6 +15,7 @@ function Mapview() {
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedCountryName, setSelectedCountryName] = useState("");
     const [selectedStateName, setSelectedStateName] = useState("");
+    const [coordinates, setCoordinates] = useState({ latitude: 0, longitude: 0 });
 
     const ZERO = 0;
     const countryRegion = new CountryRegion();
@@ -84,17 +85,41 @@ function Mapview() {
         setSelectedStateName(label); // Set the selected state name
     };
 
-    const handleLGAChange = (event) => {
+    const getCityCoordinates = async (cityName) => {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${cityName}&format=json`);
+        const data = await response.json();
+        if (data.length > 0) {
+            return {
+                latitude: parseFloat(data[0].lat),
+                longitude: parseFloat(data[0].lon)
+            };
+        }
+        return { latitude: 0, longitude: 0 };
+    };
+    
+    const handleLGAChange = async (event) => {
         const { value, label } = event;
         setLGA(value);
         setSelectedCity(label); // Update the selected city when LGA changes
+    
+        // Fetch coordinates for the selected city
+        try {
+            console.log('Fetching coordinates for:', label);
+            const cityCoordinates = await getCityCoordinates(label);
+            console.log('City Coordinates:', cityCoordinates);
+            setCoordinates({ latitude: cityCoordinates.latitude, longitude: cityCoordinates.longitude });
+        } catch (error) {
+            console.error('Error fetching coordinates:', error);
+        }
     };
+    
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Selected Country:', selectedCountryName);
         console.log('Selected State:', selectedStateName);
         console.log('Selected City:', selectedCity);
+        console.log('Coordinates:', coordinates);
     };
 
     const customStyles = {
@@ -118,7 +143,7 @@ function Mapview() {
             <main>
                 <section className="submain submain-one">
                     <section className="submain-zero-image-cover">
-                        <Map selectedCity={selectedCity} />  {/* Pass selectedCity as a prop */}
+                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} selectedCity={selectedCity} />  
                     </section>
                     <form className="submain-one-form" onSubmit={handleSubmit}>
                         <header className="submain-one-form-header">
@@ -162,9 +187,6 @@ function Mapview() {
                                     />
                                 }
                             </section>
-                            {
-                                !true && lga
-                            }
                             <section className="subdomain-one-form-body-subsection-one">
                                 <button className="subdomain-one-form-body-subsection-one-button">Submit</button>
                             </section>
@@ -173,7 +195,7 @@ function Mapview() {
                 </section>
                 <section className="submain submain-two">
                     <section className="submain-two-image-cover">
-                        <Map selectedCity={selectedCity} /> 
+                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} selectedCity={selectedCity} /> 
                     </section>
                 </section>
             </main>

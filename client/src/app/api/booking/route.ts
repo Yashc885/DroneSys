@@ -37,7 +37,8 @@ export async function PUT(request: Request) {
 
     try {
         const url = new URL(request.url);
-        const id = url.searchParams.get('id'); // Extract ID from query parameters
+        const id = url.searchParams.get('id'); 
+        console.log(request)
         if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
 
         const data = await request.json(); 
