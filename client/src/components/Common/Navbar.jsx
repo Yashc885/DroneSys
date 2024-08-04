@@ -7,7 +7,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Menu, MenuHandler, MenuList, MenuItem } from "@material-tailwind/react";
 import { Button } from "@/components/ui/button";
 
-function NavList({ setOpenNav, onLoginUser, onLoginVendor }) {
+function NavList({ setOpenNav, onLoginUser, onLoginVendor, user }) {
   const handleLoginUser = () => {
     onLoginUser("/login/user");
     setOpenNav(false);
@@ -55,35 +55,50 @@ function NavList({ setOpenNav, onLoginUser, onLoginVendor }) {
           Resources
         </Link>
       </Typography>
-      <Menu allowHover>
-        <MenuHandler>
-          <Button
-            type="button"
-            size="lg"
-            className="h-full cursor-pointer col-span-2 sm:col-span-1 p-2 bg-rose-500 hover:bg-rose-600 rounded-xl text-base text-white font-medium"
-          >
-            Login
-          </Button>
-        </MenuHandler>
-        <MenuList className="p-1 bg-white shadow-lg rounded-lg">
-          <MenuItem>
-            <button onClick={handleLoginUser} className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              User
-            </button>
-          </MenuItem>
-          <MenuItem>
-            <button onClick={handleLoginVendor} className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
-              Vendor
-            </button>
-          </MenuItem>
-        </MenuList>
-      </Menu>
+      {user ? (
+        <li className="p-1">
+          <Link href="/profile" className="flex items-center">
+            <Image
+              src={user.profilePic}
+              alt="Profile"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </Link>
+        </li>
+      ) : (
+        <Menu allowHover>
+          <MenuHandler>
+            <Button
+              type="button"
+              size="lg"
+              className="h-full cursor-pointer col-span-2 sm:col-span-1 p-2 bg-rose-500 hover:bg-rose-600 rounded-xl text-base text-white font-medium"
+            >
+              Login
+            </Button>
+          </MenuHandler>
+          <MenuList className="p-1 bg-white shadow-lg rounded-lg">
+            <MenuItem>
+              <button onClick={handleLoginUser} className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
+                User
+              </button>
+            </MenuItem>
+            <MenuItem>
+              <button onClick={handleLoginVendor} className="flex items-center hover:text-[#2a6f97] transition-colors text-black text-base">
+                Vendor
+              </button>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      )}
     </ul>
   );
 }
 
 export function NavbarSimple() {
   const [openNav, setOpenNav] = useState(false);
+  const [user, setUser] = useState(null); // Add state to track user
 
   const handleWindowResize = () => window.innerWidth >= 960 && setOpenNav(false);
 
@@ -93,6 +108,14 @@ export function NavbarSimple() {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
+  }, []);
+
+  // Mock user login logic for demonstration
+  useEffect(() => {
+    // Simulate user login (replace this with actual login logic)
+    setUser({
+      profilePic: "https://st2.depositphotos.com/2703645/7303/v/450/depositphotos_73039841-stock-illustration-male-avatar-icon.jpg", // Replace with dynamic profile pic URL
+    });
   }, []);
 
   const handleLoginUser = (path) => {
@@ -115,7 +138,7 @@ export function NavbarSimple() {
           />
         </Link>
         <div className="hidden lg:block">
-          <NavList setOpenNav={setOpenNav} onLoginUser={handleLoginUser} onLoginVendor={handleLoginVendor} />
+          <NavList setOpenNav={setOpenNav} onLoginUser={handleLoginUser} onLoginVendor={handleLoginVendor} user={user} />
         </div>
         <IconButton
           variant="text"
@@ -131,7 +154,7 @@ export function NavbarSimple() {
         </IconButton>
       </div>
       <Collapse open={openNav}>
-        <NavList setOpenNav={setOpenNav} onLoginUser={handleLoginUser} onLoginVendor={handleLoginVendor} />
+        <NavList setOpenNav={setOpenNav} onLoginUser={handleLoginUser} onLoginVendor={handleLoginVendor} user={user} />
       </Collapse>
     </Navbar>
   );
