@@ -4,13 +4,16 @@ import {NavbarSimple} from './../components/Common/Navbar.jsx';
 import Customer from './../components/Customer/CustomerList.jsx';
 import Service from "./../components/Service/Service.jsx";
 import Footer from "./../components/Common/Footer.jsx";
+import Steps from "./../components/Steps/Steps.jsx";
 export default function Home() {
   return (
     <div>
     <Hero />
     <Service />
+        <Steps />
     <Customer />
     <Footer />
     </div>
   );
 }
+

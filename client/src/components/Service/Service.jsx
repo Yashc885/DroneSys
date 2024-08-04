@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image'; 
 import { useEffect, useState } from 'react';
-
+import Slider from "./Slider.jsx";
 const servicesData = [
   {
     title: 'Service 1',
@@ -38,7 +38,9 @@ const Service = () => {
   }, []);
 
   return (
-    <div className="font-serif py-8 overflow-x-hidden">
+    <div className="font-serif  overflow-x-hidden">
+    <Slider />
+    <div className="py-4 md:py-6 lg:py-8"></div>
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-red-500">Service</h2>
           <h3 className="text-4xl font-extrabold mb-6">What We Offer</h3>
