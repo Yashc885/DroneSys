@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 const data = [
   {
     img: "https://img.freepik.com/free-photo/smart-drone-with-ai-technology_23-2148991437.jpg",
-    title: "DJI Phantom 4",
+    title: "DJI Phantom4",
     star: <AiFillStar className="rating-star" />,
     reviews: "(123 reviews)",
     prevPrice: "$150.00",
@@ -41,7 +41,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-over-fields_58409-214.jpg",
-    title: "DJI Mavic Air 2",
+    title: "DJI Mavic Air2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(97 reviews)",
     prevPrice: "$150.00",
@@ -60,7 +60,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-sky_58409-216.jpg",
-    title: "Autel Robotics EVO",
+    title: "Autel RoboticsEVO",
     star: <AiFillStar className="rating-star" />,
     reviews: "(105 reviews)",
     prevPrice: "$600.00",
@@ -79,7 +79,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-over-water_58409-217.jpg",
-    title: "Yuneec Typhoon H",
+    title: "Yuneec TyphoonH",
     star: <AiFillStar className="rating-star" />,
     reviews: "(85 reviews)",
     prevPrice: "$400.00",
@@ -98,7 +98,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-218.jpg",
-    title: "Skydio 2",
+    title: "Skydio2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(123 reviews)",
     prevPrice: "$180.00",
@@ -117,7 +117,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-city_58409-219.jpg",
-    title: "DJI Inspire 2",
+    title: "DJI Inspire2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(90 reviews)",
     prevPrice: "$400.00",
@@ -136,7 +136,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-over-forest_58409-220.jpg",
-    title: "PowerVision PowerEgg X",
+    title: "PowerVision PowerEggX",
     star: <AiFillStar className="rating-star" />,
     reviews: "(78 reviews)",
     prevPrice: "$100.00",
@@ -155,7 +155,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-above-clouds_58409-221.jpg",
-    title: "DJI Phantom 3",
+    title: "DJI Phantom3",
     star: <AiFillStar className="rating-star" />,
     reviews: "(99 reviews)",
     prevPrice: "$100.00",
@@ -174,7 +174,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-above-ground_58409-222.jpg",
-    title: "Parrot Bebop 2",
+    title: "Parrot Bebop2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(103 reviews)",
     prevPrice: "$700.00",
@@ -193,7 +193,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-over-countryside_58409-225.jpg",
-    title: "DJI Phantom 2",
+    title: "DJI Phantom2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(122 reviews)",
     prevPrice: "$700.00",
@@ -212,7 +212,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-forest_58409-226.jpg",
-    title: "DJI Mini 2",
+    title: "DJI Mini2",
     star: <AiFillStar className="rating-star" />,
     reviews: "(150 reviews)",
     prevPrice: "$200.00",
@@ -250,7 +250,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-over-field_58409-228.jpg",
-    title: "DJI Phantom 1",
+    title: "DJI Phantom1",
     star: <AiFillStar className="rating-star" />,
     reviews: "(85 reviews)",
     prevPrice: "$400.00",
@@ -269,7 +269,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-flying-over-river_58409-229.jpg",
-    title: "DJI Phantom SE",
+    title: "DJI PhantomSE",
     star: <AiFillStar className="rating-star" />,
     reviews: "(105 reviews)",
     prevPrice: "$120.00",
@@ -440,7 +440,7 @@ const data = [
   },  
   {
     img: "https://img.freepik.com/free-photo/drone-flying-over-forest_58409-238.jpg",
-    title: "DJI Air 2S",
+    title: "DJI Air2S",
     star: <AiFillStar className="rating-star" />,
     reviews: "(135 reviews)",
     prevPrice: "$1000.00",
@@ -630,7 +630,7 @@ const data = [
   },
   {
     img: "https://img.freepik.com/free-photo/drone-hovering-sunset_58409-248.jpg",
-    title: "DJI Mavic Air 2S Fly More Combo",
+    title: "DJI Mavic Air2S Fly More Combo",
     star: <AiFillStar className="rating-star" />,
     reviews: "(140 reviews)",
     prevPrice: "$120.00",

@@ -1,20 +1,26 @@
 import React from 'react';
-import ImageCarousel from './ImageCarousel';
-import ImageDescription from './ImageDescription';
+import ImageDescription from './ImageDescription'; 
+import ImageCarousel from './ImageCarousel'; 
 
-const Product = () => {
-  return (
-    <div className="py-8 md:py-16">
-      <div className="md:flex items-center ">
-        <div className="w-full md:w-1/2 md:pr-4 ">
-          <ImageCarousel />
+const Product = ({ drone }) => {
+    console.log("Product Component:", drone); 
+    if (!drone) return <div>No drone data available</div>;
+
+    // Extract images from the drone data (assuming it's an array of image URLs)
+    const images = Array(5).fill(drone.img); // Example usage, adjust if needed
+
+    return (
+        <div className="product-container p-4">
+            <div className="flex flex-col md:flex-row">
+                <div className="w-full md:w-1/2">
+                    <ImageCarousel images={images} /> 
+                </div>
+                <div className="w-full md:w-1/2 md:pl-4">
+                    <ImageDescription drone={drone} />
+                </div>
+            </div>
         </div>
-        <div className="w-full md:w-1/2 md:pl-4">
-          <ImageDescription />
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+}
 
 export default Product;
