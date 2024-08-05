@@ -22,11 +22,18 @@ const Hero = () => {
   const [dropdownValue, setDropdownValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  // const handleSearch = () => {
+  //   if (searchLocation && startDate && endDate && dropdownValue) {
+  //     window.location.href = `/trips?city=${searchLocation}&start_date=${startDate}&end_date=${endDate}&option=${dropdownValue}`;
+  //   }
+  // };
+  
   const handleSearch = () => {
     if (searchLocation && startDate && endDate && dropdownValue) {
-      window.location.href = `/trips?city=${searchLocation}&start_date=${startDate}&end_date=${endDate}&option=${dropdownValue}`;
+      window.location.href = `/listview?service=${dropdownValue}`;
     }
   };
+  
 
   const searchCities = async (searchQuery) => {
     const response = await fetch(
@@ -154,7 +161,7 @@ const Hero = () => {
                         }}
                         className="rounded-sm"
                       >
-                        {["s1", "s2", "s3", "s4", "s5", "s6"].map((option) => (
+                        {["photography", "videography", "agriculture", "mining", "security"].map((option) => (
                           <ListboxItem key={option} value={option} color="danger" className="text-black">
                             {option}
                           </ListboxItem>

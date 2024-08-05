@@ -1,50 +1,45 @@
 'use client';
 import React from 'react';
-import Image from 'next/image'; 
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import ag1 from '../../assets/serv/ag1.jpg';
+import m1 from '../../assets/serv/m1.jpg';
+import p1 from '../../assets/serv/p1.jpg';
+import s1 from '../../assets/serv/s1.jpg';
+import v1 from '../../assets/serv/v1.jpg';
 import Slider from "./Slider.jsx";
+
 const servicesData = [
   {
-    title: 'Service 1',
-    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZT0qh99IVOiZ1NdoCsrP4_mSQzuAFRBVzw&s',
+    title: 'Agriculture',
+    imgUrl: ag1,
   },
   {
-    title: 'Service 2',
-    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZT0qh99IVOiZ1NdoCsrP4_mSQzuAFRBVzw&s',
+    title: 'Mining',
+    imgUrl: m1,
   },
   {
-    title: 'Service 3',
-    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZT0qh99IVOiZ1NdoCsrP4_mSQzuAFRBVzw&s',
+    title: 'Security',
+    imgUrl: s1,
   },
   {
-    title: 'Service 4',
-    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZT0qh99IVOiZ1NdoCsrP4_mSQzuAFRBVzw&s',
+    title: 'VideoGraphy',
+    imgUrl: v1,
   },
   {
-    title: 'Service 5',
-    imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDZT0qh99IVOiZ1NdoCsrP4_mSQzuAFRBVzw&s',
+    title: 'PhotoGraphy',
+    imgUrl: p1,
   },
 ];
 
 const Service = () => {
-  const [loadedImages, setLoadedImages] = useState(new Set());
-
-  useEffect(() => {
-    servicesData.forEach(service => {
-      const img = new window.Image();
-      img.src = service.imgUrl;
-      img.onload = () => setLoadedImages(prev => new Set([...prev, service.imgUrl]));
-    });
-  }, []);
-
   return (
-    <div className="font-serif  overflow-x-hidden">
-    <Slider />
-    <div className="py-4 md:py-6 lg:py-8"></div>
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold text-red-500">Service</h2>
-          <h3 className="text-4xl font-extrabold mb-6">What We Offer</h3>
-        </div>
+    <div className="font-serif overflow-x-hidden">
+      <Slider />
+      <div className="py-4 md:py-6 lg:py-8"></div>
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-red-500">Service</h2>
+        <h3 className="text-4xl font-extrabold mb-6">What We Offer</h3>
+      </div>
       <div className="w-full max-w-7xl mx-auto p-8">
         <ul className="grid gap-8 grid-cols-1 sm:grid-cols-3 lg:grid-cols-5">
           {servicesData.map((service, index) => (
@@ -55,17 +50,12 @@ const Service = () => {
                   alt={service.title}
                   fill
                   style={{ objectFit: 'cover' }}
-                  className={`transform transition-transform duration-500 group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl ${
-                    loadedImages.has(service.imgUrl) ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className="transform transition-transform duration-500 group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl"
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 text-center">
+                  <h4 className="text-lg font-bold">{service.title}</h4>
+                </div>
               </div>
-              <a
-                href="#"
-                className="block mt-4 text-center text-lg sm:text-xl md:text-2xl underline"
-              >
-                {service.title}
-              </a>
             </li>
           ))}
         </ul>

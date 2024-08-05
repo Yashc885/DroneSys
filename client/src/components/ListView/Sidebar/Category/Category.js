@@ -1,10 +1,10 @@
 import "./Category.css";
 import Input from "../../Input";
 
-function Category({ handleChange }) {
+function Category({ selectedService, handleChange }) {
   return (
     <div className="pl-8">
-      <h2 className="sidebar-title mr-20 ">Category</h2>
+      <h2 className="sidebar-title mr-20">Category</h2>
 
       <div>
         <label className="sidebar-label-container">
@@ -16,24 +16,28 @@ function Category({ handleChange }) {
           value="agriculture"
           title="Agriculture"
           name="test"
+          checked={selectedService === 'agriculture'}
         />
         <Input
           handleChange={handleChange}
           value="photography"
           title="Photography"
           name="test"
+          checked={selectedService === 'photography'}
         />
         <Input
           handleChange={handleChange}
           value="security"
           title="Security"
           name="test"
+          checked={selectedService === 'security'}
         />
         <Input
           handleChange={handleChange}
           value="mining"
           title="Mining"
           name="test"
+          checked={selectedService === 'mining'}
         />
       </div>
     </div>
