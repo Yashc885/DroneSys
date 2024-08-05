@@ -143,7 +143,7 @@ function Mapview() {
             <main>
                 <section className="submain submain-one">
                     <section className="submain-zero-image-cover">
-                        <Map latitude={18.530488} longitude={73.8502228230239} selectedCity={selectedCity} />  
+                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} />  
                     </section>
                     <form className="submain-one-form" onSubmit={handleSubmit}>
                         <header className="submain-one-form-header">
@@ -195,7 +195,7 @@ function Mapview() {
                 </section>
                 <section className="submain submain-two">
                     <section className="submain-two-image-cover">
-                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} selectedCity={selectedCity} /> 
+                        <Map latitude={coordinates.latitude} longitude={coordinates.longitude} /> 
                     </section>
                 </section>
             </main>
