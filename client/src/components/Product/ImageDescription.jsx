@@ -53,13 +53,8 @@ const ImageDescription = ({ drone = {} }) => {
             </div>
             <p className="line-through text-gray-400 mb-4">{prevPrice}</p>
             <div className="flex items-center mb-4">
-                <div className="flex bg-gray-200 rounded p-1 w-1/2 justify-around mr-4">
-                    <span className="text-red-500 font-bold">-</span>
-                    <span className="font-bold">0</span>
-                    <span className="text-red-500 font-bold">+</span>
-                </div>
                 <button className="flex items-center bg-red-600 text-white py-2 px-4 rounded hover:shadow-lg">
-                    <ShoppingCart size={12} color="white" /> &nbsp; Add to cart
+                    <ShoppingCart size={12} color="white" /> &nbsp; Book Now
                 </button>
             </div>
         </div>

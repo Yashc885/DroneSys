@@ -45,9 +45,19 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'st2.depositphotos.com',
+        hostname: 'st2.depositphotos.com', 
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com' ,
+        pathname: '/**',
+      },      
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },      
     ],
   },
 };
