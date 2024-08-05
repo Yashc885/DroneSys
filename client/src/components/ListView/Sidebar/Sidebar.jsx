@@ -1,6 +1,6 @@
 import Category from "./Category/Category";
 import Price from "./Price/Price";
-import Colors from "./Colors/Colors";
+import Memory from "./Memory/Memory";
 
 const Sidebar = ({ handleChange }) => {
   return (
@@ -12,7 +12,7 @@ const Sidebar = ({ handleChange }) => {
         <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           <Category handleChange={handleChange} />
           <Price handleChange={handleChange} />
-          <Colors handleChange={handleChange} />
+          <Memory handleChange={handleChange} />
         </div>
       </section>
     </div>

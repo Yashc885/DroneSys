@@ -16,7 +16,7 @@ const Price = ({ handleChange }) => {
         />
         <span className="text-sm">All</span>
       </label>
-
+      <div className="py-2"></div>
       <Input
         handleChange={handleChange}
         value={50}

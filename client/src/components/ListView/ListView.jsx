@@ -36,10 +36,10 @@ function ListView() {
 
     if (selected) {
       filteredProducts = filteredProducts.filter(
-        ({ category, color, company, newPrice, title }) =>
+        ({ category, memory, time, newPrice, title }) =>
           category === selected ||
-          color === selected ||
-          company === selected ||
+          memory === selected ||
+          time === selected ||
           newPrice === selected ||
           title === selected
       );

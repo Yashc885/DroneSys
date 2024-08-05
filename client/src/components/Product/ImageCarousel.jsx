@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import imageone from '../../assets/product/shoeone.jpg';
-import imagetwo from '../../assets/product/shoetwo.jpg';
-import imagethree from '../../assets/product/shoethree.jpg';
-import imagefour from '../../assets/product/shoefour.jpg';
-import imagefive from '../../assets/product/shoefour.jpg';
+import imageone from '../../assets/drone/d1.jpeg';
+import imagetwo from '../../assets/drone/d2.png';
+import imagethree from '../../assets/drone/d3.jpeg';
+import imagefour from '../../assets/drone/d4.jpeg';
+import imagefive from '../../assets/drone/d5.png';
 
 const images = [imageone, imagetwo, imagethree, imagefour , imagefive];
 
