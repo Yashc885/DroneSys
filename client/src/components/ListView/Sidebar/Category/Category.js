@@ -1,43 +1,66 @@
+'use client'
+import { useRouter } from 'next/navigation';
 import "./Category.css";
 import Input from "../../Input";
 
 function Category({ selectedService, handleChange }) {
+  const router = useRouter();
+  console.log("selectect" , selectedService)
+
+  const handleRadioChange = (event) => {
+    const selectedValue = event.target.value;
+    handleChange(event); 
+    router.push(`/listview?service=${selectedValue}`);
+  };
+
   return (
     <div className="pl-8">
       <h2 className="sidebar-title mr-20">Category</h2>
-
       <div>
         <label className="sidebar-label-container">
-          <input onChange={handleChange} type="radio" value="" name="test" />
+          <input
+            onChange={handleRadioChange}
+            type="radio"
+            value=""
+            name="test"
+            checked={selectedService === ""}
+          />
           <span className="checkmark"></span>All
         </label>
         <Input
-          handleChange={handleChange}
+          handleChange={handleRadioChange}
           value="agriculture"
           title="Agriculture"
           name="test"
-          checked={selectedService === 'agriculture'}
+          checked={selectedService === "agriculture"}
         />
         <Input
-          handleChange={handleChange}
+          handleChange={handleRadioChange}
           value="photography"
           title="Photography"
           name="test"
-          checked={selectedService === 'photography'}
+          checked={selectedService === "photography"}
         />
         <Input
-          handleChange={handleChange}
+          handleChange={handleRadioChange}
           value="security"
           title="Security"
           name="test"
-          checked={selectedService === 'security'}
+          checked={selectedService === "security"}
         />
         <Input
-          handleChange={handleChange}
+          handleChange={handleRadioChange}
+          value="videography"
+          title="Videography"
+          name="test"
+          checked={selectedService === "videography"}
+        />
+        <Input
+          handleChange={handleRadioChange}
           value="mining"
           title="Mining"
           name="test"
-          checked={selectedService === 'mining'}
+          checked={selectedService === "mining"}
         />
       </div>
     </div>

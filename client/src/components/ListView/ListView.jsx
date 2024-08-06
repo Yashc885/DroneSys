@@ -1,13 +1,16 @@
-'use client';
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import Card from "./Card.jsx";
 import products from "./db/data";
 import Sidebar from "./Sidebar/Sidebar.jsx";
 import Navigation from "./Navigation/Nav.jsx";
 import Recommended from "./Recommended/Recommended.jsx";
+import { useSearchParams } from "next/navigation";
 
 function ListView() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const searchParams = useSearchParams();
+  const service = searchParams.get("service") || "";
+  const [selectedCategory, setSelectedCategory] = useState(service);
   const [query, setQuery] = useState("");
 
   const handleInputChange = (event) => {
@@ -15,19 +18,19 @@ function ListView() {
   };
 
   const filteredItems = products.filter(
-    (product) =>
-      product.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    (product) => product.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
   );
-
+  //sidebar
   const handleChange = (event) => {
-    setSelectedCategory(event.target.value);
+      setSelectedCategory(event.target.value);
   };
-
+  //time
   const handleClick = (event) => {
     setSelectedCategory(event.target.value);
   };
 
   function filteredData(products, selected, query) {
+    console.log("selected", selected);
     let filteredProducts = products;
 
     if (query) {
@@ -46,7 +49,7 @@ function ListView() {
     }
 
     return filteredProducts.map(
-      ({ img, title, star, reviews, prevPrice, newPrice , move }) => (
+      ({ img, title, star, reviews, prevPrice, newPrice, move }) => (
         <Card
           key={Math.random()}
           img={img}
@@ -56,7 +59,7 @@ function ListView() {
           prevPrice={prevPrice}
           newPrice={newPrice}
           move={move}
-          className="w-full h-full" 
+          className="w-full h-full"
         />
       )
     );

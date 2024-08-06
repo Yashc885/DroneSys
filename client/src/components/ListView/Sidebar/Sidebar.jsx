@@ -1,8 +1,10 @@
 import Category from "./Category/Category";
 import Price from "./Price/Price";
 import Memory from "./Memory/Memory";
-
-const Sidebar = ({ handleChange }) => {
+import { useSearchParams } from "next/navigation";
+const Sidebar = ({  handleChange }) => {
+  const searchParams = useSearchParams();
+  const service = searchParams.get("service") || "";
   return (
     <div className="">
       <section className="fixed inset-y-20  left-0 w-1/6 bg-white border-r-2 border-gray-300 flex flex-col items-center z-10">
@@ -10,7 +12,7 @@ const Sidebar = ({ handleChange }) => {
           <h1 className="text-center font-bold text-3xl">🛒</h1>
         </div>
         <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-          <Category handleChange={handleChange} />
+          <Category handleChange={handleChange} selectedService={service} />
           <Price handleChange={handleChange} />
           <Memory handleChange={handleChange} />
         </div>
