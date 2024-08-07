@@ -53,19 +53,20 @@ const Footer = () => {
               <div className="md:flex">
                 <div className="md:w-[50%]">
                   <ul>
-                    <li className="mb-2"><a href="#" className="text-white hover:text-blue-400">Home</a></li>
-                    <li className="mb-2"><a href="#" className="text-white hover:text-blue-400">About</a></li>
-                    <li className="mb-2"><a href="#" className="text-white hover:text-blue-400">Services</a></li>
-                    <li className="mb-2"><a href="#" className="text-white hover:text-blue-400">Listview</a></li>
-                    <li className="mb-2"><a href="#" className="text-white hover:text-blue-400">Mapview</a></li>
+                    <li className="mb-2"><a href="/" className="text-white hover:text-red-500">Home</a></li>
+                    <li className="mb-2"><a href="/aboutus" className="text-white hover:text-red-500">About</a></li>
+                    <li className="mb-2"><a href="/services" className="text-white hover:text-red-500">Services</a></li>
+                    <li className="mb-2"><a href="/listview" className="text-white hover:text-red-500">Listview</a></li>
+                    <li className="mb-2"><a href="/mapview" className="text-white hover:text-red-500">Mapview</a></li>
                   </ul>
                 </div>
                 <div className="md:w-[50%]">
                   <ul className="space-y-3">
-                    <li><a href="#" className="text-white hover:text-blue-400">Our Services</a></li>
-                    <li><a href="#" className="text-white hover:text-blue-400">Expert Team</a></li>
-                    <li><a href="#" className="text-white hover:text-blue-400">Contact Us</a></li>
-                    <li><a href="#" className="text-white hover:text-blue-400">Latest News</a></li>
+                    <li><a href="/services" className="text-white hover:text-red-500">Our Services</a></li>
+                    <li><a href="#" className="text-white hover:text-red-500">Expert Team</a></li>
+                    <li><a href="#" className="text-white hover:text-red-500">Contact Us</a></li>
+                    <li><a href="#" className="text-white hover:text-red-500">Latest News</a></li>
+                    <li><a href="/faq" className="text-white hover:text-red-500">FAQ</a></li>
                   </ul>
                 </div>
               </div>

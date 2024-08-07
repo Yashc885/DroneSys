@@ -12,15 +12,11 @@ const Customer = ({ name, imageSrc, projectCount, description }) => {
           width={500} // Specify the width of the image
           height={128} // Specify the height of the image
         />
-        <div className="flex justify-between items-center">
-          <h3 className="font-bold text-lg">{name}</h3>
-          <p className="text-gray-600">{projectCount} Projects</p>
+        <div className=" justify-between text-center items-center">
+          <h1 className="font-extrabold text-lg">{name}</h1>
         </div>
-        <p className="text-gray-500">{description}</p>
+        <p className="text-gray-500 justify-normal ">{description}</p>
       </div>
-      <a href="#" className="block py-4 px-6 text-center bg-transparent border border-black transition-colors duration-300 hover:bg-purple-500 hover:text-white">
-        Follow {name}
-      </a>
     </div>
   );
 }

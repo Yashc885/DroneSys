@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import AccordionItem from './AccordionItem';
+import Image from 'next/image';
 
 const Faq = () => {
     const [open, setOpen] = useState(null);
@@ -56,11 +57,26 @@ const Faq = () => {
         }
     ];
     
-    
     return (
-        <div>
-            <section className="bg-gray-700 py-12 md:py-16 mx-auto grid place-items-center">
-                <div className="px-10 max-w-[800px]">
+        <div className="relative min-h-screen flex flex-col items-center justify-center">
+            {/* Background Image and Overlay */}
+            <div className="absolute inset-0">
+                <Image
+                    src="https://e1.pxfuel.com/desktop-wallpaper/682/1001/desktop-wallpaper-10-amazing-nature-footage-by-drones-drones.jpg"
+                    layout="fill"
+                    objectFit="cover"
+                    alt="Background"
+                    className="z-[-1]" // Ensure image is behind content
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+            </div>
+
+            {/* FAQ Content */}
+            <section className="relative py-12 md:py-16 mx-auto grid place-items-center z-10">
+            <div className="py-6 md:py-10 ">
+                <h1 className ="text-2xl md:text-3xl lg:text-4xl text-center text-white font-extrabold uppercase">FAQ</h1>
+            </div>
+                <div className="px-4 max-w-[800px] text-black  ">
                     {entries.map((data, index) => (
                         <AccordionItem
                             key={index}

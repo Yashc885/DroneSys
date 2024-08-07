@@ -6,25 +6,21 @@ const CustomersList = () => {
     {
       name: 'Kelsie Meyer',
       imageSrc: 'https://images.unsplash.com/photo-1622219809260-ce065fc5277f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyMzMwNjYxOQ&ixlib=rb-1.2.1&q=85',
-      projectCount: 17,
       description: 'Whipped steamed roast cream beans macchiato skinny grinder café. Iced grinder go mocha steamed grounds cultivar panna aroma.'
     },
     {
       name: 'Mark Carusso',
       imageSrc: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyMzMxNTMwNQ&ixlib=rb-1.2.1&q=85',
-      projectCount: 33,
       description: 'Whipped steamed roast cream beans macchiato skinny grinder café. Iced grinder go mocha steamed grounds cultivar panna aroma.'
     },
     {
       name: 'Taylor Green',
       imageSrc: 'https://images.unsplash.com/photo-1456885284447-7dd4bb8720bf?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyMzMxNTQzNA&ixlib=rb-1.2.1&q=85',
-      projectCount: 26,
       description: 'Whipped steamed roast cream beans macchiato skinny grinder café. Iced grinder go mocha steamed grounds cultivar panna aroma.'
     },
     {
       name: 'Isaiah Jian',
       imageSrc: 'https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYyMzMxNjA1MA&ixlib=rb-1.2.1&q=85',
-      projectCount: 12,
       description: 'Whipped steamed roast cream beans macchiato skinny grinder café. Iced grinder go mocha steamed grounds cultivar panna aroma.'
     }
   ];
@@ -43,7 +39,6 @@ const CustomersList = () => {
               key={index}
               name={customer.name}
               imageSrc={customer.imageSrc}
-              projectCount={customer.projectCount}
               description={customer.description}
             />
           ))}

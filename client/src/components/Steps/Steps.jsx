@@ -22,36 +22,36 @@ const DEMO_DATA = [
     id: 2,
     img: HIW2img,
     imgDark: HIW2img,
-    title: "Add to bag",
+    title: "Verify needs & product details ",
     desc: "Easily select the correct items and add them to the cart",
   },
   {
     id: 3,
     img: HIW3img,
     imgDark: HIW3img,
-    title: "Make an appointment ",
+    title: "Book your service and product",
     desc: "Let Us now about your requirements along with dates ",
   },
   {
     id: 4,
     img: HIW4img,
     imgDark: HIW4img,
-    title: "Verification",
-    desc: "We will verify and contact you shortly on the given contact details",
+    title: "Verification and notification",
+    desc: "We will verify and contact you shortly ",
   },
 ];
 
 const Steps = ({ className = "", data = DEMO_DATA }) => {
   return (
-    <div className="py-8 md:py-12 lg:py-14 items-center  bg-[#F5EDED]">
+    <div className="py-8 md:py-12 lg:py-14 items-center  bg-white">
         <div className="pl-2 pr-2 md:pl-4 md:pr-4">
         <div className="text-center">
           <h2 className="text-3xl font-semibold text-red-500">Steps</h2>
           <h3 className="text-4xl font-extrabold mb-6">How to Do</h3>
         </div>
-        <div className="py-4 md:py-6 lg:py-8"></div>
+        {/* <div className="py-4 md:py-6 lg:py-8"></div> */}
             <div className={`nc-SectionHowItWork ${className}`}>
-            <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
+            <div className=" py-4 md:py-6 pb-2 md:pb-4 lg:py-8 relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20 bg-[#F5EDED] rounded-xl shadow-md ">
                 <Image
                 className="hidden md:block absolute inset-x-0 top-5"
                 src={VectorImg}
@@ -82,8 +82,8 @@ const Steps = ({ className = "", data = DEMO_DATA }) => {
                             : "purple"
                         }
                     />
-                    <h3 className="text-base font-semibold">{item.title}</h3>
-                    <span className="block text-slate-600 dark:text-slate-400 text-sm leading-6">
+                    <h3 className=" font-bold">{item.title}</h3>
+                    <span className="block text-gray-500  text-md leading-6">
                         {item.desc}
                     </span>
                     </div>
