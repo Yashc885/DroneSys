@@ -29,7 +29,7 @@ const Card = ({ img, title, star, reviews, prevPrice, newPrice, move }) => {
             <span className="text-red-500 font-bold">${newPrice}</span>
           </div>
         </div>
-        <Link href={`/book/${move}`} passHref>
+        <Link href={`/booking/${move}`} passHref>
           <div className="flex items-center justify-center py-4">
             <Button
               type="button"
