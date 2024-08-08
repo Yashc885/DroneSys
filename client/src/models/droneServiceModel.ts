@@ -19,6 +19,12 @@ const priceInfoSchema = new mongoose.Schema({
     fullday_price: { type: String, required: true },
 }, { _id: false });
 
+// Define the image schema
+const imageSchema = new mongoose.Schema({
+    type: { type: String, enum: ['url', 'file'], required: true }, // 'url' or 'file'
+    path: { type: String, required: true }, // URL or file path
+}, { _id: false });
+
 // Define the drone service schema
 const droneServiceSchema = new mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -26,6 +32,7 @@ const droneServiceSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: descriptionSchema, required: true },
     price_info: { type: priceInfoSchema, required: true },
+    images: [imageSchema], // Array of image objects
 }, { timestamps: true });
 
 // Use a model if it doesn't already exist

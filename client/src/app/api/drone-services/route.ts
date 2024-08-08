@@ -20,7 +20,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const { user_id, drone_services_id, title, description, price_info } = data;
+        const { user_id, drone_services_id, title, description, price_info, images } = data;
 
         if (!user_id || !drone_services_id || !title || !description || !price_info) {
             return NextResponse.error(new Error('All fields are required'), { status: 400 });
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
             title,
             description,
             price_info,
+            images: images || [] // Handle images field
         });
 
         await newDroneService.save();
@@ -46,11 +47,23 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
     try {
         const data = await request.json();
-        const { _id, ...updateData } = data;
+        const { _id, user_id, drone_services_id, title, description, price_info, images } = data;
 
         if (!_id) {
             return NextResponse.error(new Error('Drone service ID is required'), { status: 400 });
         }
+
+        const updateData: any = {
+            user_id,
+            drone_services_id,
+            title,
+            description,
+            price_info,
+            images
+        };
+
+        // Remove undefined fields
+        Object.keys(updateData).forEach(key => updateData[key] === undefined && delete updateData[key]);
 
         const updatedDroneService = await DroneService.findByIdAndUpdate(_id, updateData, { new: true });
         if (!updatedDroneService) {

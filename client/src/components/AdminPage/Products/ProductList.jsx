@@ -22,7 +22,8 @@ const ProductList = () => {
     price_info: {
       hourly_price: "",
       fullday_price: ""
-    }
+    },
+    images: []
   });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -54,6 +55,14 @@ const ProductList = () => {
           ...prev[prefix],
           [field]: value
         }
+      }));
+    } else if (name.startsWith("images.")) {
+      const index = parseInt(name.split(".")[1], 10);
+      const newImages = [...formData.images];
+      newImages[index] = value;
+      setFormData((prev) => ({
+        ...prev,
+        images: newImages
       }));
     } else {
       setFormData((prev) => ({
@@ -106,7 +115,8 @@ const ProductList = () => {
       price_info: {
         hourly_price: "",
         fullday_price: ""
-      }
+      },
+      images: []
     });
     setIsEditing(false);
   };
@@ -130,6 +140,16 @@ const ProductList = () => {
             <p><strong>Memory Storage:</strong> {drone.description.memory_storage}</p>
             <p><strong>Hourly Price:</strong> {drone.price_info.hourly_price}</p>
             <p><strong>Full Day Price:</strong> {drone.price_info.fullday_price}</p>
+            {drone.images && drone.images.length > 0 && (
+              <div className="mt-2">
+                <h3 className="text-lg font-semibold">Images</h3>
+                <div className="flex space-x-2 mt-2">
+                  {drone.images.map((image, index) => (
+                    <img key={index} src={image.path} alt={`Drone ${index}`} className="w-24 h-24 object-cover border rounded-md" />
+                  ))}
+                </div>
+              </div>
+            )}
             <button onClick={() => handleSelectDrone(drone)} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Edit</button>
             <button onClick={() => handleDelete(drone._id)} className="ml-2 mt-2 bg-red-500 text-white px-4 py-2 rounded">Delete</button>
           </div>
@@ -315,6 +335,32 @@ const ProductList = () => {
                 required
               />
             </div>
+          </div>
+
+          <div className="border-t mt-4 pt-4">
+            <h3 className="text-lg font-semibold">Images</h3>
+            {formData.images.map((image, index) => (
+              <div key={index} className="flex items-center mt-2">
+                <input
+                  name={`images.${index}`}
+                  type="text"
+                  value={image}
+                  onChange={handleChange}
+                  className="block w-full border rounded-md p-2"
+                  placeholder={`Image URL ${index + 1}`}
+                />
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => setFormData((prev) => ({
+                ...prev,
+                images: [...prev.images, ""]
+              }))}
+              className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
+            >
+              Add Image
+            </button>
           </div>
 
           <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
