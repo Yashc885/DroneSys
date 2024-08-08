@@ -3,25 +3,27 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const BookingSchema = new Schema({
-    user_id: { type: String, required: true },
-    drone_services_info_id: { type: String, required: true },
+    user_id: { type: String },
+    drone_services_info_id: { type: String },
     address: {
-        address1: { type: String, required: true },
+        address1: { type: String },
         address2: { type: String },
-        city: { type: String, required: true },
-        state: { type: String, required: true },
-        country: { type: String, required: true },
-        pin: { type: String, required: true }
+        city: { type: String },
+        state: { type: String },
+        country: { type: String },
+        pin: { type: String }
     },
-    is_fullday: { type: Boolean, required: true },
+    is_fullday: { type: Boolean },
     booking_info: {
-        start_date: { type: Date, required: true },
-        start_time: { type: String, required: true },
-        end_date: { type: Date, required: true },
-        end_time: { type: String, required: true }
+        start_date: { type: Date },
+        end_date: { type: Date }
     },
-    status: { type: String, enum: ['booked', 'booked-confirm', 'cancled'], required: true },
-    cancled_reason: { type: String },
+    price: { type: Number },
+    name: { type: String },
+    email: { type: String },
+    phone_number: { type: String },
+    status: { type: String, enum: ['Confirmed', 'Pending', 'Cancelled'] },
+    cancelled_reason: { type: String }, 
     created_date: { type: Date, default: Date.now },
     updated_date: { type: Date, default: Date.now }
 });

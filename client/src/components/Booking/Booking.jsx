@@ -1,4 +1,3 @@
-// Booking.jsx
 'use client';
 import React, { useState } from 'react';
 import ImageSlider from './ImageSlider';
@@ -9,6 +8,14 @@ const Booking = ({ drone }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState({
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        country: '',
+        pin: ''
+    });
     const [errors, setErrors] = useState({});
 
     const pricePerDay = drone.newPrice ? parseFloat(drone.newPrice.replace('$', '')) : 100;
@@ -43,26 +50,35 @@ const Booking = ({ drone }) => {
         return 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         let formErrors = {};
+        
+        // Validate required fields
         if (!name) formErrors.name = 'Please enter your name.';
         if (!email) formErrors.email = 'Please enter your email.';
         if (!phone) formErrors.phone = 'Please enter your phone number.';
         if (!startDate) formErrors.startDate = 'Please select a start date.';
         if (!endDate) formErrors.endDate = 'Please select an end date.';
-
+        if (!address.address1) formErrors.address1 = 'Please enter address line 1.';
+        if (!address.city) formErrors.city = 'Please enter your city.';
+        if (!address.state) formErrors.state = 'Please enter your state.';
+        if (!address.country) formErrors.country = 'Please enter your country.';
+        if (!address.pin) formErrors.pin = 'Please enter your PIN code.';
+    
+        // Validate email and phone number format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^[0-9]{10}$/;
-
+    
         if (email && !emailRegex.test(email)) {
             formErrors.email = 'Please enter a valid email address.';
         }
-
+    
         if (phone && !phoneRegex.test(phone)) {
             formErrors.phone = 'Please enter a valid 10-digit phone number.';
         }
-
+    
+        // Validate date range
         if (startDate && endDate) {
             const start = new Date(startDate);
             const end = new Date(endDate);
@@ -70,23 +86,65 @@ const Booking = ({ drone }) => {
                 formErrors.endDate = 'End date must be on or after the start date.';
             }
         }
-
+    
         if (Object.keys(formErrors).length) {
             setErrors(formErrors);
             return;
         }
-        alert('Form submitted successfully!');
-        setName('');
-        setEmail('');
-        setPhone('');
-        setStartDate('');
-        setEndDate('');
-        setErrors({});
+    
+        // Prepare booking data
+        const bookingData = {
+            user_id: 'some_user_id', // Replace with actual user ID
+            drone_services_info_id: drone._id,
+            address,
+            is_fullday: false, // Adjust if needed
+            booking_info: {
+                start_date: startDate,
+                end_date: endDate
+            },
+            price: calculateTotal(),
+            name,
+            email,
+            phone_number: phone,
+            status: 'Pending'
+        };
+    
+        try {
+            const response = await fetch('/api/booking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingData)
+            });
+    
+            const result = await response.json();
+            if (response.ok) {
+                alert('Booking confirmed successfully!');
+                // Clear form fields
+                setName('');
+                setEmail('');
+                setPhone('');
+                setStartDate('');
+                setEndDate('');
+                setAddress({
+                    address1: '',
+                    address2: '',
+                    city: '',
+                    state: '',
+                    country: '',
+                    pin: ''
+                });
+                setErrors({});
+            } else {
+                throw new Error(result.error || 'Error making booking');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     return (
-        <div className="md:flex  flex-wrap">
-            <div className="w-full p-2 md:py-8  md:w-1/2 py-2 ">
+        <div className="md:flex flex-wrap">
+            <div className="w-full p-2 md:py-8 md:w-1/2 py-2">
                 <ImageSlider images={images} className="" />
             </div>
             <div className="w-full md:w-1/2 py-4 md:py-8 mx-auto px-2">
@@ -136,6 +194,83 @@ const Booking = ({ drone }) => {
                         </div>
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
+                                Address Line 1:
+                                <input
+                                    type="text"
+                                    name="address1"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.address1}
+                                    onChange={(e) => setAddress({ ...address, address1: e.target.value })}
+                                />
+                                {errors.address1 && <p className="text-red-500 text-sm">{errors.address1}</p>}
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
+                                Address Line 2:
+                                <input
+                                    type="text"
+                                    name="address2"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.address2}
+                                    onChange={(e) => setAddress({ ...address, address2: e.target.value })}
+                                />
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
+                                City:
+                                <input
+                                    type="text"
+                                    name="city"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.city}
+                                    onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                                />
+                                {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
+                                State:
+                                <input
+                                    type="text"
+                                    name="state"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.state}
+                                    onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                                />
+                                {errors.state && <p className="text-red-500 text-sm">{errors.state}</p>}
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
+                                Country:
+                                <input
+                                    type="text"
+                                    name="country"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.country}
+                                    onChange={(e) => setAddress({ ...address, country: e.target.value })}
+                                />
+                                {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
+                                PIN Code:
+                                <input
+                                    type="text"
+                                    name="pin"
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                    value={address.pin}
+                                    onChange={(e) => setAddress({ ...address, pin: e.target.value })}
+                                />
+                                {errors.pin && <p className="text-red-500 text-sm">{errors.pin}</p>}
+                            </label>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 font-medium mb-1">
                                 Start Date:
                                 <input
                                     type="date"
@@ -160,35 +295,20 @@ const Booking = ({ drone }) => {
                                 {errors.endDate && <p className="text-red-500 text-sm">{errors.endDate}</p>}
                             </label>
                         </div>
-                        <div className="py-4">
-                            <div className="border-t border-gray-300 bg-gray-200 shadow-lg rounded-lg pt-4">
-                                <div className="px-2">
-                                    <div className="flex items-center justify-between py-2">
-                                        <h6 className="text-lg md:text-xl text-red-500 font-bold">Chosen Drone:</h6>
-                                        <h4 className="text-lg md:text-xl font-bold text-gray-900">{drone.title}</h4>
-                                    </div>
-                                    <div className="flex items-center justify-between py-2">
-                                        <h6 className="text-lg md:text-xl text-red-500 font-bold">Price Per Day:</h6>
-                                        <h4 className="text-lg md:text-xl font-bold text-gray-900">${pricePerDay}</h4>
-                                    </div>
-                                    <div className="flex items-center justify-between py-2">
-                                        <h6 className="text-lg md:text-xl text-red-500 font-bold">Total:</h6>
-                                        <h4 className="text-lg md:text-xl font-bold text-gray-900">${calculateTotal()}</h4>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="flex items-center justify-between">
+                            <span className="font-bold text-xl">Total: ${calculateTotal()}</span>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
+                            >
+                                Confirm Booking
+                            </button>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-xl shadow-lg focus:outline-none focus:ring-2"
-                        >
-                            Confirm Booking
-                        </button>
                     </form>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Booking;

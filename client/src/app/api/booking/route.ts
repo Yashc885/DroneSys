@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
-import Booking from '../../../models/bookingModel'; // Adjust the path as needed
-import connect from '../../../Database/config'; // Adjust the path as needed
+import Booking from '../../../models/bookingModel'; 
+import connect from '../../../Database/config'; 
 
 const connectToDatabase = async () => {
     if (mongoose.connections[0].readyState) return;
@@ -24,7 +24,28 @@ export async function POST(request: Request) {
 
     try {
         const data = await request.json();
-        const booking = new Booking(data);
+
+        // Ensure the incoming data contains all the required fields
+        const { user_id, drone_services_info_id, address, is_fullday, booking_info, price, name, email, phone_number, status, cancelled_reason } = data;
+
+        if (!user_id || !drone_services_info_id || !address || !is_fullday || !booking_info || !price || !name || !email || !phone_number || !status) {
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        const booking = new Booking({
+            user_id,
+            drone_services_info_id,
+            address,
+            is_fullday,
+            booking_info,
+            price,
+            name,
+            email,
+            phone_number,
+            status,
+            cancelled_reason
+        });
+
         await booking.save();
         return NextResponse.json(booking, { status: 201 });
     } catch (error) {
@@ -33,17 +54,14 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-    await connect();
+    await connectToDatabase();
 
     try {
         const url = new URL(request.url);
         const id = url.searchParams.get('id'); 
-        console.log(request)
         if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
 
-        const data = await request.json(); 
-        console.log('Updating booking with ID:', id); 
-
+        const data = await request.json();
         const updatedBooking = await Booking.findByIdAndUpdate(id, data, { new: true });
         if (!updatedBooking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
         return NextResponse.json(updatedBooking, { status: 200 });
