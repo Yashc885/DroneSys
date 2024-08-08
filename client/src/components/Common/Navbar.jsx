@@ -8,6 +8,7 @@ import { Menu, MenuHandler, MenuList, MenuItem } from "@material-tailwind/react"
 import { Button } from "@/components/ui/button";
 
 function NavList({ setOpenNav, onLoginUser, onLoginVendor, user }) {
+  console.log(user)
   const handleLoginUser = () => {
     onLoginUser("/login/user");
     setOpenNav(false);
@@ -55,7 +56,7 @@ function NavList({ setOpenNav, onLoginUser, onLoginVendor, user }) {
           Resources
         </Link>
       </Typography>
-      {user ? (
+      {user  != null ? (
         <li className="p-1">
           <Link href="/profile" className="flex items-center">
             <Image
@@ -98,7 +99,7 @@ function NavList({ setOpenNav, onLoginUser, onLoginVendor, user }) {
 
 export function NavbarSimple() {
   const [openNav, setOpenNav] = useState(false);
-  const [user, setUser] = useState(null); // Add state to track user
+  const [user, setUser] = useState(null); 
 
   const handleWindowResize = () => window.innerWidth >= 960 && setOpenNav(false);
 
@@ -109,15 +110,22 @@ export function NavbarSimple() {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+  // useEffect(() => {
+  //   setUser({
+  //     profilePic: "https://st2.depositphotos.com/2703645/7303/v/450/depositphotos_73039841-stock-illustration-male-avatar-icon.jpg", 
+  //   });
+  // }, []);
 
-  // Mock user login logic for demonstration
   useEffect(() => {
-    // Simulate user login (replace this with actual login logic)
-    setUser({
-      profilePic: "https://st2.depositphotos.com/2703645/7303/v/450/depositphotos_73039841-stock-illustration-male-avatar-icon.jpg", // Replace with dynamic profile pic URL
+    const data = localStorage.getItem('key');
+    console.log("user" , data )
+    if (data) {
+          setUser({
+      profilePic: "https://st2.depositphotos.com/2703645/7303/v/450/depositphotos_73039841-stock-illustration-male-avatar-icon.jpg", 
     });
+    }
   }, []);
-
+ 
   const handleLoginUser = (path) => {
     window.location.href = path; 
   };

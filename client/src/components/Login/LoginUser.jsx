@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
@@ -9,8 +9,7 @@ import axios from "axios";
 const LoginUser = () => {
   const router = useRouter();
   const [error, setError] = useState("");
-
-  const isValidEmail = (email) => {
+   const isValidEmail = (email) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   };
@@ -34,8 +33,8 @@ const LoginUser = () => {
 
     try {
       const response = await axios.post("/api/login", { email, password });
-
       if (response.status === 200) {
+        localStorage.setItem('key' , 'success' )
         setError("");
         toast.success("Successful login");
         router.replace("/");

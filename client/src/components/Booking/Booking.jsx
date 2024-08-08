@@ -23,14 +23,14 @@ const Booking = ({ drone }) => {
             thumbnailWidth: 250,
             thumbnailHeight: 150,
         },
-        // {
-        //     original: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg', // Add more images
-        //     thumbnail: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg',
-        //     originalWidth: 1000,
-        //     originalHeight: 600,
-        //     thumbnailWidth: 250,
-        //     thumbnailHeight: 150,
-        // }
+        {
+            original: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg', // Add more images
+            thumbnail: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg',
+            originalWidth: 1000,
+            originalHeight: 600,
+            thumbnailWidth: 250,
+            thumbnailHeight: 150,
+        }
     ];
 
     const calculateTotal = () => {
@@ -85,9 +85,9 @@ const Booking = ({ drone }) => {
     };
 
     return (
-        <div className="md:flex flex-wrap">
-            <div className="w-full md:w-1/2">
-                <ImageSlider images={images} />
+        <div className="md:flex  flex-wrap">
+            <div className="w-full p-2 md:py-8  md:w-1/2 py-2 ">
+                <ImageSlider images={images} className="" />
             </div>
             <div className="w-full md:w-1/2 py-4 md:py-8 mx-auto px-2">
                 <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
