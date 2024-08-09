@@ -23,7 +23,10 @@ const ProductList = () => {
       hourly_price: "",
       fullday_price: ""
     },
-    images: []
+    images: [{ type: "url", path: "" }],
+    category: "",
+    move: "",
+    location: ""
   });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -47,23 +50,27 @@ const ProductList = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith("description.") || name.startsWith("price_info.")) {
+   console.log(name, value);
+    if (name.startsWith("description.") || name.startsWith("price_info.") || name.startsWith("images.")) {
       const [prefix, field] = name.split(".");
-      setFormData((prev) => ({
-        ...prev,
-        [prefix]: {
-          ...prev[prefix],
-          [field]: value
-        }
-      }));
-    } else if (name.startsWith("images.")) {
-      const index = parseInt(name.split(".")[1], 10);
-      const newImages = [...formData.images];
-      newImages[index] = value;
-      setFormData((prev) => ({
-        ...prev,
-        images: newImages
-      }));
+      
+      if (prefix === "images") {
+        const [index, subField] = field.split(".");
+        setFormData((prev) => ({
+          ...prev,
+          images: prev.images.map((image, idx) =>
+            idx === parseInt(index, 10) ? { ...image, [subField]: value } : image
+          )
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          [prefix]: {
+            ...prev[prefix],
+            [field]: value
+          }
+        }));
+      }
     } else {
       setFormData((prev) => ({
         ...prev,
@@ -71,6 +78,7 @@ const ProductList = () => {
       }));
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,7 +124,10 @@ const ProductList = () => {
         hourly_price: "",
         fullday_price: ""
       },
-      images: []
+      images: [{ type: "url", path: "" }],
+      category: "",
+      move: "",
+      location: ""
     });
     setIsEditing(false);
   };
@@ -124,7 +135,7 @@ const ProductList = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Drone Services</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {droneServices.map((drone) => (
           <div key={drone._id} className="p-4 border rounded-lg shadow">
@@ -200,170 +211,108 @@ const ProductList = () => {
 
           <div className="border-t mt-4 pt-4">
             <h3 className="text-lg font-semibold">Description</h3>
-            <div>
-              <label htmlFor="description.description" className="block text-sm font-medium text-gray-700">Description</label>
-              <textarea
-                id="description.description"
-                name="description.description"
-                value={formData.description.description}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.weight" className="block text-sm font-medium text-gray-700">Weight</label>
-              <input
-                id="description.weight"
-                name="description.weight"
-                type="text"
-                value={formData.description.weight}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_ascent_speed" className="block text-sm font-medium text-gray-700">Max Ascent Speed</label>
-              <input
-                id="description.max_ascent_speed"
-                name="description.max_ascent_speed"
-                type="text"
-                value={formData.description.max_ascent_speed}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_descent_speed" className="block text-sm font-medium text-gray-700">Max Descent Speed</label>
-              <input
-                id="description.max_descent_speed"
-                name="description.max_descent_speed"
-                type="text"
-                value={formData.description.max_descent_speed}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_forward_speed" className="block text-sm font-medium text-gray-700">Max Forward Speed</label>
-              <input
-                id="description.max_forward_speed"
-                name="description.max_forward_speed"
-                type="text"
-                value={formData.description.max_forward_speed}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_ceiling" className="block text-sm font-medium text-gray-700">Max Ceiling</label>
-              <input
-                id="description.max_ceiling"
-                name="description.max_ceiling"
-                type="text"
-                value={formData.description.max_ceiling}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_flight_time" className="block text-sm font-medium text-gray-700">Max Flight Time</label>
-              <input
-                id="description.max_flight_time"
-                name="description.max_flight_time"
-                type="text"
-                value={formData.description.max_flight_time}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.max_weight_carry" className="block text-sm font-medium text-gray-700">Max Weight Carry</label>
-              <input
-                id="description.max_weight_carry"
-                name="description.max_weight_carry"
-                type="text"
-                value={formData.description.max_weight_carry}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description.memory_storage" className="block text-sm font-medium text-gray-700">Memory Storage</label>
-              <input
-                id="description.memory_storage"
-                name="description.memory_storage"
-                type="text"
-                value={formData.description.memory_storage}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
+            {Object.keys(formData.description).map((key) => (
+              <div key={key}>
+                <label htmlFor={`description.${key}`} className="block text-sm font-medium text-gray-700 capitalize">{key.replace(/_/g, ' ')}</label>
+                <input
+                  id={`description.${key}`}
+                  name={`description.${key}`}
+                  type="text"
+                  value={formData.description[key]}
+                  onChange={handleChange}
+                  className="block w-full mt-1 border rounded-md p-2"
+                  required
+                />
+              </div>
+            ))}
           </div>
 
           <div className="border-t mt-4 pt-4">
             <h3 className="text-lg font-semibold">Price Info</h3>
-            <div>
-              <label htmlFor="price_info.hourly_price" className="block text-sm font-medium text-gray-700">Hourly Price</label>
-              <input
-                id="price_info.hourly_price"
-                name="price_info.hourly_price"
-                type="text"
-                value={formData.price_info.hourly_price}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="price_info.fullday_price" className="block text-sm font-medium text-gray-700">Full Day Price</label>
-              <input
-                id="price_info.fullday_price"
-                name="price_info.fullday_price"
-                type="text"
-                value={formData.price_info.fullday_price}
-                onChange={handleChange}
-                className="block w-full mt-1 border rounded-md p-2"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="border-t mt-4 pt-4">
-            <h3 className="text-lg font-semibold">Images</h3>
-            {formData.images.map((image, index) => (
-              <div key={index} className="flex items-center mt-2">
+            {Object.keys(formData.price_info).map((key) => (
+              <div key={key}>
+                <label htmlFor={`price_info.${key}`} className="block text-sm font-medium text-gray-700 capitalize">{key.replace(/_/g, ' ')}</label>
                 <input
-                  name={`images.${index}`}
+                  id={`price_info.${key}`}
+                  name={`price_info.${key}`}
                   type="text"
-                  value={image}
+                  value={formData.price_info[key]}
                   onChange={handleChange}
-                  className="block w-full border rounded-md p-2"
-                  placeholder={`Image URL ${index + 1}`}
+                  className="block w-full mt-1 border rounded-md p-2"
+                  required
                 />
               </div>
             ))}
-            <button
-              type="button"
-              onClick={() => setFormData((prev) => ({
-                ...prev,
-                images: [...prev.images, ""]
-              }))}
-              className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
-            >
-              Add Image
-            </button>
           </div>
 
-          <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+          <div className="border-t mt-4 pt-4">
+              <h3 className="text-lg font-semibold">Images</h3>
+              {formData.images.map((image, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <label htmlFor={`images.${index}.path`} className="block text-sm font-medium text-gray-700">Image URL {index + 1}</label>
+                  <input
+                    id={`images.${index}.path`}
+                    name={`images.${index}.path`}
+                    type="text"
+                    value={image.path}
+                    onChange={handleChange}
+                    className="block w-full mt-1 border rounded-md p-2"
+                  />
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setFormData((prev) => ({
+                  ...prev,
+                  images: [...prev.images, { type: "url", path: "" }]
+                }))}
+                className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
+              >
+                Add Image
+              </button>
+            </div>
+
+
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+            <input
+              id="category"
+              name="category"
+              type="text"
+              value={formData.category}
+              onChange={handleChange}
+              className="block w-full mt-1 border rounded-md p-2"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="move" className="block text-sm font-medium text-gray-700">Move</label>
+            <input
+              id="move"
+              name="move"
+              type="text"
+              value={formData.move}
+              onChange={handleChange}
+              className="block w-full mt-1 border rounded-md p-2"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              value={formData.location}
+              onChange={handleChange}
+              className="block w-full mt-1 border rounded-md p-2"
+              required
+            />
+          </div>
+
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
             {isEditing ? "Update Drone Service" : "Add Drone Service"}
           </button>
         </form>

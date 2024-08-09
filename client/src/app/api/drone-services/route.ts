@@ -12,7 +12,7 @@ export async function GET() {
         return NextResponse.json(droneServices);
     } catch (error) {
         console.error('Error fetching drone services:', error);
-        return NextResponse.error(new Error('Failed to fetch drone services'));
+        return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
     }
 }
 
@@ -20,10 +20,10 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const { user_id, drone_services_id, title, description, price_info, images } = data;
+        const { user_id, drone_services_id, title, description, price_info, images, location } = data;
 
-        if (!user_id || !drone_services_id || !title || !description || !price_info) {
-            return NextResponse.error(new Error('All fields are required'), { status: 400 });
+        if (!user_id || !drone_services_id || !title || !description || !price_info || !location) {
+            return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
         }
 
         const newDroneService = new DroneService({
@@ -32,14 +32,15 @@ export async function POST(request: Request) {
             title,
             description,
             price_info,
-            images: images || [] // Handle images field
+            images: images || [], // Handle images field
+            location
         });
 
         await newDroneService.save();
         return NextResponse.json(newDroneService, { status: 201 });
     } catch (error) {
         console.error('Error creating drone service:', error);
-        return NextResponse.error(new Error('Failed to create drone service'));
+        return NextResponse.json({ error: 'Failed to create drone service' }, { status: 500 });
     }
 }
 
@@ -47,10 +48,10 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
     try {
         const data = await request.json();
-        const { _id, user_id, drone_services_id, title, description, price_info, images } = data;
+        const { _id, user_id, drone_services_id, title, description, price_info, images, location } = data;
 
         if (!_id) {
-            return NextResponse.error(new Error('Drone service ID is required'), { status: 400 });
+            return NextResponse.json({ error: 'Drone service ID is required' }, { status: 400 });
         }
 
         const updateData: any = {
@@ -59,7 +60,8 @@ export async function PUT(request: Request) {
             title,
             description,
             price_info,
-            images
+            images,
+            location
         };
 
         // Remove undefined fields
@@ -67,13 +69,13 @@ export async function PUT(request: Request) {
 
         const updatedDroneService = await DroneService.findByIdAndUpdate(_id, updateData, { new: true });
         if (!updatedDroneService) {
-            return NextResponse.error(new Error('Drone service not found'), { status: 404 });
+            return NextResponse.json({ error: 'Drone service not found' }, { status: 404 });
         }
 
         return NextResponse.json(updatedDroneService);
     } catch (error) {
         console.error('Error updating drone service:', error);
-        return NextResponse.error(new Error('Failed to update drone service'));
+        return NextResponse.json({ error: 'Failed to update drone service' }, { status: 500 });
     }
 }
 
@@ -84,17 +86,17 @@ export async function DELETE(request: Request) {
         const _id = searchParams.get('_id');
 
         if (!_id) {
-            return NextResponse.error(new Error('Drone service ID is required'), { status: 400 });
+            return NextResponse.json({ error: 'Drone service ID is required' }, { status: 400 });
         }
 
         const deletedDroneService = await DroneService.findByIdAndDelete(_id);
         if (!deletedDroneService) {
-            return NextResponse.error(new Error('Drone service not found'), { status: 404 });
+            return NextResponse.json({ error: 'Drone service not found' }, { status: 404 });
         }
 
         return NextResponse.json({ message: 'Drone service deleted successfully' });
     } catch (error) {
         console.error('Error deleting drone service:', error);
-        return NextResponse.error(new Error('Failed to delete drone service'));
+        return NextResponse.json({ error: 'Failed to delete drone service' }, { status: 500 });
     }
 }
