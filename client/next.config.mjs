@@ -58,6 +58,11 @@ const nextConfig = {
         hostname: 'raw.githubusercontent.com',
         pathname: '/**',
       },      
+      {
+        protocol: 'https',
+        hostname: 'www.dji.com',
+        pathname: '/**',
+      },
     ],
   },
 };

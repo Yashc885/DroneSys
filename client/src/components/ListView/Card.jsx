@@ -3,10 +3,10 @@ import Image from "next/image";
 import { Button } from "./../ui/button.js";
 import Link from "next/link";
 
-const Card = ({ img, title, star, reviews, prevPrice, newPrice, move }) => {
+const Card = ({ img, title, star, reviews, prevPrice, newPrice, move = "/" }) => {
   return (
     <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-       <Link href={`/product/${move}`} passHref>
+      <Link href={move} passHref>
         <Image
           src={img}
           alt={title}
@@ -40,7 +40,6 @@ const Card = ({ img, title, star, reviews, prevPrice, newPrice, move }) => {
             </Button>
           </div>
         </Link>
-
       </div>
     </div>
   );
