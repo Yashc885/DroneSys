@@ -33,7 +33,8 @@ const droneServiceSchema = new mongoose.Schema({
     description: { type: descriptionSchema, required: true },
     price_info: { type: priceInfoSchema, required: true },
     images: [imageSchema], // Array of image objects
-    location: { type: String, required: true }, // New field for state name
+    location: { type: String, required: true }, // Field for location
+    move: { type: String, required: true }, // Field for navigation
 }, { timestamps: true });
 
 const DroneService = mongoose.models.DroneService || mongoose.model('DroneService', droneServiceSchema);

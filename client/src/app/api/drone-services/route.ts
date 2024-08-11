@@ -16,13 +16,14 @@ export async function GET() {
     }
 }
 
+
 // Handler for POST requests
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const { user_id, drone_services_id, title, description, price_info, images, location } = data;
+        const { user_id, drone_services_id, title, description, price_info, images, location, move } = data;
 
-        if (!user_id || !drone_services_id || !title || !description || !price_info || !location) {
+        if (!user_id || !drone_services_id || !title || !description || !price_info || !location || !move) {
             return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
         }
 
@@ -33,7 +34,8 @@ export async function POST(request: Request) {
             description,
             price_info,
             images: images || [], // Handle images field
-            location
+            location,
+            move // Include the new field
         });
 
         await newDroneService.save();
@@ -44,11 +46,12 @@ export async function POST(request: Request) {
     }
 }
 
+
 // Handler for PUT requests (update)
 export async function PUT(request: Request) {
     try {
         const data = await request.json();
-        const { _id, user_id, drone_services_id, title, description, price_info, images, location } = data;
+        const { _id, user_id, drone_services_id, title, description, price_info, images, location, move } = data;
 
         if (!_id) {
             return NextResponse.json({ error: 'Drone service ID is required' }, { status: 400 });
@@ -61,7 +64,8 @@ export async function PUT(request: Request) {
             description,
             price_info,
             images,
-            location
+            location,
+            move // Include the new field
         };
 
         // Remove undefined fields
@@ -78,6 +82,7 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: 'Failed to update drone service' }, { status: 500 });
     }
 }
+
 
 // Handler for DELETE requests
 export async function DELETE(request: Request) {
@@ -100,3 +105,4 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ error: 'Failed to delete drone service' }, { status: 500 });
     }
 }
+
