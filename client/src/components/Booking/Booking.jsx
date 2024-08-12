@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ImageSlider from './ImageSlider';
 
 const Booking = ({ drone }) => {
+    //console.log(drone)
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [name, setName] = useState('');
@@ -31,7 +32,7 @@ const Booking = ({ drone }) => {
             thumbnailHeight: 150,
         },
         {
-            original: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg', // Add more images
+            original: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg',
             thumbnail: 'https://img.freepik.com/free-photo/drone-flying-over-mountains_58409-219.jpg',
             originalWidth: 1000,
             originalHeight: 600,
@@ -94,20 +95,29 @@ const Booking = ({ drone }) => {
     
         // Prepare booking data
         const bookingData = {
-            user_id: 'some_user_id', // Replace with actual user ID
-            drone_services_info_id: drone._id,
-            address,
+            user_id:  drone.user_id, // Replace with actual user ID
+            drone_services_info_id: drone.drone_services_info_id,
+            address : {
+                address1: address.address1,
+                address2: address.address2,
+                city: address.city,
+                state: address.state,
+                country: address.country ,
+                pin: address.pin
+            },
             is_fullday: false, // Adjust if needed
             booking_info: {
                 start_date: startDate,
                 end_date: endDate
             },
-            price: calculateTotal(),
-            name,
-            email,
+            price: Number(calculateTotal()),
+            name:name,
+            email:email,
             phone_number: phone,
-            status: 'Pending'
+            status: 'Pending',
+            cancelled_reason: 'aise hee'
         };
+        console.log(bookingData)
     
         try {
             const response = await fetch('/api/booking', {
@@ -117,9 +127,9 @@ const Booking = ({ drone }) => {
             });
     
             const result = await response.json();
+            console.log(result)
             if (response.ok) {
                 alert('Booking confirmed successfully!');
-                // Clear form fields
                 setName('');
                 setEmail('');
                 setPhone('');
@@ -142,10 +152,12 @@ const Booking = ({ drone }) => {
         }
     };
 
+    console.log(errors);
+
     return (
         <div className="md:flex flex-wrap">
             <div className="w-full p-2 md:py-8 md:w-1/2 py-2">
-                <ImageSlider images={images} className="" />
+                <ImageSlider images={images} />
             </div>
             <div className="w-full md:w-1/2 py-4 md:py-8 mx-auto px-2">
                 <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -189,7 +201,7 @@ const Booking = ({ drone }) => {
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
                                 />
-                                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                                {errors.phone && <p className="text-red-500 text-sm">{errors.phone_number}</p>}
                             </label>
                         </div>
                         <div>
@@ -202,10 +214,9 @@ const Booking = ({ drone }) => {
                                     value={address.address1}
                                     onChange={(e) => setAddress({ ...address, address1: e.target.value })}
                                 />
-                                {errors.address1 && <p className="text-red-500 text-sm">{errors.address1}</p>}
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.address1}</p>}
                             </label>
-                        </div>
-                        <div>
+
                             <label className="block text-gray-700 font-medium mb-1">
                                 Address Line 2:
                                 <input
@@ -215,11 +226,11 @@ const Booking = ({ drone }) => {
                                     value={address.address2}
                                     onChange={(e) => setAddress({ ...address, address2: e.target.value })}
                                 />
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.address2}</p>}
                             </label>
-                        </div>
-                        <div>
+
                             <label className="block text-gray-700 font-medium mb-1">
-                                City:
+                                city:
                                 <input
                                     type="text"
                                     name="city"
@@ -227,12 +238,11 @@ const Booking = ({ drone }) => {
                                     value={address.city}
                                     onChange={(e) => setAddress({ ...address, city: e.target.value })}
                                 />
-                                {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.city}</p>}
                             </label>
-                        </div>
-                        <div>
+
                             <label className="block text-gray-700 font-medium mb-1">
-                                State:
+                                state
                                 <input
                                     type="text"
                                     name="state"
@@ -240,10 +250,9 @@ const Booking = ({ drone }) => {
                                     value={address.state}
                                     onChange={(e) => setAddress({ ...address, state: e.target.value })}
                                 />
-                                {errors.state && <p className="text-red-500 text-sm">{errors.state}</p>}
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.state}</p>}
                             </label>
-                        </div>
-                        <div>
+
                             <label className="block text-gray-700 font-medium mb-1">
                                 Country:
                                 <input
@@ -253,12 +262,10 @@ const Booking = ({ drone }) => {
                                     value={address.country}
                                     onChange={(e) => setAddress({ ...address, country: e.target.value })}
                                 />
-                                {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.country}</p>}
                             </label>
-                        </div>
-                        <div>
                             <label className="block text-gray-700 font-medium mb-1">
-                                PIN Code:
+                                Pin:
                                 <input
                                     type="text"
                                     name="pin"
@@ -266,9 +273,11 @@ const Booking = ({ drone }) => {
                                     value={address.pin}
                                     onChange={(e) => setAddress({ ...address, pin: e.target.value })}
                                 />
-                                {errors.pin && <p className="text-red-500 text-sm">{errors.pin}</p>}
+                                {errors.address && <p className="text-red-500 text-sm">{errors.address.pin}</p>}
                             </label>
+
                         </div>
+                    
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Start Date:
@@ -295,11 +304,13 @@ const Booking = ({ drone }) => {
                                 {errors.endDate && <p className="text-red-500 text-sm">{errors.endDate}</p>}
                             </label>
                         </div>
-                        <div className="flex items-center justify-between">
-                            <span className="font-bold text-xl">Total: ${calculateTotal()}</span>
+                        <div className="text-center">
+                            <p className="font-bold text-lg">Total Price: ${calculateTotal()}</p>
+                        </div>
+                        <div className="text-center">
                             <button
                                 type="submit"
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:outline-none"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                             >
                                 Confirm Booking
                             </button>

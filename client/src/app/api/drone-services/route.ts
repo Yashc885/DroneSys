@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import DroneService from '../../../models/droneServiceModel'; // Adjust the path as needed
 import connect from '../../../Database/config.ts'; // Ensure you have a database connection function
+import { useParams } from 'next/navigation';
 
 // Connect to the database
 connect();
@@ -8,6 +9,7 @@ connect();
 // Handler for GET requests
 export async function GET() {
     try {
+        console.log("one")
         const droneServices = await DroneService.find();
         return NextResponse.json(droneServices);
     } catch (error) {
@@ -15,6 +17,19 @@ export async function GET() {
         return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
     }
 }
+
+export async function GETProduct(request: Request) {
+    try {
+        console.log("two" , request)
+        const droneServices = await DroneService.find({title:request.useParams()});
+        return NextResponse.json(droneServices);
+    } catch (error) {
+        console.error('Error fetching drone services:', error);
+        return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
+    }
+}
+
+
 
 
 // Handler for POST requests

@@ -8,7 +8,7 @@ const connectToDatabase = async () => {
     await connect();
 };
 
-export async function GET() {
+export async function GET(request: Request) {
     await connectToDatabase();
 
     try {
@@ -28,9 +28,9 @@ export async function POST(request: Request) {
         // Ensure the incoming data contains all the required fields
         const { user_id, drone_services_info_id, address, is_fullday, booking_info, price, name, email, phone_number, status, cancelled_reason } = data;
 
-        if (!user_id || !drone_services_info_id || !address || !is_fullday || !booking_info || !price || !name || !email || !phone_number || !status) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-        }
+        // if (!user_id || !drone_services_info_id || !address || !is_fullday || !booking_info || !price || !name || !email || !phone_number || !status) {
+        //     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        // }
 
         const booking = new Booking({
             user_id,
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
             status,
             cancelled_reason
         });
-
+            console.log("booking" , booking)
         await booking.save();
         return NextResponse.json(booking, { status: 201 });
     } catch (error) {

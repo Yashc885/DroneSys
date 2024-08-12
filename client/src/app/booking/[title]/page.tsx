@@ -1,35 +1,37 @@
 'use client';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'next/navigation';
 import Booking from "../../../components/Booking/Booking";
 import { NavbarSimple } from "../../../components/Common/Navbar";
 import Footer from "../../../components/Common/Footer";
-import data from '../../../components/ListView/db/data'; // Adjust the path as needed
 
 const BookingPage = () => {
-    const { title } = useParams(); // Get the title parameter from the URL
+    const { title } = useParams();
+    const [drone, setDrone] = useState(null);
 
-    // Normalize title from URL
-    const normalizeTitle = (title) => {
-        return title
-            .replace(/_/g, ' ')          // Replace underscores with spaces
-            .toLowerCase()               // Convert to lowercase
-            .replace(/\s+/g, ' ')        // Replace multiple spaces with a single space
-            .trim();                     // Remove leading and trailing spaces
-    };
-    const normalizedTitle = normalizeTitle(title);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/drone-services?title=${title}`);
+                console.log(response.data);
+                setDrone(response.data[0]);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
-    // Find the drone based on the normalized title
-    const drone = data.find(item => normalizeTitle(item.title) === normalizedTitle);
-
-    // Handle the case where no drone is found
-    if (!drone) {
-        return <p>Drone not found</p>;
-    }
+        fetchData();
+    }, [title]);
 
     return (
         <div>
             <NavbarSimple />
-            <Booking drone={drone} />
+            {drone ? (
+                <Booking drone={drone} />
+            ) : (
+                <p>Loading...</p> 
+            )}
             <Footer />
         </div>
     );

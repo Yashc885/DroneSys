@@ -6,7 +6,7 @@ import Link from "next/link";
 const Card = ({ img, title, star, reviews, prevPrice, newPrice, move = "/" }) => {
   return (
     <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-      <Link href={move} passHref>
+      <Link href={`/product/${move}`} passHref>
         <Image
           src={img}
           alt={title}
