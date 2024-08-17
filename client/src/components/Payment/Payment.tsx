@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from "next/image";
 import CheckoutPage from './CheckoutPage';
-import convertToSubcurrency from './../../lib/convertToSubcurrency.ts'; // Ensure the import path is correct
+import convertToSubcurrency from './../../lib/convertToSubcurrency.ts'; 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
