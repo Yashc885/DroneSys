@@ -24,7 +24,7 @@ const PaymentConfirmation = () => {
         <h1 className="text-4xl md:text-5xl font-bold text-green-600 mt-8">Success</h1>
         <p className="text-gray-700 text-lg md:text-xl mt-4">
           We received your purchase request;
-          <br /> we'll be in touch shortly!
+          <br /> we will  be in touch shortly!
         </p>
       </div>
     </div>

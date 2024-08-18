@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import Select from 'react-select';
 import CountryRegion from "countryregionjs";
 import Map from "./Map";
@@ -18,9 +18,9 @@ function Mapview() {
     const [coordinates, setCoordinates] = useState({ latitude: 0, longitude: 0 });
 
     const ZERO = 0;
-    const countryRegion = new CountryRegion();
+    const countryRegion = useMemo(() => new CountryRegion(), []);
 
-    const getCountryRegionInstance = useCallback(() => countryRegion, []);
+    const getCountryRegionInstance = useCallback(() => countryRegion, [countryRegion]);
 
     useEffect(() => {
         const getCountries = async () => {

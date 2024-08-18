@@ -1,4 +1,4 @@
-'use client ';
+'use client';
 import React from 'react';
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -7,12 +7,12 @@ const LineChartComp = ({ orders = [], type = 'today' }) => {
 
     React.useEffect(() => {
         updateChart();
-    }, [orders, type]);
+    }, [orders, type, updateChart]); // Include updateChart in the dependency array
 
     const updateChart = () => {
         const tempData = orders.map(order => {
             const totalCost = order.items.reduce((total, item) => total + item.cost, 0);
-            const timeStamp = type === "today"
+            const timeStamp = type === 'today'
                 ? new Date(order.timeStamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 : new Date(order.timeStamp).toLocaleDateString();
 

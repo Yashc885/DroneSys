@@ -20,7 +20,7 @@ const Privacy = () => {
           <li>Focusing on what is best for the community</li>
           <li>Showing empathy towards other community members</li>
         </ul>
-        <p className=" pl-5 py-2 justify justify-center text-gray-900">This Privacy Policy forms an electronic contract within the provisions of the (Indian) Information Technology Act, 2000 (" IT Act") and the rules made thereunder and the amended provisions pertaining to electronic documents/records in various statutes as amended by the IT Act, from time to time. This Privacy Policy does not require any physical, electronic or digital signature and 
+        <p className=" pl-5 py-2 justify justify-center text-gray-900">This Privacy Policy forms an electronic contract within the provisions of the Indian Information Technology Act, 2000  IT Act and the rules made thereunder and the amended provisions pertaining to electronic documents/records in various statutes as amended by the IT Act, from time to time. This Privacy Policy does not require any physical, electronic or digital signature and 
                                         this Privacy Policy shall be a legally binding document between you and IIT Delhi.
         </p>
 
@@ -35,7 +35,7 @@ const Privacy = () => {
         <div class="container mx-auto p-4">
     <h1 class="text-xl py-2 font-bold text-red-500 mb-4">THE INFORMATION WE COLLECT AND HOW WE USE IT</h1>
     <p class="mb-4">
-      We are bound by the privacy principles set out in the IT Act and applicable rules ("Privacy Laws") in relation to its management of Information of Indian citizens and permanent residents. We will only collect Information using this Platform and use, disclose and store that Information in accordance with the Privacy Laws and this Privacy Policy.
+      We are bound by the privacy principles set out in the IT Act and applicable rules Privacy Laws in relation to its management of Information of Indian citizens and permanent residents. We will only collect Information using this Platform and use, disclose and store that Information in accordance with the Privacy Laws and this Privacy Policy.
     </p>
 
     <p class="mb-4">
@@ -170,7 +170,7 @@ const Privacy = () => {
     </p>
 
         <p className="text-gray-900">
-          Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+          Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the projects leadership.
         </p>
       </section>
     </div>

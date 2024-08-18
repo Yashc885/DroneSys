@@ -27,7 +27,7 @@ const Conduct = () => {
           <li>The use of sexualized language or imagery and unwelcome sexual attention or advances</li>
           <li>Trolling, insulting/derogatory comments, and personal or political attacks</li>
           <li>Public or private harassment</li>
-          <li>Publishing others' private information, such as a physical or electronic address, without explicit permission</li>
+          <li>Publishing others private information, such as a physical or electronic address, without explicit permission</li>
           <li>Other conduct which could reasonably be considered inappropriate in a professional setting</li>
         </ul>
 
@@ -50,7 +50,7 @@ const Conduct = () => {
         </p>
 
         <p className="text-gray-900">
-          Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+          Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the projects leadership.
         </p>
       </section>
     </div>

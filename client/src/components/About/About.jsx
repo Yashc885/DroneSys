@@ -58,13 +58,13 @@ const About = () => {
           <p className="mt-4 text-gray-700 justify-normal items-center " >
           Our team of skilled professionals is dedicated to providing high-quality drone services tailored to meet the unique 
           needs of our clients. With extensive industry experience and a commitment to safety, we ensure that every project is executed 
-          with the highest standards of professionalism and care. Whether it's aerial surveys, inspections, or live streaming, we 
+          with the highest standards of professionalism and care. Whether its aerial surveys, inspections, or live streaming, we 
           leverage our expertise to deliver exceptional results.
           </p>
           <p className="mt-4 text-gray-700 justify-normal items-center " >
-          We are passionate about pushing the boundaries of what's possible with drone technology. By continuously investing in research 
+          We are passionate about pushing the boundaries of whats possible with drone technology. By continuously investing in research 
           and development, we strive to stay at the forefront of innovation, providing our clients with the most advanced solutions 
-          available. At [Your Company Name], our mission is to harness the power of drones to drive progress and create lasting value
+          available. At Acceledge , our mission is to harness the power of drones to drive progress and create lasting value
            for businesses and communities.
           </p>
         </div>

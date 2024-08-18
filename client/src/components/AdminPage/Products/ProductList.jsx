@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 
 const ProductList = () => {
   const [droneServices, setDroneServices] = useState([]);
@@ -167,7 +169,14 @@ const ProductList = () => {
                 <h3 className="text-lg font-semibold">Images</h3>
                 <div className="flex space-x-2 mt-2">
                   {drone.images.map((image, index) => (
-                    <img key={index} src={image.path} alt={`Drone ${index}`} className="w-24 h-24 object-cover border rounded-md" />
+                    <Image 
+                    key={index} 
+                    src={image.path}
+                     alt={`Drone ${index}`}
+                      className="w-24 h-24 object-cover border rounded-md"
+                      width={100}
+                      height={100}
+                       />
                   ))}
                 </div>
               </div>

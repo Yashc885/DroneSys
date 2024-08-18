@@ -21,18 +21,18 @@ const Terms = () => {
 
       <h2 className="py-4 md:py-6 text-red-500 font-semibold text-xl md:text-2xl">DEFINITIONS</h2>
       <p className="mb-4">
-        <strong>User</strong> "User" or "You" or "Your" refers to you, as a user of the Services. A user is someone who accesses or uses the Services for the purpose of sharing, displaying, hosting, publishing, transacting, or uploading information or views or pictures and includes other persons jointly participating in using the Services including without limitation a user having access to ‘institute community’ created with or without consent of the institute.
+        <strong>User</strong> User or You or Your refers to you, as a user of the Services. A user is someone who accesses or uses the Services for the purpose of sharing, displaying, hosting, publishing, transacting, or uploading information or views or pictures and includes other persons jointly participating in using the Services including without limitation a user having access to institute community created with or without consent of the institute.
       </p>
       <p className="mb-4">
-        <strong>Content</strong> "Content" will include (but is not limited to) images, photos, audio, video, events, location data, nearby places, and all other forms of information or data. "Your content" or "User Content" means content that you upload, share or transmit to, through or in connection with the Services, such as likes, images, photos, messages, profile information, and any other materials that you publicly display or displayed in your account profile. "Third Party Content" means content that comes from parties other than IIT Delhi or its users and is available on the Services.
+        <strong>Content</strong> Content will include but is not limited to images, photos, audio, video, events, location data, nearby places, and all other forms of information or data. Your content or User Content means content that you upload, share or transmit to, through or in connection with the Services, such as likes, images, photos, messages, profile information, and any other materials that you publicly display or displayed in your account profile. Third Party Content means content that comes from parties other than IIT Delhi or its users and is available on the Services.
       </p>
 
       <h2 className="py-4 md:py-6 text-red-500 font-semibold text-xl md:text-2xl">ELIGIBILITY TO USE THE SERVICES</h2>
       <p className="mb-4">
-        You hereby represent and warrant that you are at least Fifteen (15) years of age or above and are fully able and competent to understand and agree the terms, conditions, obligations, affirmations, representations, and warranties set forth in these Terms. For the minors, i.e. people below the age of 18, we encourage them to use the platform under parental supervision.
+        You hereby represent and warrant that you are at least Fifteen 15 years of age or above and are fully able and competent to understand and agree the terms, conditions, obligations, affirmations, representations, and warranties set forth in these Terms. For the minors, i.e. people below the age of 18, we encourage them to use the platform under parental supervision.
       </p>
       <p className="mb-4">
-        <strong>Compliance with Laws</strong>. You are responsible for complying with all laws and regulations in the country in which you live when you access and use the Services. You agree to use the Services only in compliance with these Terms and applicable law, and in a manner that does not violate our legal rights or those of any third party(ies).
+        <strong>Compliance with Laws</strong>. You are responsible for complying with all laws and regulations in the country in which you live when you access and use the Services. You agree to use the Services only in compliance with these Terms and applicable law, and in a manner that does not violate our legal rights or those of any third party ies.
       </p>
 
       <h2 className="py-4 md:py-6 text-red-500 font-semibold text-xl md:text-2xl">CHANGES TO THE TERMS</h2>
@@ -56,10 +56,10 @@ const Terms = () => {
         You acknowledge and agree that if IIT Delhi disables access to your account, you may be prevented from accessing the Services, your account details or any files or other content, which is contained in your account.
       </p>
       <p className="mb-4">
-        You acknowledge and agree that while IIT Delhi may not currently have set a fixed upper limit on the number of transmissions you may send or receive through the Services, IIT Delhi may set such fixed upper limits at any time, at IIT Delhi's discretion.
+        You acknowledge and agree that while IIT Delhi may not currently have set a fixed upper limit on the number of transmissions you may send or receive through the Services, IIT Delhi may set such fixed upper limits at any time, at IIT Delhis discretion.
       </p>
       <p className="mb-4">
-        By using IIT Delhi's Services you agree to the following disclaimer: The Content on these Services is for informational purposes only. IIT Delhi disclaims any liability for any information that may have become outdated since the last time the particular piece of information was updated. IIT Delhi reserves the right to make changes and corrections to any part of the Content on these Services at any time without prior notice. Unless stated otherwise, all pictures and information contained on these Services are believed to be owned by or licensed to IIT Delhi. Please email a takedown request (by using the “Contact Us” link on the home page) to the webmaster if you are the copyright owner of any Content on these Services and you think the use of the above material violates Your copyright in any way. Please indicate the exact URL of the webpage in your request.
+        By using IIT Delhis Services you agree to the following disclaimer: The Content on these Services is for informational purposes only. IIT Delhi disclaims any liability for any information that may have become outdated since the last time the particular piece of information was updated. IIT Delhi reserves the right to make changes and corrections to any part of the Content on these Services at any time without prior notice. Unless stated otherwise, all pictures and information contained on these Services are believed to be owned by or licensed to IIT Delhi. Please email a takedown request (by using the “Contact Us” link on the home page) to the webmaster if you are the copyright owner of any Content on these Services and you think the use of the above material violates Your copyright in any way. Please indicate the exact URL of the webpage in your request.
       </p>
       <p className="mb-4">
         IIT Delhi reserves the right to charge subscription and/or membership fees from a user, by giving reasonable prior notice, in respect of any product, service or any other aspect of this site anytime in future.
