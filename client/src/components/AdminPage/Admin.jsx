@@ -40,6 +40,14 @@ const Admin = () => {
                             Products
                         </Link>
                     </Button>
+
+                    <Button variant="text-white border border-2  rounded-lg pl-1 pr-1 mx-1 
+                hover:bg-blue-500  hover:text-white" size="sm" className="mx-1">
+                        <Link href="/admin/subscribe">
+                            Subscribe
+                        </Link>
+                    </Button>
+
                 </div>
 
                 </div>
