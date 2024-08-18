@@ -5,9 +5,11 @@ import Customer from './../components/Customer/CustomerList.jsx';
 import Service from "./../components/Service/Service.jsx";
 import Footer from "./../components/Common/Footer.jsx";
 import Steps from "./../components/Steps/Steps.jsx";
+//import Footer from './../components/Common/Footer.jsx';
 export default function Home() {
   return (
     <div>
+      {/* <NavbarSimple /> */}
     <Hero />
     <Service />
         <Steps />

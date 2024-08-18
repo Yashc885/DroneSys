@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaCalendarAlt, FaSearch } from "react-icons/fa";
 import { Listbox, ListboxItem, Input } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
 import Agriculture from "../../assets/agri.svg";
 import { NavbarSimple } from "./../Common/Navbar";
+
 const Hero = () => {
   const [searchLocation, setSearchLocation] = useState("");
   const [startDate, setStartDate] = useState(() => {
@@ -22,18 +22,11 @@ const Hero = () => {
   const [dropdownValue, setDropdownValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // const handleSearch = () => {
-  //   if (searchLocation && startDate && endDate && dropdownValue) {
-  //     window.location.href = `/trips?city=${searchLocation}&start_date=${startDate}&end_date=${endDate}&option=${dropdownValue}`;
-  //   }
-  // };
-  
   const handleSearch = () => {
     if (searchLocation && startDate && endDate && dropdownValue) {
       window.location.href = `/listview?service=${dropdownValue}`;
     }
   };
-  
 
   const searchCities = async (searchQuery) => {
     const response = await fetch(
@@ -64,7 +57,7 @@ const Hero = () => {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-        <div className="z-10 p-4 sm:p-8 bg-white rounded-xl shadow-lg text-black text-center max-w-4xl w-full mx-4">
+        <div className="relative z-10 p-4 sm:p-8 bg-white rounded-xl shadow-lg text-black text-center max-w-4xl w-full mx-4">
           <div className="py-4">
             <div className="text-center flex flex-col gap-2">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
@@ -88,7 +81,7 @@ const Hero = () => {
                 placeholder="Search Location"
               />
               {cities.length > 0 && (
-                <div className="w-full min-h-48 max-w-sm border rounded-sm border-black absolute top-24 sm:top-16 z-80">
+                <div className="relative w-full min-h-48 max-w-sm border rounded-sm border-black z-50">
                   <div
                     className="bg-cover bg-center bg-no-repeat relative min-h-48 w-full px-1 py-2 rounded-sm"
                     style={{
@@ -102,7 +95,7 @@ const Hero = () => {
                         setSearchLocation(key);
                         setCities([]);
                       }}
-                      className="rounded-sm"
+                      className="rounded-sm z-50"
                     >
                       {cities.map((city) => (
                         <ListboxItem key={city} color="danger" className="text-black">
@@ -133,7 +126,6 @@ const Hero = () => {
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
-              {/* dropdown section  */}
               <div className="relative col-span-2 sm:col-span-1 lg:col-span-1">
                 <Input
                   color="danger"
@@ -145,7 +137,7 @@ const Hero = () => {
                   placeholder="Select Service"
                 />
                 {isDropdownOpen && (
-                  <div className="w-full min-h-48 max-w-sm border rounded-sm border-black absolute top-24 sm:top-16 z-80">
+                  <div className="absolute top-full left-0 w-full min-h-48 max-w-sm border rounded-sm border-black z-50">
                     <div
                       className="bg-cover bg-center bg-no-repeat relative min-h-48 w-full px-1 py-2 rounded-sm"
                       style={{
@@ -159,7 +151,7 @@ const Hero = () => {
                           setDropdownValue(key);
                           setIsDropdownOpen(false);
                         }}
-                        className="rounded-sm"
+                        className="rounded-sm z-50"
                       >
                         {["photography", "videography", "agriculture", "mining", "security"].map((option) => (
                           <ListboxItem key={option} value={option} color="danger" className="text-black">
