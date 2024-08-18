@@ -47,27 +47,29 @@ const Orders = () => {
     };
 
     return (
-        <div className="p-4 md:p-8">
-            {loading && <p className="text-center text-gray-500">Loading bookings...</p>}
-            {error && <p className="text-center text-red-500">{error}</p>}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="p-6 bg-gray-100 min-h-screen">
+            {loading && <p className="text-center text-gray-600 text-lg">Loading bookings...</p>}
+            {error && <p className="text-center text-red-600 text-lg">{error}</p>}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {bookings.map((booking) => (
-                    <div key={booking._id} className="bg-white p-4 rounded-lg shadow-md">
-                        <h3 className="text-xl font-semibold mb-2">{booking.name}</h3>
-                        <p><strong>Start Date:</strong> {new Date(booking.booking_info.start_date).toLocaleDateString()}</p>
-                        <p><strong>End Date:</strong> {new Date(booking.booking_info.end_date).toLocaleDateString()}</p>
-                        <p><strong>Price:</strong> ${booking.price.toFixed(2)}</p>
-                        <p><strong>City:</strong> {booking.address.city}</p>
-                        <div className="mt-4 flex justify-between">
+                    <div key={booking._id} className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                        <h3 className="text-2xl font-semibold text-center mb-4">{booking.name}</h3>
+                        <div className="text-gray-700 mb-4">
+                            <p><strong>From:</strong> {new Date(booking.booking_info.start_date).toLocaleDateString()}</p>
+                            <p><strong>To:</strong> {new Date(booking.booking_info.end_date).toLocaleDateString()}</p>
+                            <p><strong>Price:</strong> ${booking.price.toFixed(2)}</p>
+                            <p><strong>City:</strong> {booking.address.city}</p>
+                        </div>
+                        <div className="flex justify-between mt-4">
                             <button
                                 onClick={() => handleStatusChange(booking._id, 'Confirmed')}
-                                className="px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600"
+                                className="px-5 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-colors"
                             >
                                 Accept
                             </button>
                             <button
                                 onClick={() => handleStatusChange(booking._id, 'Cancelled')}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
+                                className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-colors"
                             >
                                 Decline
                             </button>

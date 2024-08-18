@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const ProductList = () => {
@@ -29,10 +29,7 @@ const ProductList = () => {
     location: ""
   });
   const [isEditing, setIsEditing] = useState(false);
-
-  useEffect(() => {
-    fetchDroneServices();
-  }, []);
+  const [productsFetched, setProductsFetched] = useState(false);
 
   const fetchDroneServices = async () => {
     try {
@@ -43,6 +40,11 @@ const ProductList = () => {
     }
   };
 
+  const handleFetchProducts = () => {
+    fetchDroneServices();
+    setProductsFetched(true);
+  };
+
   const handleSelectDrone = (drone) => {
     setFormData(drone);
     setIsEditing(true);
@@ -50,7 +52,6 @@ const ProductList = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-   console.log(name, value);
     if (name.startsWith("description.") || name.startsWith("price_info.") || name.startsWith("images.")) {
       const [prefix, field] = name.split(".");
       
@@ -78,7 +79,6 @@ const ProductList = () => {
       }));
     }
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,11 +133,22 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Drone Services</h1>
+  <div className="container mx-auto p-6">
+    <div className="mb-6">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-extrabold text-center flex-grow">Drone Services</h1>
+        <button
+          onClick={handleFetchProducts}
+          className="bg-blue-500 text-white px-4 py-2 rounded ml-auto"
+        >
+          My Products
+        </button>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {droneServices.map((drone) => (
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        {productsFetched && droneServices.map((drone) => (
           <div key={drone._id} className="p-4 border rounded-lg shadow">
             <h2 className="text-xl font-semibold">{drone.title}</h2>
             <p><strong>Description:</strong> {drone.description.description}</p>
@@ -246,32 +257,22 @@ const ProductList = () => {
           </div>
 
           <div className="border-t mt-4 pt-4">
-              <h3 className="text-lg font-semibold">Images</h3>
-              {formData.images.map((image, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <label htmlFor={`images.${index}.path`} className="block text-sm font-medium text-gray-700">Image URL {index + 1}</label>
-                  <input
-                    id={`images.${index}.path`}
-                    name={`images.${index}.path`}
-                    type="text"
-                    value={image.path}
-                    onChange={handleChange}
-                    className="block w-full mt-1 border rounded-md p-2"
-                  />
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => setFormData((prev) => ({
-                  ...prev,
-                  images: [...prev.images, { type: "url", path: "" }]
-                }))}
-                className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
-              >
-                Add Image
-              </button>
-            </div>
-
+            <h3 className="text-lg font-semibold">Images</h3>
+            {formData.images.map((image, index) => (
+              <div key={index}>
+                <label htmlFor={`images.${index}.path`} className="block text-sm font-medium text-gray-700">Image URL {index + 1}</label>
+                <input
+                  id={`images.${index}.path`}
+                  name={`images.${index}.path`}
+                  type="text"
+                  value={image.path}
+                  onChange={handleChange}
+                  className="block w-full mt-1 border rounded-md p-2"
+                  required
+                />
+              </div>
+            ))}
+          </div>
 
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
@@ -311,10 +312,22 @@ const ProductList = () => {
               required
             />
           </div>
+          <div >
+            <button
+              type="submit"
+              className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+            >
+              {isEditing ? "Update Drone Service" : "Add Drone Service"}
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="mt-2 bg-gray-500 text-white px-4 py-2 rounded ml-2"
+            >
+              Reset
+            </button>
+          </div>
 
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-            {isEditing ? "Update Drone Service" : "Add Drone Service"}
-          </button>
         </form>
       </div>
     </div>
