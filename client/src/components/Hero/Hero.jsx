@@ -46,9 +46,9 @@ const Hero = () => {
 
   return (
     <div>
-      <NavbarSimple />
-      <div className="min-h-screen flex flex-col items-center justify-center relative">
-        <div className="absolute inset-0 z-0">
+      {/* <NavbarSimple /> */}
+      <div className="min-h-screen flex flex-col items-center justify-center ">
+        <div className="  absolute inset-0 -z-10 ">
           <Image
             src="https://e1.pxfuel.com/desktop-wallpaper/682/1001/desktop-wallpaper-10-amazing-nature-footage-by-drones-drones.jpg"
             fill

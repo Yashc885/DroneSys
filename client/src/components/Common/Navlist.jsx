@@ -17,6 +17,10 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
     setOpenNav(false); 
   };
 
+  const logOut = () =>{
+    localStorage.clear();
+  }
+
   const toggleProfileMenu = () => setShowProfileMenu(prev => !prev);
 
   return (
@@ -66,14 +70,14 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
             onClick={toggleProfileMenu}
           />
           {showProfileMenu && (
-            <div className="absolute right-0 mt-2 w-36 bg-white shadow-lg rounded-lg z-50 transition-opacity duration-300 opacity-100">
+            <div className="absolute -right-12 md:mt-48 w-36 bg-white shadow-lg rounded-lg z-1000 transition-opacity duration-300 opacity-100">
               <Link href="/you/profile" className="block p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Your Profile">
                 Your Profile
               </Link>
               <Link href="/you/orders" className="block p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Your Orders">
                 Your Orders
               </Link>
-              <button className="block w-full text-left p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Logout">
+              <button onClick={logOut} className="block w-full text-left p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Logout">
                 Logout
               </button>
             </div>
@@ -86,7 +90,7 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
               Login
             </button>
           </MenuHandler>
-          <MenuList className="p-1 bg-white shadow-lg rounded-lg">
+          <MenuList className="p-1 bg-white ">
             <MenuItem>
               <button onClick={handleLoginUser} className="flex items-center p-2 hover:bg-gray-200 rounded" aria-label="Login as User">
                 User

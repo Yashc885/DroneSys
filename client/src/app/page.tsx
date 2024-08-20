@@ -9,10 +9,10 @@ import Steps from "./../components/Steps/Steps.jsx";
 export default function Home() {
   return (
     <div>
-      {/* <NavbarSimple /> */}
+      <NavbarSimple />
     <Hero />
     <Service />
-        <Steps />
+    <Steps />
     <Customer />
     <Footer />
     </div>

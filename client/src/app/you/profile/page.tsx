@@ -7,7 +7,7 @@ export default function Home() {
     <div>
     <NavbarSimple />
     <YourProfile />
-    <Footer />
+    {/* <Footer /> */}
     </div>
   );
 }

@@ -47,32 +47,36 @@ function ListView() {
     setSelectedCategory(event.target.value);
   };
 
-  function filteredData(products, selected, query) {
+  function filteredData(products, query) {
     let filteredProducts = products;
+    console.log(products);
+    console.log(query)
+    console.log(selectedCategory)
+   console.log(filteredProducts)
 
-    if (query) {
-      filteredProducts = filteredItems;
-    }
-
-    if (selected) {
+    if (selectedCategory) {
       filteredProducts = filteredProducts.filter(
-        ({ category, memory_storage, max_flight_time, newPrice, title }) =>
-          category === selected ||
-          memory_storage === selected ||
-          max_flight_time === selected ||
-          newPrice === selected ||
-          title === selected
+        ({ title, drone_services_id, description, price_info }) =>
+          title.toLowerCase() === selectedCategory.toLowerCase() ||
+          description.memory_storage.toString().toLowerCase() === selectedCategory.toLowerCase() ||
+          description.max_flight_time.toString().toLowerCase() === selectedCategory.toLowerCase() ||
+          price_info.hourly_price.toString().toLowerCase() === selectedCategory.toLowerCase() ||
+          drone_services_id.toLowerCase() === selectedCategory.toLowerCase()
       );
     }
+
+    console.log(filteredProducts);
+
+    
 
     return filteredProducts.map(
       ({ images, title, price_info, move }) => (
         <Card
-          key={title} // Use a unique key
-          img={images[0]?.path} // Assuming images array has at least one image
+          key={title} 
+          img={images[0]?.path} 
           title={title}
-          star={<AiFillStar className="rating-star" />} // Adjust if needed
-          reviews="(105 reviews)" // Placeholder or actual data if available
+          star={<AiFillStar className="rating-star" />} 
+          reviews="(105 reviews)" 
           prevPrice={price_info.fullday_price}
           newPrice={price_info.hourly_price}
           move={move}
@@ -81,7 +85,7 @@ function ListView() {
     );
   }
 
-  const result = filteredData(products, selectedCategory, query);
+  const result = filteredData(products, query);
 
   return (
     <div className="flex flex-wrap">

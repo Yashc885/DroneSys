@@ -38,7 +38,7 @@ export function NavbarSimple() {
   };
 
   return (
-    <Navbar className="bg-white w-full py-2">
+    <Navbar className="bg-white w-full py-2 rounded-none">
       <div className="flex items-center justify-between w-full px-4 lg:px-8">
         <Link href="/" className="flex items-center">
           <Image
