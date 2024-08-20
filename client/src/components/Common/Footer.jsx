@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from 'next/image'; // Import next/image for optimized images
+import Image from 'next/image';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import FooterSlider from "./FooterSlider";
@@ -17,15 +18,14 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="footer-logo mb-6">
-                <a href="index.html">
-                  {/* Use next/image for optimized image */}
+                <Link href='/'>
                   <Image
                     src="https://tropogo.com/assets/images/footer/ic_tropogologo.svg"
                     alt="logo"
                     width={150} // Adjust width as per your design
                     height={40} // Adjust height as per your design
                   />
-                </a>
+                </Link>
               </div>
               <div className="footer-text mb-6">
                 <p className="text-white justify justify-between">

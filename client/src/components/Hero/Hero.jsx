@@ -5,7 +5,11 @@ import { FaCalendarAlt, FaSearch } from "react-icons/fa";
 import { Listbox, ListboxItem, Input } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
 import Agriculture from "../../assets/agri.svg";
-import { NavbarSimple } from "./../Common/Navbar";
+// import { NavbarSimple } from "./../Common/Navbar";
+import dynamic from 'next/dynamic';
+
+const NavbarSimple = dynamic(() => import('./../Common/Navbar.jsx'), { ssr: false });
+
 
 const Hero = () => {
   const [searchLocation, setSearchLocation] = useState("");

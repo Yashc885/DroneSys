@@ -2,10 +2,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
-
+import { useRouter } from 'next/navigation'
 const Admin = () => {
     const handleLogout = async () => {
-        console.log("Logout logic here");
+        localStorage.clear();
+        router.push('/')
     };
 
     return (

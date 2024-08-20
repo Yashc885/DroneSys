@@ -96,10 +96,10 @@ const Photography = () => {
             </div>
           </div>
           <div className="hero-image-section">
-            <Image
+          <Image
               className="hero-image1"
-              src="https://img.freepik.com/premium-photo/consumer-drone-most-amazing-hd-8k-wallpaper-background-stock-photographic-image_915071-24368.jpg"
-              alt="Photo"
+              src="https://img.freepik.com/free-photo/smart-farming-technology_1048-16755.jpg"
+              alt="Agriculture"
               layout="responsive"
               width={600}
               height={400}
