@@ -5,13 +5,14 @@ import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import RegisterAdmin from './../Register/RegisterAdmin.jsx';
 import DashboardHero from './DashboardHero.jsx';
-
+import Newsletter from './Newsletter';
 // Dummy components for routes
 const Dashboard = () => <div><Dashboard /></div>;
 const Vendors = () => <div>Vendors</div>;
 const Users = () => <div>Users</div>;
 const Admins = () => <div><RegisterAdmin /></div>;
 const Grievance = () => <div>Grievance</div>;
+const NewsletterSection = () => <div><Newsletter /></div>;
 
 const Hero = () => {
   return (
@@ -32,6 +33,7 @@ const Hero = () => {
                 <Route path="/superuser/admin" element={<Admins />} />
                 <Route path="/superuser/grievance" element={<Grievance />} />
                 <Route path="/superuser/home" element={<DashboardHero />} />
+                <Route path="/superuser/newsletter" element={<NewsletterSection />} />
               </Routes>
             </div>
           </div>

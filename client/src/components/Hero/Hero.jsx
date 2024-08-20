@@ -5,11 +5,19 @@ import { FaCalendarAlt, FaSearch } from "react-icons/fa";
 import { Listbox, ListboxItem, Input } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
 import Agriculture from "../../assets/agri.svg";
-// import { NavbarSimple } from "./../Common/Navbar";
 import dynamic from 'next/dynamic';
 
+// Dynamically import NavbarSimple without SSR
 const NavbarSimple = dynamic(() => import('./../Common/Navbar.jsx'), { ssr: false });
 
+// List of Indian states
+const states = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa',
+  'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala',
+  'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland',
+  'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
+];
 
 const Hero = () => {
   const [searchLocation, setSearchLocation] = useState("");
@@ -22,37 +30,28 @@ const Hero = () => {
     today.setDate(today.getDate() + 1);
     return today.toISOString().split("T")[0];
   });
-  const [cities, setCities] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]);
   const [dropdownValue, setDropdownValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSearch = () => {
     if (searchLocation && startDate && endDate && dropdownValue) {
-      window.location.href = `/listview?service=${dropdownValue}`;
+      window.location.href = `/listview?service=${dropdownValue}&state=${searchLocation}`;
     }
   };
 
-  const searchCities = async (searchQuery) => {
-    const response = await fetch(
-      `https://secure.geonames.org/searchJSON?q=${searchQuery}&maxRows=5&username=kmaar&style=SHORT`
+  const searchStates = (searchQuery) => {
+    const filteredStates = states.filter((state) =>
+      state.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    const parsed = await response.json();
-    setCities(parsed?.geonames.map((city) => city.name) ?? []);
+    setFilteredStates(filteredStates);
   };
-
-  const activities = [
-    { name: "Photography", icon: Agriculture, move: '/photography' },
-    { name: "Agriculture", icon: Agriculture, move: '/photography' },
-    { name: "Delivery", icon: Agriculture, move: '/photography' },
-    { name: "Surveillance", icon: Agriculture, move: '/photography' },
-    { name: "Inspection", icon: Agriculture, move: '/photography' },
-  ];
 
   return (
     <div>
       {/* <NavbarSimple /> */}
-      <div className="min-h-screen flex flex-col items-center justify-center ">
-        <div className="  absolute inset-0 -z-10 ">
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="absolute inset-0 -z-10">
           <Image
             src="https://e1.pxfuel.com/desktop-wallpaper/682/1001/desktop-wallpaper-10-amazing-nature-footage-by-drones-drones.jpg"
             fill
@@ -72,44 +71,38 @@ const Hero = () => {
               </h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-              <Input
-                color="danger"
-                variant="bordered"
-                className="text-black placeholder-black border border-black"
-                startContent={<FaSearch />}
-                value={searchLocation}
-                onChange={(e) => {
-                  setSearchLocation(e.target.value);
-                  searchCities(e.target.value);
-                }}
-                placeholder="Search Location"
-              />
-              {cities.length > 0 && (
-                <div className="relative w-full min-h-48 max-w-sm border rounded-sm border-black z-50">
-                  <div
-                    className="bg-cover bg-center bg-no-repeat relative min-h-48 w-full px-1 py-2 rounded-sm"
-                    style={{
-                      backgroundImage: 'url("https://e1.pxfuel.com/desktop-wallpaper/682/1001/desktop-wallpaper-10-amazing-nature-footage-by-drones-drones.jpg")',
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-white rounded-sm"></div>
+              <div className="relative col-span-1">
+                <Input
+                  color="danger"
+                  variant="bordered"
+                  className="text-black placeholder-black border border-black"
+                  startContent={<FaSearch />}
+                  value={searchLocation}
+                  onChange={(e) => {
+                    setSearchLocation(e.target.value);
+                    searchStates(e.target.value);
+                  }}
+                  placeholder="Search State"
+                />
+                {filteredStates.length > 0 && (
+                  <div className="absolute top-full left-0 w-full mt-1 bg-white border border-black rounded-sm shadow-lg z-50">
                     <Listbox
-                      aria-label="Actions"
+                      aria-label="States"
                       onAction={(key) => {
                         setSearchLocation(key);
-                        setCities([]);
+                        setFilteredStates([]);
                       }}
-                      className="rounded-sm z-50"
+                      className="rounded-sm"
                     >
-                      {cities.map((city) => (
-                        <ListboxItem key={city} color="danger" className="text-black">
-                          {city}
+                      {filteredStates.map((state) => (
+                        <ListboxItem key={state} color="danger" className="text-black">
+                          {state}
                         </ListboxItem>
                       ))}
                     </Listbox>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
               <Input
                 type="date"
                 placeholder="Start Date"
@@ -141,29 +134,21 @@ const Hero = () => {
                   placeholder="Select Service"
                 />
                 {isDropdownOpen && (
-                  <div className="absolute top-full left-0 w-full min-h-48 max-w-sm border rounded-sm border-black z-50">
-                    <div
-                      className="bg-cover bg-center bg-no-repeat relative min-h-48 w-full px-1 py-2 rounded-sm"
-                      style={{
-                        backgroundImage: 'url("https://e1.pxfuel.com/desktop-wallpaper/682/1001/desktop-wallpaper-10-amazing-nature-footage-by-drones-drones.jpg")',
+                  <div className="absolute top-full left-0 w-full mt-1 bg-white border border-black rounded-sm shadow-lg z-50">
+                    <Listbox
+                      aria-label="Select Service"
+                      onAction={(key) => {
+                        setDropdownValue(key);
+                        setIsDropdownOpen(false);
                       }}
+                      className="rounded-sm"
                     >
-                      <div className="absolute inset-0 bg-white rounded-sm"></div>
-                      <Listbox
-                        aria-label="Select Service"
-                        onAction={(key) => {
-                          setDropdownValue(key);
-                          setIsDropdownOpen(false);
-                        }}
-                        className="rounded-sm z-50"
-                      >
-                        {["photography", "videography", "agriculture", "mining", "security"].map((option) => (
-                          <ListboxItem key={option} value={option} color="danger" className="text-black">
-                            {option}
-                          </ListboxItem>
-                        ))}
-                      </Listbox>
-                    </div>
+                      {["photography", "videography", "agriculture", "mining", "security"].map((option) => (
+                        <ListboxItem key={option} value={option} color="danger" className="text-black">
+                          {option}
+                        </ListboxItem>
+                      ))}
+                    </Listbox>
                   </div>
                 )}
               </div>

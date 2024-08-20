@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
 import { ShoppingCart } from 'react-feather';
+import Link from 'next/link'; // Import Link from next/link
 
 const ImageDescription = ({ drone = {} }) => {
     const {
@@ -12,6 +13,9 @@ const ImageDescription = ({ drone = {} }) => {
         description = { description: 'No description', weight: 'N/A', max_ascent_speed: 'N/A', max_descent_speed: 'N/A', max_forward_speed: 'N/A', max_ceiling: 'N/A', max_weight_carry: 'N/A', memory_storage: 'N/A' },
         price_info = { hourly_price: '0', fullday_price: '0' }
     } = drone;
+
+    // Create a URL-friendly product name (e.g., replace spaces with hyphens)
+    const productNameSlug = title.toLowerCase().replace(/\s+/g, '-');
 
     return (
         <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-lg">
@@ -42,9 +46,11 @@ const ImageDescription = ({ drone = {} }) => {
             </div>
             <p className="line-through text-gray-400 mb-4">{price_info.fullday_price}</p>
             <div className="flex items-center mb-4">
-                <button className="flex items-center bg-red-600 text-white py-2 px-4 rounded hover:shadow-lg" aria-label="Book Now">
-                    <ShoppingCart size={12} color="white" /> &nbsp; Book Now
-                </button>
+                <Link href={`/booking/${productNameSlug}`}> {/* Wrap with Link component */}
+                    <a className="flex items-center bg-red-600 text-white py-2 px-4 rounded hover:shadow-lg" aria-label="Book Now">
+                        <ShoppingCart size={12} color="white" /> &nbsp; Book Now
+                    </a>
+                </Link>
             </div>
         </div>
     );

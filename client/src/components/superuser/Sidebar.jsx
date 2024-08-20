@@ -19,6 +19,7 @@ const SIDEBAR_ITEMS = [
   { id: "user", title: "Users", icon: LuFolderClosed, path: "/superuser/user" },
   { id: "admin", title: "Admins", icon: LuStickyNote, path: "/superuser/admin" },
   { id: "grievance", title: "Grievances", icon: LuBell, path: "/superuser/grievance" },
+  { id: "newsletter", title: "Newsletter", icon: LuBell, path: "/superuser/newsletter" },
 ];
 
 const SidebarItem = ({ item, activeTab, setActiveTab, isSidebarCollapsed }) => {

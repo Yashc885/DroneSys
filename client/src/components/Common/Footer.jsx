@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import FooterSlider from "./FooterSlider";
+import EmailForm from './EmailForm';
 const Footer = () => {
   return (
     <>
@@ -76,12 +77,7 @@ const Footer = () => {
                 <span className="block h-0.5 w-12 bg-blue-400 absolute -bottom-4 left-0"></span>
               </h3>
               <p className="mb-6 text-white">Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
-              <form className="relative">
-                <input type="text" placeholder="Email Address" className="w-full py-3 px-4  border-gray-600 text-white placeholder-text-gray-400  focus:outline-none" />
-                <button className="absolute right-0 top-0 mt-1 mr-1 bg-blue-400 py-3 px-4 text-white">
-                  <i className="fab fa-telegram-plane"></i>
-                </button>
-              </form>
+                <EmailForm />
             </div>
           </div>
         </div>
