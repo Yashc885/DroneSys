@@ -1,12 +1,12 @@
 "use client";
+
 import React, { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const RegisterUser = () => {
+const RegisterAdmin = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -17,9 +17,9 @@ const RegisterUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -29,120 +29,93 @@ const RegisterUser = () => {
 
     if (!password || password.length < 8) {
       setError("Password is invalid");
-      toast.error("Password is invalid");
+      toast.error("Password must be at least 8 characters long");
       return;
     }
 
     setError("");
-    
+
     try {
-      console.log(name , email , password);
-      const response = await axios.post('/api/register', {
+      const response = await axios.post("/api/register", {
         name,
         email,
         password,
       });
-      
+
       toast.success("Registration successful");
-      router.push("/");
+      // Redirect to the success page
+      router.push("http://localhost:3000/superuser/successful");
     } catch (err) {
       toast.error(err.response?.data?.msg || "Registration failed");
     }
   };
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col justify-center  sm:px-6 lg:px-8">
-      <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
-        <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
-          <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register</h1>
-          <form className="space-y-6 py-4" onSubmit={handleSubmit}>
-          <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+    <div className="mx-auto items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 py-4 md:py-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Register Associate Admins
+          </h2>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="name" className="sr-only">
                 Name
               </label>
-              <div className="mt-2">
-                <input
-                  id="name"
-                  name="name"
-                  type="name"
-                  autoComplete="name"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <input
+                id="name"
+                name="name"
+                type="text"
+                autoComplete="name"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Name"
+              />
+            </div>
+            <div className="mt-4">
+              <label htmlFor="email" className="sr-only">
                 Email address
               </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Email address"
+              />
             </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+            <div className="mt-4">
+              <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+              />
             </div>
-            <div>
-              <button
-                type="submit"
-                className="flex w-full border border-black justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-              >
-                Register
-              </button>
-              <p className="text-red-600 text-center text-[16px] my-4">
-                {error && error}
-              </p>
-            </div>
-            <div>
-            <div className="relative mt-10">
-              <div
-                className="absolute inset-0 flex items-center"
-                aria-hidden="true"
-              >
-                <div className="w-full border-t border-gray-200" />
-              </div>
-            </div>
-            <p className="text-red-600 text-center text-[16px] my-4">
-              {error && error}
-            </p>
           </div>
-         
-         </div>
-          </form>
-        </div>
+
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Register
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 };
 
-export default RegisterUser;
+export default RegisterAdmin;
