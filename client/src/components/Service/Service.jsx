@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';  // Import Link from next/link
 import ag1 from '../../assets/serv/ag1.jpg';
 import m1 from '../../assets/serv/m1.jpg';
 import p1 from '../../assets/serv/p1.jpg';
@@ -12,22 +13,27 @@ const servicesData = [
   {
     title: 'Agriculture',
     imgUrl: ag1,
+    url: '/services/agriculture',  // Add URL for each service
   },
   {
     title: 'Mining',
     imgUrl: m1,
+    url: '/services/mining',
   },
   {
     title: 'Security',
     imgUrl: s1,
+    url: '/services/security',
   },
   {
     title: 'VideoGraphy',
     imgUrl: v1,
+    url: '/services/videography',
   },
   {
     title: 'PhotoGraphy',
     imgUrl: p1,
+    url: '/services/photography',
   },
 ];
 
@@ -44,18 +50,20 @@ const Service = () => {
         <ul className="grid gap-8 grid-cols-1 sm:grid-cols-3 lg:grid-cols-5">
           {servicesData.map((service, index) => (
             <li key={index} className="relative list-none group">
-              <div className="relative overflow-hidden rounded-2xl h-64">
-                <Image
-                  src={service.imgUrl}
-                  alt={service.title}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className="transform transition-transform duration-500 group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 text-center">
-                  <h4 className="text-lg font-bold">{service.title}</h4>
-                </div>
-              </div>
+              <Link href={service.url}> 
+                  <div className="relative overflow-hidden rounded-2xl h-64">
+                    <Image
+                      src={service.imgUrl}
+                      alt={service.title}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      className="transform transition-transform duration-500 group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 text-center">
+                      <h4 className="text-lg font-bold">{service.title}</h4>
+                    </div>
+                  </div>
+              </Link>
             </li>
           ))}
         </ul>
