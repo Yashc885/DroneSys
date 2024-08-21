@@ -1,5 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign } from 'react-icons/fa';
+import Sidebar from './Sidebar'
 
 const Orders = () => {
     const [bookings, setBookings] = useState([]);
@@ -47,35 +49,78 @@ const Orders = () => {
     };
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
-            {loading && <p className="text-center text-gray-600 text-lg">Loading bookings...</p>}
-            {error && <p className="text-center text-red-600 text-lg">{error}</p>}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {bookings.map((booking) => (
-                    <div key={booking._id} className="bg-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105">
-                        <h3 className="text-2xl font-semibold text-center mb-4">{booking.name}</h3>
-                        <div className="text-gray-700 mb-4">
-                            <p><strong>From:</strong> {new Date(booking.booking_info.start_date).toLocaleDateString()}</p>
-                            <p><strong>To:</strong> {new Date(booking.booking_info.end_date).toLocaleDateString()}</p>
-                            <p><strong>Price:</strong> ${booking.price.toFixed(2)}</p>
-                            <p><strong>City:</strong> {booking.address.city}</p>
-                        </div>
-                        <div className="flex justify-between mt-4">
-                            <button
-                                onClick={() => handleStatusChange(booking._id, 'Confirmed')}
-                                className="px-5 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-colors"
+        <div className="bg-gray-200 min-h-screen flex flex-col md:flex-row">
+            <div className="hidden md:block w-1/4 bg-white shadow-lg p-6 md:p-8">
+                <Sidebar />
+            </div>
+            <div className="w-full md:w-3/4 flex flex-col items-center">
+                <div className="w-full md:w-11/12 lg:w-10/12 xl:w-8/12">
+                    <div className="space-y-6 p-4 rounded-lg">
+                        {loading && (
+                            <p className="text-center text-gray-600 text-lg">Loading bookings...</p>
+                        )}
+                        {error && (
+                            <p className="text-center text-red-600 text-lg">{error}</p>
+                        )}
+                        {bookings.map((booking) => (
+                            <div
+                                key={booking._id}
+                                className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-transform transform hover:scale-105"
                             >
-                                Accept
-                            </button>
-                            <button
-                                onClick={() => handleStatusChange(booking._id, 'Cancelled')}
-                                className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-colors"
-                            >
-                                Decline
-                            </button>
-                        </div>
+                                <div className="flex flex-col md:flex-row justify-between items-center border-b pb-4 mb-4">
+                                    <div className="mb-4 md:mb-0 md:w-[70%]">
+                                        <h3 className="text-2xl font-semibold mb-2">{booking.name}</h3>
+                                        <div className="text-gray-700">
+                                            <p className="flex items-center">
+                                                <FaCalendarAlt className="mr-2 text-blue-500" />
+                                                <strong>From:</strong> {new Date(booking.booking_info.start_date).toLocaleDateString()}
+                                            </p>
+                                            <p className="flex items-center">
+                                                <FaCalendarAlt className="mr-2 text-blue-500" />
+                                                <strong>To:</strong> {new Date(booking.booking_info.end_date).toLocaleDateString()}
+                                            </p>
+                                            <p className="flex items-center">
+                                                <FaDollarSign className="mr-2 text-green-500" />
+                                                <strong>Price:</strong> ${booking.price.toFixed(2)}
+                                            </p>
+                                            <p className="flex ">
+                                                <FaMapMarkerAlt className="mr-2 text-red-500" />
+                                                <strong>Location:</strong> {booking.address.address1}, {booking.address.address2}, {booking.address.city}, {booking.address.state}, {booking.address.country} - {booking.address.pin}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="md:w-[30%] flex items-center justify-between md:justify-end">
+                                        <div className="flex flex-col items-center">
+                                            <h4 className="text-lg text-gray-600 font-bold">
+                                                <span className="flex items-center">
+                                                    <FaMapMarkerAlt className="mr-2 text-indigo-500" />
+                                                <span className="text-indigo-600 ml-1">{booking.drone_services_info_id}</span>
+                                                </span>                                                
+                                            </h4>
+                                            <div className="mt-4 flex flex-col space-y-2 w-full">
+                                                <button
+                                                    onClick={() => handleStatusChange(booking._id, 'Confirmed')}
+                                                    className="px-6 py-2 bg-green-500 text-white font-semibold rounded-full shadow-md hover:bg-green-600 transition-all duration-200 transform hover:scale-105"
+                                                >
+                                                    Accept
+                                                </button>
+                                                <button
+                                                    onClick={() => handleStatusChange(booking._id, 'Cancelled')}
+                                                    className="px-6 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-all duration-200 transform hover:scale-105"
+                                                >
+                                                    Decline
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-4 flex justify-center items-center text-sm text-gray-500">
+                                    <p>Booking ID: {booking._id}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );
