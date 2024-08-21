@@ -1,44 +1,92 @@
-'use client'
-import { useState, useEffect } from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone } from 'react-icons/fa';
 import axios from 'axios';
+import Sidebar from './Sidebar';
 
 const YourOrders = () => {
     const [orders, setOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
 
     useEffect(() => {
-        // Fetch orders from the API
         const fetchOrders = async () => {
             try {
                 const response = await axios.get('/api/booking');
                 setOrders(response.data);
+                setFilteredOrders(response.data); // Initial display of all orders
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         };
-        
+
         fetchOrders();
     }, []);
 
+    const handleFilterChange = (filter) => {
+        switch (filter) {
+            case 'all':
+                setFilteredOrders(orders);
+                break;
+            case 'new':
+                setFilteredOrders(orders.filter(order => order.status === 'Pending'));
+                break;
+            case 'past':
+                setFilteredOrders(orders.filter(order => order.status === 'Confirmed' || order.status === 'Rejected'));
+                break;
+            default:
+                setFilteredOrders(orders);
+        }
+    };
+
     return (
-        <div className="container mx-auto p-6">
-            <h1 className="text-2xl font-bold text-center  mb-6">Your Orders</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {orders.length === 0 ? (
-                    <p className="col-span-full text-center text-gray-500">No orders found</p>
-                ) : (
-                    orders.map((order) => (
-                        <div key={order._id} className="bg-white shadow-md rounded-lg p-4 border border-gray-200">
-                            <h2 className="text-xl font-semibold mb-2">{order.name}</h2>
-                            <p className="text-gray-700 mb-2">Email: {order.email}</p>
-                            <p className="text-gray-700 mb-2">Phone: {order.phone_number}</p>
-                            <p className="text-gray-700 mb-2">Status: <span className={`font-bold ${order.status === 'Pending' ? 'text-yellow-500' : 'text-green-500'}`}>{order.status}</span></p>
-                            <p className="text-gray-700 mb-2">Price: ${order.price}</p>
-                            <p className="text-gray-700 mb-2">Start Date: {new Date(order.booking_info.start_date).toLocaleDateString()}</p>
-                            <p className="text-gray-700 mb-2">End Date: {new Date(order.booking_info.end_date).toLocaleDateString()}</p>
-                            <p className="text-gray-700 mb-2">Address: {order.address.address1}, {order.address.city}, {order.address.state}, {order.address.country} - {order.address.pin}</p>
-                        </div>
-                    ))
-                )}
+        <div className="flex">
+            <Sidebar onFilterChange={handleFilterChange} />
+            <div className="flex-1 p-6 bg-gray-100">
+                <div className="w-full max-w-4xl mx-auto">
+                    {filteredOrders.length === 0 ? (
+                        <p className="text-center text-gray-500">No orders found</p>
+                    ) : (
+                        filteredOrders.map((order) => (
+                            <div key={order._id} className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 mb-6 transition-transform transform hover:scale-105 hover:shadow-xl">
+                                <div className="flex flex-col md:flex-row">
+                                    <div className="md:w-1/2 mb-4 md:mb-0">
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaCalendarAlt className="text-yellow-500 mr-3" />
+                                            <span><span className="font-bold">Start Date:</span> {new Date(order.booking_info.start_date).toLocaleDateString()}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaCalendarAlt className="text-yellow-500 mr-3" />
+                                            <span><span className="font-bold">End Date:</span> {new Date(order.booking_info.end_date).toLocaleDateString()}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <span><span className="font-bold">Status:</span> 
+                                                <span className={`font-bold ${order.status === 'Pending' ? 'text-yellow-500' : order.status === 'Confirmed' ? 'text-green-500' : 'text-red-500'}`}> {order.status}</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaDollarSign className="text-green-500 mr-3" />
+                                            <span><span className="font-bold">Price:</span> ${order.price}</span>
+                                        </div>
+                                    </div>
+                                    <div className="md:w-1/2">
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaUser className="text-blue-500 mr-3" />
+                                            <span><span className="font-bold">Email:</span> {order.email}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaPhone className="text-teal-500 mr-3" />
+                                            <span><span className="font-bold">Phone:</span> {order.phone_number}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaMapMarkerAlt className="text-red-500 mr-3" />
+                                            <span><span className="font-bold">Address:</span> {order.address.address1}, {order.address.city}, {order.address.state}, {order.address.country} - {order.address.pin}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
             </div>
         </div>
     );
