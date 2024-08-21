@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import ImageSlider from './ImageSlider';
 
 const Booking = ({ drone }) => {
-    //console.log(drone)
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [name, setName] = useState('');
@@ -20,8 +19,6 @@ const Booking = ({ drone }) => {
     const [errors, setErrors] = useState({});
 
     const pricePerDay = drone.newPrice ? parseFloat(drone.newPrice.replace('$', '')) : 100;
-
-    // Prepare the images data for ImageSlider
     const images = [
         {
             original: drone.img,
@@ -54,8 +51,7 @@ const Booking = ({ drone }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let formErrors = {};
-        
-        // Validate required fields
+
         if (!name) formErrors.name = 'Please enter your name.';
         if (!email) formErrors.email = 'Please enter your email.';
         if (!phone) formErrors.phone = 'Please enter your phone number.';
@@ -66,20 +62,18 @@ const Booking = ({ drone }) => {
         if (!address.state) formErrors.state = 'Please enter your state.';
         if (!address.country) formErrors.country = 'Please enter your country.';
         if (!address.pin) formErrors.pin = 'Please enter your PIN code.';
-    
-        // Validate email and phone number format
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const phoneRegex = /^[0-9]{10}$/;
-    
+
         if (email && !emailRegex.test(email)) {
             formErrors.email = 'Please enter a valid email address.';
         }
-    
+
         if (phone && !phoneRegex.test(phone)) {
             formErrors.phone = 'Please enter a valid 10-digit phone number.';
         }
-    
-        // Validate date range
+
         if (startDate && endDate) {
             const start = new Date(startDate);
             const end = new Date(endDate);
@@ -87,45 +81,44 @@ const Booking = ({ drone }) => {
                 formErrors.endDate = 'End date must be on or after the start date.';
             }
         }
-    
+
         if (Object.keys(formErrors).length) {
             setErrors(formErrors);
             return;
         }
-    
-        // Prepare booking data
+
         const bookingData = {
-            user_id:  drone.user_id, // Replace with actual user ID
+            user_id: drone.user_id,
             drone_services_info_id: drone.drone_services_info_id,
-            address : {
+            address: {
                 address1: address.address1,
                 address2: address.address2,
                 city: address.city,
                 state: address.state,
-                country: address.country ,
+                country: address.country,
                 pin: address.pin
             },
-            is_fullday: false, // Adjust if needed
+            is_fullday: false,
             booking_info: {
                 start_date: startDate,
                 end_date: endDate
             },
             price: Number(calculateTotal()),
-            name:name,
-            email:email,
+            name: name,
+            email: email,
             phone_number: phone,
             status: 'Pending',
             cancelled_reason: 'aise hee'
         };
         console.log(bookingData)
-    
+
         try {
             const response = await fetch('/api/booking', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookingData)
             });
-    
+
             const result = await response.json();
             console.log(result)
             if (response.ok) {
@@ -152,165 +145,171 @@ const Booking = ({ drone }) => {
         }
     };
 
-    console.log(errors);
-
     return (
         <div className="md:flex flex-wrap">
             <div className="w-full p-2 md:py-8 md:w-1/2 py-2">
                 <ImageSlider images={images} />
             </div>
             <div className="w-full md:w-1/2 py-4 md:py-8 mx-auto px-2">
-                <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-                    <div className="bg-red-500 p-2 text-center text-white font-extrabold rounded-xl shadow-lg">
-                        <h2 className="text-2xl">Booking Details</h2>
+                <div className="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md">
+                    <div className="bg-red-500 p-2 text-center text-white font-extrabold rounded-xl shadow-lg mb-4">
+                        <h2 className="text-xl">Booking Details</h2>
                     </div>
-                    <form className="py-4 md:py-8 space-y-4" onSubmit={handleSubmit}>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Your Name:
-                                <input
-                                    type="text"
-                                    name="name"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-                            </label>
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1">
+                                    Your Name:
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1">
+                                    Your Email:
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1">
+                                    Phone:
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                    />
+                                    {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1">
+                                    Start Date:
+                                    <input
+                                        type="date"
+                                        name="startDate"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                        value={startDate}
+                                        onChange={(e) => setStartDate(e.target.value)}
+                                    />
+                                    {errors.startDate && <p className="text-red-500 text-sm">{errors.startDate}</p>}
+                                </label>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 font-medium mb-1">
+                                    End Date:
+                                    <input
+                                        type="date"
+                                        name="endDate"
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                        value={endDate}
+                                        onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                    {errors.endDate && <p className="text-red-500 text-sm">{errors.endDate}</p>}
+                                </label>
+                            </div>
                         </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Your Email:
-                                <input
-                                    type="email"
-                                    name="email"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                            </label>
+                        <div className="mt-4">
+                            <h3 className="text-gray-700 font-medium mb-2">Address</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        Address Line 1:
+                                        <input
+                                            type="text"
+                                            name="address1"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.address1}
+                                            onChange={(e) => setAddress({ ...address, address1: e.target.value })}
+                                        />
+                                        {errors.address1 && <p className="text-red-500 text-sm">{errors.address1}</p>}
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        Address Line 2:
+                                        <input
+                                            type="text"
+                                            name="address2"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.address2}
+                                            onChange={(e) => setAddress({ ...address, address2: e.target.value })}
+                                        />
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        City:
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.city}
+                                            onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                                        />
+                                        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        State:
+                                        <input
+                                            type="text"
+                                            name="state"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.state}
+                                            onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                                        />
+                                        {errors.state && <p className="text-red-500 text-sm">{errors.state}</p>}
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        Country:
+                                        <input
+                                            type="text"
+                                            name="country"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.country}
+                                            onChange={(e) => setAddress({ ...address, country: e.target.value })}
+                                        />
+                                        {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-medium mb-1">
+                                        PIN Code:
+                                        <input
+                                            type="text"
+                                            name="pin"
+                                            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
+                                            value={address.pin}
+                                            onChange={(e) => setAddress({ ...address, pin: e.target.value })}
+                                        />
+                                        {errors.pin && <p className="text-red-500 text-sm">{errors.pin}</p>}
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Phone:
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                />
-                                {errors.phone && <p className="text-red-500 text-sm">{errors.phone_number}</p>}
-                            </label>
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Address Line 1:
-                                <input
-                                    type="text"
-                                    name="address1"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.address1}
-                                    onChange={(e) => setAddress({ ...address, address1: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.address1}</p>}
-                            </label>
-
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Address Line 2:
-                                <input
-                                    type="text"
-                                    name="address2"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.address2}
-                                    onChange={(e) => setAddress({ ...address, address2: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.address2}</p>}
-                            </label>
-
-                            <label className="block text-gray-700 font-medium mb-1">
-                                city:
-                                <input
-                                    type="text"
-                                    name="city"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.city}
-                                    onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.city}</p>}
-                            </label>
-
-                            <label className="block text-gray-700 font-medium mb-1">
-                                state
-                                <input
-                                    type="text"
-                                    name="state"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.state}
-                                    onChange={(e) => setAddress({ ...address, state: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.state}</p>}
-                            </label>
-
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Country:
-                                <input
-                                    type="text"
-                                    name="country"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.country}
-                                    onChange={(e) => setAddress({ ...address, country: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.country}</p>}
-                            </label>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Pin:
-                                <input
-                                    type="text"
-                                    name="pin"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={address.pin}
-                                    onChange={(e) => setAddress({ ...address, pin: e.target.value })}
-                                />
-                                {errors.address && <p className="text-red-500 text-sm">{errors.address.pin}</p>}
-                            </label>
-
-                        </div>
-                    
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                Start Date:
-                                <input
-                                    type="date"
-                                    name="startDate"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                />
-                                {errors.startDate && <p className="text-red-500 text-sm">{errors.startDate}</p>}
-                            </label>
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 font-medium mb-1">
-                                End Date:
-                                <input
-                                    type="date"
-                                    name="endDate"
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                />
-                                {errors.endDate && <p className="text-red-500 text-sm">{errors.endDate}</p>}
-                            </label>
-                        </div>
-                        <div className="text-center">
-                            <p className="font-bold text-lg">Total Price: ${calculateTotal()}</p>
-                        </div>
-                        <div className="text-center">
+                        <div className="mt-4 text-right">
+                            <p className="text-gray-700 font-medium">Total Price: ${calculateTotal().toFixed(2)}</p>
                             <button
                                 type="submit"
-                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+                                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 Confirm Booking
                             </button>
