@@ -1,12 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign } from 'react-icons/fa';
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar';
 
 const Orders = () => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -48,10 +49,17 @@ const Orders = () => {
         }
     };
 
+    const filteredBookings = bookings.filter(booking => {
+        if (filter === 'all') return true;
+        if (filter === 'new') return booking.status === 'Pending';
+        if (filter === 'past') return booking.status === 'Confirmed' || booking.status === 'Cancelled';
+        return true;
+    });
+
     return (
         <div className="bg-gray-200 min-h-screen flex flex-col md:flex-row">
             <div className="hidden md:block w-1/4 bg-white shadow-lg p-6 md:p-8">
-                <Sidebar />
+                <Sidebar onFilterChange={setFilter} />
             </div>
             <div className="w-full md:w-3/4 flex flex-col items-center">
                 <div className="w-full md:w-11/12 lg:w-10/12 xl:w-8/12">
@@ -62,7 +70,7 @@ const Orders = () => {
                         {error && (
                             <p className="text-center text-red-600 text-lg">{error}</p>
                         )}
-                        {bookings.map((booking) => (
+                        {filteredBookings.map((booking) => (
                             <div
                                 key={booking._id}
                                 className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-transform transform hover:scale-105"
@@ -94,7 +102,7 @@ const Orders = () => {
                                             <h4 className="text-lg text-gray-600 font-bold">
                                                 <span className="flex items-center">
                                                     <FaMapMarkerAlt className="mr-2 text-indigo-500" />
-                                                <span className="text-indigo-600 ml-1">{booking.drone_services_info_id}</span>
+                                                    <span className="text-indigo-600 ml-1">{booking.drone_services_info_id}</span>
                                                 </span>                                                
                                             </h4>
                                             <div className="mt-4 flex flex-col space-y-2 w-full">
