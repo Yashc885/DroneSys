@@ -7,20 +7,22 @@ import Sidebar from './Sidebar';
 const YourOrders = () => {
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
+    const userId = '66a33bda91814aa9d455ad9c'; 
 
     useEffect(() => {
         const fetchOrders = async () => {
             try {
                 const response = await axios.get('/api/booking');
-                setOrders(response.data);
-                setFilteredOrders(response.data); // Initial display of all orders
+                const userOrders = response.data.filter(order => order.user_id === userId);
+                setOrders(userOrders);
+                setFilteredOrders(userOrders); 
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
         };
 
         fetchOrders();
-    }, []);
+    }, [userId]);
 
     const handleFilterChange = (filter) => {
         switch (filter) {
@@ -37,6 +39,7 @@ const YourOrders = () => {
                 setFilteredOrders(orders);
         }
     };
+    console.log(userId)
 
     return (
         <div className="flex">
