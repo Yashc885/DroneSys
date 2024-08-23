@@ -7,8 +7,8 @@ import Sidebar from './Sidebar';
 const YourOrders = () => {
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
-    const userId = '66a33bda91814aa9d455ad9c'; 
-
+    const userId = localStorage.getItem('user_id'); 
+    console.log(userId)
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -39,8 +39,6 @@ const YourOrders = () => {
                 setFilteredOrders(orders);
         }
     };
-    console.log(userId)
-
     return (
         <div className="flex">
             <Sidebar onFilterChange={handleFilterChange} />

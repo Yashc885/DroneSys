@@ -7,10 +7,22 @@ import { useParams } from 'next/navigation';
 connect();
 
 // Handler for GET requests
-export async function GET() {
+export async function GET(request: Request) {
     try {
-        console.log("one")
-        const droneServices = await DroneService.find();
+        console.log("Request:", request);
+        const searchParams = request.nextUrl.searchParams;
+        const query = searchParams.get('title');
+        console.log("SearchParams:", searchParams);
+        console.log("Query:", query);
+        
+        let droneServices;
+        if (query === null || query === undefined) {
+            console.log('hello ')
+            droneServices = await DroneService.find();
+        } else {
+            droneServices = await DroneService.findById(query);
+        }
+        
         return NextResponse.json(droneServices);
     } catch (error) {
         console.error('Error fetching drone services:', error);
@@ -18,16 +30,17 @@ export async function GET() {
     }
 }
 
-export async function GETProduct(request: Request) {
-    try {
-        console.log("two" , request)
-        const droneServices = await DroneService.find({title:request.useParams()});
-        return NextResponse.json(droneServices);
-    } catch (error) {
-        console.error('Error fetching drone services:', error);
-        return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
-    }
-}
+
+// export async function GET(request: Request) {
+//     try {
+//         console.log("two" , request.params)
+//         const droneServices = await DroneService.findById(request.useParams());
+//         return NextResponse.json(droneServices);
+//     } catch (error) {
+//         console.error('Error fetching drone services:', error);
+//         return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
+//     }
+// }
 
 
 

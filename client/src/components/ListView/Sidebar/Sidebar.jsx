@@ -1,6 +1,7 @@
 import Category from "./Category/Category";
 import Price from "./Price/Price";
-import Memory from "./Memory/Memory";
+// import Memory from "./Memory/Memory";
+import State from "./State/State";
 import { useSearchParams } from "next/navigation";
 const Sidebar = ({  handleChange }) => {
   const searchParams = useSearchParams();
@@ -13,8 +14,9 @@ const Sidebar = ({  handleChange }) => {
         </div>
         <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           <Category handleChange={handleChange} selectedService={service} />
-          <Price handleChange={handleChange} />
-          <Memory handleChange={handleChange} />
+          {/* <Price handleChange={handleChange} /> */}
+          {/* <Memory handleChange={handleChange} /> */}
+          <State handleChange={handleChange} />
         </div>
       </section>
     </div>

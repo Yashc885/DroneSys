@@ -18,7 +18,7 @@ const Booking = ({ drone }) => {
     });
     const [errors, setErrors] = useState({});
 
-    const pricePerDay = drone.newPrice ? parseFloat(drone.newPrice.replace('$', '')) : 100;
+    const pricePerDay = drone.newPrice ? parseFloat(drone.newPrice.replace('$', '')) : 150;
     const images = [
         {
             original: drone.img,
@@ -89,7 +89,7 @@ const Booking = ({ drone }) => {
 
         const bookingData = {
             user_id: drone.user_id,
-            drone_services_info_id: drone.drone_services_info_id,
+            drone_services_info_id: drone.drone_services_id,
             address: {
                 address1: address.address1,
                 address2: address.address2,

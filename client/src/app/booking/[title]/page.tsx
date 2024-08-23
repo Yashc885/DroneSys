@@ -15,7 +15,7 @@ const BookingPage = () => {
             try {
                 const response = await axios.get(`/api/drone-services?title=${title}`);
                 console.log(response.data);
-                setDrone(response.data[0]);
+                setDrone(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

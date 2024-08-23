@@ -17,6 +17,7 @@ function ListView() {
   const [selectedCategory, setSelectedCategory] = useState(service);
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +40,10 @@ function ListView() {
     setSelectedCategory(event.target.value);
   };
 
+  const handleLocationChange = (event) => {
+    setSelectedLocation(event.target.value); 
+  };
+
   const filteredData = useMemo(() => {
     return products
       .filter((product) =>
@@ -47,6 +52,9 @@ function ListView() {
       .filter(({ title, drone_services_id, description, price_info }) => {
         if (!selectedCategory) return true;
         const category = selectedCategory.toLowerCase();
+        const loc = selectedLocation.toLowerCase();
+        console.log(category)
+        console.log(loc)
         return (
           title.toLowerCase() === category ||
           description.memory_storage.toString().toLowerCase() === category ||
@@ -67,7 +75,7 @@ function ListView() {
         <Recommended handleClick={handleCategoryChange} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {filteredData.length ? (
-            filteredData.map(({ images, title, price_info, move }) => (
+            filteredData.map(({ _id ,images, title, price_info, move }) => (
               <Card
                 key={title}
                 img={images[0]?.path}
@@ -76,7 +84,7 @@ function ListView() {
                 reviews="(105 reviews)"
                 prevPrice={price_info.fullday_price}
                 newPrice={price_info.hourly_price}
-                move={move}
+                move={_id}
               />
             ))
           ) : (

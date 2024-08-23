@@ -8,12 +8,13 @@ import { NavbarSimple } from '../../../components/Common/Navbar';
 const ProductPage = () => {
     const { title } = useParams();
     const [productInfo, setProductInfo] = useState();
-
+    console.log("title" , title)
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`/api/drone-services?title=${title}`);
-                setProductInfo(response.data[0]);
+                setProductInfo(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -23,6 +24,7 @@ const ProductPage = () => {
             fetchData();
         }
     }, [title]);
+    console.log(productInfo)
 
     return (
         <div>

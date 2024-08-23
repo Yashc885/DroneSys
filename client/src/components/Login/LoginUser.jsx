@@ -35,6 +35,7 @@ const LoginUser = () => {
       const response = await axios.post("/api/login", { email, password });
       if (response.status === 200) {
         localStorage.setItem('key' , 'success' )
+        localStorage.setItem('user_id' , response.data.user_id)
         setError("");
         toast.success("Successful login");
         router.replace("/");

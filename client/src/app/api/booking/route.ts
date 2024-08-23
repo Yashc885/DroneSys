@@ -9,13 +9,25 @@ const connectToDatabase = async () => {
 };
 
 export async function GET(request: Request) {
-    await connectToDatabase();
-
     try {
-        const bookings = await Booking.find();
-        return NextResponse.json(bookings, { status: 200 });
+        console.log("Request:", request);
+        const searchParams = request.nextUrl.searchParams;
+        const query = searchParams.get('title');
+        console.log("SearchParams:", searchParams);
+        console.log("Query:", query);
+        
+        let droneServices;
+        if (query === null || query === undefined) {
+            console.log('hello ')
+            droneServices = await Booking.find();
+        } else {
+            droneServices = await Booking.findById(query);
+        }
+        
+        return NextResponse.json(droneServices);
     } catch (error) {
-        return NextResponse.json({ error: 'Error fetching bookings' }, { status: 500 });
+        console.error('Error fetching drone services:', error);
+        return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
     }
 }
 
@@ -27,11 +39,6 @@ export async function POST(request: Request) {
 
         // Ensure the incoming data contains all the required fields
         const { user_id, drone_services_info_id, address, is_fullday, booking_info, price, name, email, phone_number, status, cancelled_reason } = data;
-
-        // if (!user_id || !drone_services_info_id || !address || !is_fullday || !booking_info || !price || !name || !email || !phone_number || !status) {
-        //     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-        // }
-
         const booking = new Booking({
             user_id,
             drone_services_info_id,
