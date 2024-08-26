@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa'; 
-import './style.css'
+import './style.css';
+import withAuthAdmin frpm './../withAuthAdmin.js';
 
 const Successful = () => {
   return (
@@ -20,4 +21,4 @@ const Successful = () => {
   );
 };
 
-export default Successful;
+export default withAuthAdmin(Successful);

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import ImageSlider from './ImageSlider';
-
+import withAuthUser from './../withAuthUser.js'
 const Booking = ({ drone }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -321,4 +321,4 @@ const Booking = ({ drone }) => {
     );
 };
 
-export default Booking;
+export default withAuthUser(Booking);
