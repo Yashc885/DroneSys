@@ -6,9 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
-import { Button } from "./Button";
 import { priceFormat } from "@/lib/utils";
-import Link from "next/link";
 import agricul from './../../assets/agricul.png';
 import secu from './../../assets/secu.png';
 import mini from './../../assets/mini.png';
@@ -29,7 +27,7 @@ const Slider = () => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id} className="relative">
-            <Link href={slide.id} >
+            <div className="relative h-full">
               <figure className="relative h-full">
                 <Image
                   src={slide.img}
@@ -50,7 +48,7 @@ const Slider = () => {
                   )}
                 </div>
               </div>
-            </Link>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

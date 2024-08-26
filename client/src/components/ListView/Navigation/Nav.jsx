@@ -14,17 +14,6 @@ const Nav = ({ handleInputChange, query }) => {
           placeholder="Enter your search Drone."
         />
       </div>
-      {/* <div className="flex items-center space-x-4">
-        <a href="#" className="nav-icons">
-          <FiHeart />
-        </a>
-        <a href="#" className="nav-icons">
-          <AiOutlineShoppingCart />
-        </a>
-        <a href="#" className="nav-icons">
-          <AiOutlineUserAdd />
-        </a>
-      </div> */}
     </nav>
   );
 };

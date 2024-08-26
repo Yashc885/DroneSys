@@ -1,16 +1,14 @@
-'use client'
+'use client';
 import { useRouter } from 'next/navigation';
 import "./Category.css";
 import Input from "../../Input";
 
 function Category({ selectedService, handleChange }) {
   const router = useRouter();
-  console.log("selectect" , selectedService)
 
   const handleRadioChange = (event) => {
     const selectedValue = event.target.value;
-    handleChange(event); 
-    router.push(`/listview?service=${selectedValue}`);
+    handleChange('service', selectedValue);
   };
 
   return (
@@ -22,7 +20,7 @@ function Category({ selectedService, handleChange }) {
             onChange={handleRadioChange}
             type="radio"
             value=""
-            name="test"
+            name="service"
             checked={selectedService === ""}
           />
           <span className="checkmark"></span>All
@@ -31,35 +29,35 @@ function Category({ selectedService, handleChange }) {
           handleChange={handleRadioChange}
           value="agriculture"
           title="Agriculture"
-          name="test"
+          name="service"
           checked={selectedService === "agriculture"}
         />
         <Input
           handleChange={handleRadioChange}
           value="photography"
           title="Photography"
-          name="test"
+          name="service"
           checked={selectedService === "photography"}
         />
         <Input
           handleChange={handleRadioChange}
           value="security"
           title="Security"
-          name="test"
+          name="service"
           checked={selectedService === "security"}
         />
         <Input
           handleChange={handleRadioChange}
           value="videography"
           title="Videography"
-          name="test"
+          name="service"
           checked={selectedService === "videography"}
         />
         <Input
           handleChange={handleRadioChange}
           value="mining"
           title="Mining"
-          name="test"
+          name="service"
           checked={selectedService === "mining"}
         />
       </div>
