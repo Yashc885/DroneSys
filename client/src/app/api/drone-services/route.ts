@@ -2,22 +2,18 @@ import { NextResponse } from 'next/server';
 import DroneService from '../../../models/droneServiceModel'; // Adjust the path as needed
 import connect from '../../../Database/config.ts'; // Ensure you have a database connection function
 import { useParams } from 'next/navigation';
-
-// Connect to the database
 connect();
-
-// Handler for GET requests
 export async function GET(request: Request) {
     try {
-        console.log("Request:", request);
+        // console.log("Request:", request);
         const searchParams = request.nextUrl.searchParams;
         const query = searchParams.get('title');
-        console.log("SearchParams:", searchParams);
-        console.log("Query:", query);
+        // console.log("SearchParams:", searchParams);
+        // console.log("Query:", query);
         
         let droneServices;
         if (query === null || query === undefined) {
-            console.log('hello ')
+            // console.log('hello ')
             droneServices = await DroneService.find();
         } else {
             droneServices = await DroneService.findById(query);
@@ -29,23 +25,6 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
     }
 }
-
-
-// export async function GET(request: Request) {
-//     try {
-//         console.log("two" , request.params)
-//         const droneServices = await DroneService.findById(request.useParams());
-//         return NextResponse.json(droneServices);
-//     } catch (error) {
-//         console.error('Error fetching drone services:', error);
-//         return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
-//     }
-// }
-
-
-
-
-// Handler for POST requests
 export async function POST(request: Request) {
     try {
         const data = await request.json();
@@ -95,8 +74,6 @@ export async function PUT(request: Request) {
             location,
             move // Include the new field
         };
-
-        // Remove undefined fields
         Object.keys(updateData).forEach(key => updateData[key] === undefined && delete updateData[key]);
 
         const updatedDroneService = await DroneService.findByIdAndUpdate(_id, updateData, { new: true });
@@ -110,9 +87,6 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: 'Failed to update drone service' }, { status: 500 });
     }
 }
-
-
-// Handler for DELETE requests
 export async function DELETE(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
