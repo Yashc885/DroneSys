@@ -9,6 +9,11 @@ import Image from "next/image";
 import { Button } from "./Button";
 import { priceFormat } from "@/lib/utils";
 import Link from "next/link";
+import agricul from './../../assets/agricul.png';
+import secu from './../../assets/secu.png';
+import mini from './../../assets/mini.png';
+import photo from './../../assets/photo.png';
+import video from './../../assets/video.png';
 
 const Slider = () => {
   return (
@@ -24,7 +29,7 @@ const Slider = () => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id} className="relative">
-            <Link href={`/${slide.id}`}>
+            <Link href={slide.id} >
               <figure className="relative h-full">
                 <Image
                   src={slide.img}
@@ -44,9 +49,6 @@ const Slider = () => {
                     </del>
                   )}
                 </div>
-                <div>
-                  <Button>Buy Now</Button>
-                </div>
               </div>
             </Link>
           </SwiperSlide>
@@ -61,7 +63,7 @@ export default Slider;
 const slides = [
   {
     id: "1",
-    img: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689932562/ecom/slider/realmebuds_wnxmdx.webp",
+    img: agricul,
     title: "Agriculture Drone",
     price: 1799,
     discountPrice: 999,
@@ -69,7 +71,7 @@ const slides = [
   },
   {
     id: "2",
-    img: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689932563/ecom/slider/1_Nord35G-desktop_mgdkzw.webp",
+    img: mini,
     title: "Mining Drone",
     price: 1799,
     discountPrice: 999,
@@ -77,7 +79,7 @@ const slides = [
   },
   {
     id: "3",
-    img: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689932562/ecom/slider/realmebuds_wnxmdx.webp",
+    img: secu,
     title: "Security Drone",
     price: 1799,
     discountPrice: 999,
@@ -85,7 +87,7 @@ const slides = [
   },
   {
     id: "4",
-    img: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689932563/ecom/slider/1_Nord35G-desktop_mgdkzw.webp",
+    img: video,
     title: "Videography Drone",
     price: 1799,
     discountPrice: 999,
@@ -93,7 +95,7 @@ const slides = [
   },
   {
     id: "5",
-    img: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689932562/ecom/slider/realmebuds_wnxmdx.webp",
+    img: photo,
     title: "Photography Drone",
     price: 1799,
     discountPrice: 999,

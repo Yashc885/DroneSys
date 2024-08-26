@@ -6,11 +6,6 @@ import { Listbox, ListboxItem, Input } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
 import Agriculture from "../../assets/agri.svg";
 import dynamic from 'next/dynamic';
-
-// Dynamically import NavbarSimple without SSR
-const NavbarSimple = dynamic(() => import('./../Common/Navbar.jsx'), { ssr: false });
-
-// List of Indian states
 const states = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa',
   'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala',
@@ -49,7 +44,6 @@ const Hero = () => {
 
   return (
     <div>
-      {/* <NavbarSimple /> */}
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="absolute inset-0 -z-10">
           <Image
