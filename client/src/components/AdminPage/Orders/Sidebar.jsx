@@ -11,30 +11,33 @@ const Sidebar = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="w-64 min-h-screen bg-white text-black h-full flex flex-col">
-            <div className="p-4 text-center font-bold text-lg border-b border-gray-700">
+        <div className="w-64 min-h-screen bg-white text-black h-full flex flex-col shadow-lg">
+            <div className="p-4 text-center font-bold text-lg border-b border-gray-300">
                 Orders
             </div>
             <div className="flex flex-col">
                 <button
-                    className={`p-4 flex items-center ${activeFilter === 'all' ? 'bg-red-400' : 'hover:bg-red-500'} border-b border-gray-700`}
+                    aria-label="All Orders"
+                    className={`p-4 flex items-center ${activeFilter === 'all' ? 'bg-red-500 text-white' : 'hover:bg-red-400'} border-b border-gray-300 transition-colors duration-300`}
                     onClick={() => handleFilterChange('all')}
                 >
-                    <FaList className="mr-2" />
+                    <FaList className="mr-3 text-lg" />
                     All Orders
                 </button>
                 <button
-                    className={`p-4 flex items-center ${activeFilter === 'new' ? 'bg-red-400' : 'hover:bg-red-500'} border-b border-gray-700`}
+                    aria-label="New Orders"
+                    className={`p-4 flex items-center ${activeFilter === 'new' ? 'bg-red-500 text-white' : 'hover:bg-red-400'} border-b border-gray-300 transition-colors duration-300`}
                     onClick={() => handleFilterChange('new')}
                 >
-                    <FaClipboardList className="mr-2" />
+                    <FaClipboardList className="mr-3 text-lg" />
                     New Orders
                 </button>
                 <button
-                    className={`p-4 flex items-center ${activeFilter === 'past' ? 'bg-red-400' : 'hover:bg-red-500'} border-b border-gray-700`}
+                    aria-label="Past Orders"
+                    className={`p-4 flex items-center ${activeFilter === 'past' ? 'bg-red-500 text-white' : 'hover:bg-red-400'} border-b border-gray-300 transition-colors duration-300`}
                     onClick={() => handleFilterChange('past')}
                 >
-                    <FaArchive className="mr-2" />
+                    <FaArchive className="mr-3 text-lg" />
                     Past Orders
                 </button>
             </div>

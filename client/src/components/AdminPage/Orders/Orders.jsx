@@ -1,133 +1,92 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone } from 'react-icons/fa';
+import axios from 'axios';
 import Sidebar from './Sidebar';
 
 const Orders = () => {
-    const [bookings, setBookings] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [filter, setFilter] = useState('all');
-
+    const [orders, setOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
+    const userId = localStorage.getItem('vendor_id'); 
+    console.log(userId)
     useEffect(() => {
-        const fetchBookings = async () => {
+        const fetchOrders = async () => {
             try {
-                const response = await fetch('/api/booking');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch bookings');
-                }
-                const data = await response.json();
-                setBookings(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+                const response = await axios.get('/api/booking');
+                const userOrders = response.data.filter(order => order.user_id === userId);
+                setOrders(userOrders);
+                setFilteredOrders(userOrders); 
+            } catch (error) {
+                console.error('Error fetching orders:', error);
             }
         };
 
-        fetchBookings();
-    }, []);
+        fetchOrders();
+    }, [userId]);
 
-    const handleStatusChange = async (id, status) => {
-        try {
-            const response = await fetch(`/api/booking?id=${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to update booking status');
-            }
-            const updatedBooking = await response.json();
-            setBookings((prevBookings) =>
-                prevBookings.map((booking) =>
-                    booking._id === updatedBooking._id ? updatedBooking : booking
-                )
-            );
-        } catch (err) {
-            setError(err.message);
+    const handleFilterChange = (filter) => {
+        switch (filter) {
+            case 'all':
+                setFilteredOrders(orders);
+                break;
+            case 'new':
+                setFilteredOrders(orders.filter(order => order.status === 'Pending'));
+                break;
+            case 'past':
+                setFilteredOrders(orders.filter(order => order.status === 'Confirmed' || order.status === 'Rejected'));
+                break;
+            default:
+                setFilteredOrders(orders);
         }
     };
-
-    const filteredBookings = bookings.filter(booking => {
-        if (filter === 'all') return true;
-        if (filter === 'new') return booking.status === 'Pending';
-        if (filter === 'past') return booking.status === 'Confirmed' || booking.status === 'Cancelled';
-        return true;
-    });
-
     return (
-        <div className="bg-gray-200 min-h-screen flex flex-col md:flex-row">
-            <div className="hidden md:block w-1/4 bg-white shadow-lg p-6 md:p-8">
-                <Sidebar onFilterChange={setFilter} />
-            </div>
-            <div className="w-full md:w-3/4 flex flex-col items-center">
-                <div className="w-full md:w-11/12 lg:w-10/12 xl:w-8/12">
-                    <div className="space-y-6 p-4 rounded-lg">
-                        {loading && (
-                            <p className="text-center text-gray-600 text-lg">Loading bookings...</p>
-                        )}
-                        {error && (
-                            <p className="text-center text-red-600 text-lg">{error}</p>
-                        )}
-                        {filteredBookings.map((booking) => (
-                            <div
-                                key={booking._id}
-                                className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-transform transform hover:scale-105"
-                            >
-                                <div className="flex flex-col md:flex-row justify-between items-center border-b pb-4 mb-4">
-                                    <div className="mb-4 md:mb-0 md:w-[70%]">
-                                        <h3 className="text-2xl font-semibold mb-2">{booking.name}</h3>
-                                        <div className="text-gray-700">
-                                            <p className="flex items-center">
-                                                <FaCalendarAlt className="mr-2 text-blue-500" />
-                                                <strong>From:</strong> {new Date(booking.booking_info.start_date).toLocaleDateString()}
-                                            </p>
-                                            <p className="flex items-center">
-                                                <FaCalendarAlt className="mr-2 text-blue-500" />
-                                                <strong>To:</strong> {new Date(booking.booking_info.end_date).toLocaleDateString()}
-                                            </p>
-                                            <p className="flex items-center">
-                                                <FaDollarSign className="mr-2 text-green-500" />
-                                                <strong>Price:</strong> ${booking.price.toFixed(2)}
-                                            </p>
-                                            <p className="flex ">
-                                                <FaMapMarkerAlt className="mr-2 text-red-500" />
-                                                <strong>Location:</strong> {booking.address.address1}, {booking.address.address2}, {booking.address.city}, {booking.address.state}, {booking.address.country} - {booking.address.pin}
-                                            </p>
+        <div className="flex">
+            <Sidebar onFilterChange={handleFilterChange} />
+            <div className="flex-1 p-6 bg-gray-100">
+                <div className="w-full max-w-4xl mx-auto">
+                    {filteredOrders.length === 0 ? (
+                        <p className="text-center text-gray-500">No orders found</p>
+                    ) : (
+                        filteredOrders.map((order) => (
+                            <div key={order._id} className="bg-white p-6 rounded-lg shadow-lg border border-gray-300 mb-6 transition-transform transform hover:scale-105 hover:shadow-xl">
+                                <div className="flex flex-col md:flex-row">
+                                    <div className="md:w-1/2 mb-4 md:mb-0">
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaCalendarAlt className="text-yellow-500 mr-3" />
+                                            <span><span className="font-bold">Start Date:</span> {new Date(order.booking_info.start_date).toLocaleDateString()}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaCalendarAlt className="text-yellow-500 mr-3" />
+                                            <span><span className="font-bold">End Date:</span> {new Date(order.booking_info.end_date).toLocaleDateString()}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <span><span className="font-bold">Status:</span> 
+                                                <span className={`font-bold ${order.status === 'Pending' ? 'text-yellow-500' : order.status === 'Confirmed' ? 'text-green-500' : 'text-red-500'}`}> {order.status}</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaDollarSign className="text-green-500 mr-3" />
+                                            <span><span className="font-bold">Price:</span> ${order.price}</span>
                                         </div>
                                     </div>
-                                    <div className="md:w-[30%] flex items-center justify-between md:justify-end">
-                                        <div className="flex flex-col items-center">
-                                            <h4 className="text-lg text-gray-600 font-bold">
-                                                <span className="flex items-center">
-                                                    <FaMapMarkerAlt className="mr-2 text-indigo-500" />
-                                                    <span className="text-indigo-600 ml-1">{booking.drone_services_info_id}</span>
-                                                </span>                                                
-                                            </h4>
-                                            <div className="mt-4 flex flex-col space-y-2 w-full">
-                                                <button
-                                                    onClick={() => handleStatusChange(booking._id, 'Confirmed')}
-                                                    className="px-6 py-2 bg-green-500 text-white font-semibold rounded-full shadow-md hover:bg-green-600 transition-all duration-200 transform hover:scale-105"
-                                                >
-                                                    Accept
-                                                </button>
-                                                <button
-                                                    onClick={() => handleStatusChange(booking._id, 'Cancelled')}
-                                                    className="px-6 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-all duration-200 transform hover:scale-105"
-                                                >
-                                                    Decline
-                                                </button>
-                                            </div>
+                                    <div className="md:w-1/2">
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaUser className="text-blue-500 mr-3" />
+                                            <span><span className="font-bold">Email:</span> {order.email}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaPhone className="text-teal-500 mr-3" />
+                                            <span><span className="font-bold">Phone:</span> {order.phone_number}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <FaMapMarkerAlt className="text-red-500 mr-3" />
+                                            <span><span className="font-bold">Address:</span> {order.address.address1}, {order.address.city}, {order.address.state}, {order.address.country} - {order.address.pin}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="mt-4 flex justify-center items-center text-sm text-gray-500">
-                                    <p>Booking ID: {booking._id}</p>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

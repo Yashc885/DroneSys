@@ -5,9 +5,11 @@ import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
 import withAuth from './../withAuth.js'
 const Admin = () => {
+    const router = useRouter(); 
+
     const handleLogout = async () => {
         localStorage.clear();
-        router.push('/')
+        router.push('/'); 
     };
 
     return (

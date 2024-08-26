@@ -37,7 +37,7 @@ const LoginVendor = () => {
 
       if (response.status === 200) {
         localStorage.setItem('key' , 'success' )
-        localStorage.setItem('user_id' , response.data.user_id)        
+        localStorage.setItem('vendor_id' , response.data.user_id)        
         setError("");
         toast.success("Successful login");
         router.replace("/admin");
