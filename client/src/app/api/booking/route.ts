@@ -64,19 +64,26 @@ export async function PUT(request: Request) {
     await connectToDatabase();
 
     try {
-        const url = new URL(request.url);
-        const id = url.searchParams.get('id'); 
-        if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
-
         const data = await request.json();
-        const updatedBooking = await Booking.findByIdAndUpdate(id, data, { new: true });
-        if (!updatedBooking) return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+        const { orderId, status } = data;
+
+        if (!orderId || !status) {
+            return NextResponse.json({ error: 'orderId and status are required' }, { status: 400 });
+        }
+
+        const updatedBooking = await Booking.findByIdAndUpdate(orderId, { status }, { new: true });
+
+        if (!updatedBooking) {
+            return NextResponse.json({ error: 'Booking not found' }, { status: 404 });
+        }
+
         return NextResponse.json(updatedBooking, { status: 200 });
     } catch (error) {
-        console.error(error); 
-        return NextResponse.json({ error: 'Error updating booking' }, { status: 400 });
+        console.error('Error updating booking:', error); 
+        return NextResponse.json({ error: 'Error updating booking' }, { status: 500 });
     }
 }
+
 
 export async function DELETE(request: Request) {
     await connectToDatabase();

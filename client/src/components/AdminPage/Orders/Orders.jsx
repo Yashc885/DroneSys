@@ -8,7 +8,7 @@ const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
     const userId = localStorage.getItem('vendor_id'); 
-    console.log(userId)
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -39,6 +39,21 @@ const Orders = () => {
                 setFilteredOrders(orders);
         }
     };
+
+    const handleStatusChange = async (orderId, newStatus) => {
+        try {
+            await axios.put('/api/booking', { orderId, status: newStatus });
+            setOrders(orders.map(order => 
+                order._id === orderId ? { ...order, status: newStatus } : order
+            ));
+            setFilteredOrders(filteredOrders.map(order =>
+                order._id === orderId ? { ...order, status: newStatus } : order
+            ));
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
+    };
+
     return (
         <div className="flex">
             <Sidebar onFilterChange={handleFilterChange} />
@@ -84,6 +99,22 @@ const Orders = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {order.status === 'Pending' && (
+                                    <div className="flex justify-end mt-4 space-x-4">
+                                        <button 
+                                            onClick={() => handleStatusChange(order._id, 'Confirmed')}
+                                            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
+                                        >
+                                            Accept
+                                        </button>
+                                        <button 
+                                            onClick={() => handleStatusChange(order._id, 'Cancelled')}
+                                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                                        >
+                                            Reject
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
