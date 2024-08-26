@@ -33,7 +33,7 @@ const LoginVendor = () => {
     }
 
     try {
-      const response = await axios.post("/api/login", { email, password });
+      const response = await axios.post("/api/loginvendor", { email, password });
 
       if (response.status === 200) {
         localStorage.setItem('key' , 'success' )

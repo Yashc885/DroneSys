@@ -20,9 +20,9 @@ export async function POST(req: Request) {
             return NextResponse.json({ msg: 'Invalid credentials' }, { status: 409 });
         }
 
-        // Check if user role is 'customer'
-        if (user.role !== 'customer') {
-            return NextResponse.json({ msg: 'Unauthorized access' }, { status: 403 });
+        // Check if user role is 'provider'
+        if (user.role !== 'provider') {
+            return NextResponse.json({ msg: 'Unauthorized access only provider can login ' }, { status: 403 });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
