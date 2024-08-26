@@ -17,8 +17,8 @@ const LoginVendor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -33,12 +33,14 @@ const LoginVendor = () => {
     }
 
     try {
-      const response = await axios.post("/api/vendor/login", { email, password });
+      const response = await axios.post("/api/login", { email, password });
 
       if (response.status === 200) {
+        localStorage.setItem('key' , 'success' )
+        localStorage.setItem('user_id' , response.data.user_id)        
         setError("");
         toast.success("Successful login");
-        router.replace("/dashboard");
+        router.replace("/admin");
       } else {
         setError("Invalid email or password");
         toast.error("Invalid email or password");
@@ -117,7 +119,7 @@ const LoginVendor = () => {
               </button>
               <div className="py-2">
                 <div className="text-center text-md md:text-lg">
-                  <h3 className="text-black">Don&apos;t have an account? {/* Changed */}
+                  <h3 className="text-black">Don&apos;t have an account?
                     <Link href="/register/vendor">
                       <span className="text-blue-300 cursor-pointer"> Register</span>
                     </Link>
