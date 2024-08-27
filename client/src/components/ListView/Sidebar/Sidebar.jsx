@@ -1,19 +1,29 @@
-'use client';
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Category from "./Category/Category";
-import Price from "./Price/Price";
 import State from "./State/State";
 import { useRouter, useSearchParams } from "next/navigation";
+
 
 const Sidebar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Initialize filters from search params
   const [filters, setFilters] = useState({
     service: searchParams.get("service") || "",
     price: searchParams.get("price") || "",
     state: searchParams.get("state") || "",
   });
+
+  // Update filters when searchParams change
+  useEffect(() => {
+    setFilters({
+      service: searchParams.get("service") || "",
+      price: searchParams.get("price") || "",
+      state: searchParams.get("state") || "",
+    });
+  }, [searchParams]);
 
   const handleChange = (filterType, value) => {
     const updatedFilters = { ...filters, [filterType]: value };
@@ -31,7 +41,7 @@ const Sidebar = () => {
         </div>
         <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           <Category handleChange={handleChange} selectedService={filters.service} />
-          <Price handleChange={handleChange} selectedPrice={filters.price} />
+          {/* <Price handleChange={handleChange} selectedPrice={filters.price} /> */}
           <State handleChange={handleChange} selectedLocation={filters.state} />
         </div>
       </section>

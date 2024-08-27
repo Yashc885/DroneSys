@@ -1,4 +1,3 @@
-// ListView.jsx
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
@@ -7,18 +6,18 @@ import Card from "./Card.jsx";
 import Sidebar from "./Sidebar/Sidebar.jsx";
 import Navigation from "./Navigation/Nav.jsx";
 import Recommended from "./Recommended/Recommended.jsx";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AiFillStar } from "react-icons/ai";
-import debounce from "lodash.debounce";
 
 function ListView() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const service = searchParams.get("service") || "";
-  const location = searchParams.get("location") || "";
-  const [selectedCategory, setSelectedCategory] = useState(service);
-  const [selectedLocation, setSelectedLocation] = useState(location);
-  const [query, setQuery] = useState("");
+  const location = searchParams.get("state") || "";
+
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,50 +32,28 @@ function ListView() {
     fetchData();
   }, []);
 
-  const handleInputChange = debounce((event) => {
-    setQuery(event.target.value);
-  }, 300);
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
-  };
-
-  const filteredData = useMemo(() => {
-    return products.filter((product) => {
-      const matchesCategory =
-        !selectedCategory ||
-        product.title.toLowerCase().includes(selectedCategory.toLowerCase());
-
-      const matchesLocation =
-        !selectedLocation ||
-        product.location.toLowerCase().includes(selectedLocation.toLowerCase());
-
-      const matchesQuery = product.title
-        .toLowerCase()
-        .includes(query.toLowerCase());
-
-      return matchesCategory && matchesLocation && matchesQuery;
+  useEffect(() => {
+    // Filter products whenever service or location changes
+    const filteredData = products.filter((product) => {
+      return (
+        (!service || product.drone_services_id.toLowerCase().includes(service.toLowerCase())) &&
+        (!location || product.location.toLowerCase().includes(location.toLowerCase()))
+      );
     });
-  }, [products, query, selectedCategory, selectedLocation]);
+    setFilteredProducts(filteredData);
+  }, [products, service, location]);
 
   return (
     <div className="flex flex-wrap">
       <div className="w-full lg:w-1/6">
-        <Sidebar
-          handleCategoryChange={handleCategoryChange}
-          handleLocationChange={handleLocationChange}
-        />
+        <Sidebar />
       </div>
       <div className="w-full lg:w-5/6 p-2 pl-4 pr-4 ">
-        <Navigation query={query} handleInputChange={handleInputChange} />
-        <Recommended handleClick={handleCategoryChange} />
+        <Navigation />
+        <Recommended handleClick={() => router.push(`/listview?service=${service}`)} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {filteredData.length ? (
-            filteredData.map(({ _id, images, title, price_info, move }) => (
+          {filteredProducts.length ? (
+            filteredProducts.map(({ _id, images, title, price_info, move }) => (
               <Card
                 key={title}
                 img={images[0]?.path}

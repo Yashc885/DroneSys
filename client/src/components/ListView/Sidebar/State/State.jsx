@@ -14,12 +14,14 @@ const indianStates = [
 
 const State = ({ selectedLocation , handleChange }) => {
   const router = useRouter();
-  console.log("selectect state " , selectedLocation)
+ // console.log("selectect state " , selectedLocation)
 
-  const handleRadioChange = (event) => {
+  const handleStateChange = (event) => {
     const selectedValue = event.target.value;
-    handleChange(event); 
-    router.push(`/listview?service=${selectedValue}`);
+    // handleChange(event); 
+    //console.log(selectedValue);
+    // router.push(`/listview?service=${selectedValue}`);
+    handleChange('state', selectedValue);
   };
   
 
@@ -29,7 +31,7 @@ const State = ({ selectedLocation , handleChange }) => {
       <select
         id="state"
         name="state"
-        onChange={handleChange}
+        onChange={handleStateChange}
         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
       >
         <option value="">All States</option>
