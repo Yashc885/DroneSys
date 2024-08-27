@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone } from 'react-icons/fa';
 import axios from 'axios';
@@ -7,15 +8,20 @@ import Sidebar from './Sidebar';
 const YourOrders = () => {
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
-    const userId = localStorage.getItem('user_id'); 
-    console.log(userId)
+    const userId = typeof window !== 'undefined' ? localStorage.getItem('user_id') : null;
+
     useEffect(() => {
         const fetchOrders = async () => {
+            if (!userId) {
+                console.error('User ID not found');
+                return;
+            }
+
             try {
                 const response = await axios.get('/api/booking');
                 const userOrders = response.data.filter(order => order.user_id === userId);
                 setOrders(userOrders);
-                setFilteredOrders(userOrders); 
+                setFilteredOrders(userOrders);
             } catch (error) {
                 console.error('Error fetching orders:', error);
             }
@@ -39,6 +45,7 @@ const YourOrders = () => {
                 setFilteredOrders(orders);
         }
     };
+
     return (
         <div className="flex">
             <Sidebar onFilterChange={handleFilterChange} />
