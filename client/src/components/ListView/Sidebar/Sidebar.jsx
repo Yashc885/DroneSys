@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Category from "./Category/Category";
 import State from "./State/State";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import Price from "./Price/Price";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const Sidebar = () => {
         </div>
         <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           <Category handleChange={handleChange} selectedService={filters.service} />
-          {/* <Price handleChange={handleChange} selectedPrice={filters.price} /> */}
+          <Price handleChange={handleChange} selectedPrice={filters.price} />
           <State handleChange={handleChange} selectedLocation={filters.state} />
         </div>
       </section>

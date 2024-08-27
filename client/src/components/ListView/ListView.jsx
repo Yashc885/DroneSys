@@ -15,6 +15,7 @@ function ListView() {
 
   const service = searchParams.get("service") || "";
   const location = searchParams.get("state") || "";
+  const pricing = searchParams.get("price") || "";
 
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -37,11 +38,12 @@ function ListView() {
     const filteredData = products.filter((product) => {
       return (
         (!service || product.drone_services_id.toLowerCase().includes(service.toLowerCase())) &&
-        (!location || product.location.toLowerCase().includes(location.toLowerCase()))
+        (!location || product.location.toLowerCase().includes(location.toLowerCase())) &&
+        (!pricing || product.price_info.hourly_price.toLowerCase().includes(pricing.toLowerCase()))
       );
     });
     setFilteredProducts(filteredData);
-  }, [products, service, location]);
+  }, [products, service, location , pricing]);
 
   return (
     <div className="flex flex-wrap">
