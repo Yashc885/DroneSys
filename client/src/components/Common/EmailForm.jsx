@@ -31,7 +31,7 @@ const EmailForm = () => {
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full py-3 px-4 border-gray-600 text-black placeholder-gray-200 focus:outline-none"
+          className="w-full py-3 px-4 border-gray-600 text-black placeholder-gray-400 focus:outline-none rounded-sm shadow-sm "
           required
         />
         <button

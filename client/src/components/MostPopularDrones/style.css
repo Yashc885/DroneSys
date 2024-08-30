@@ -1,0 +1,48 @@
+/* Style for the slider arrows */
+.slick-arrow {
+    z-index: 1;
+  }
+  
+  .slick-arrow.slick-next {
+    right: 10px;
+  }
+  
+  .slick-arrow.slick-prev {
+    left: 10px;
+  }
+  
+  /* Parallax effect */
+  .parallax {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Style for the DroneCard component */
+  .drone-card {
+    background-color: #fef2f2; /* bg-red-50 */
+    border: 2px solid #f87171; /* border-red-500 */
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* shadow-lg */
+    margin: 0 2rem; /* mx-8 */
+    height: 300px; /* Adjust height to make the card longer */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes content to the bottom */
+  }
+  
+  /* Ensure the image fits within the card */
+  .drone-card img {
+    object-fit: cover;
+    border-radius: 1.5rem 1.5rem 0 0; /* Rounded top corners */
+  }
+  
+  /* Style for the title and price section */
+  .drone-card .pl-2 {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom */
+  }
+  

@@ -13,6 +13,7 @@ const states = [
   'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
   'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
+import TypeWriterEffect from "./TypeWriterEffect.tsx";
 
 const Hero = () => {
   const [searchLocation, setSearchLocation] = useState("");
@@ -55,14 +56,20 @@ const Hero = () => {
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
         <div className="relative z-10 p-4 sm:p-8 bg-white rounded-xl shadow-lg text-black text-center max-w-4xl w-full mx-4">
-          <div className="py-4">
+        <div className="py-4">
             <div className="text-center flex flex-col gap-2">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
                 Best Service provided specially for you!
               </h2>
               <h3 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold">
                 Explore the world of drones.
               </h3>
+              <h2 className=" text-xl md:text-2xl lg:text-3xl text-red-500 font-bold ">
+              <TypeWriterEffect
+                strings={["Photography. ", "Videography. ", "Security." , "Mining." , "Agriculture"]}
+                  cursor="🚁"
+              />
+            </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
               <div className="relative col-span-1">

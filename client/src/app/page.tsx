@@ -6,6 +6,7 @@ import Service from "./../components/Service/Service.jsx";
 import Footer from "./../components/Common/Footer.jsx";
 import Steps from "./../components/Steps/Steps.jsx";
 import MostPopularDrones from './../components/MostPopularDrones/MostPopularDrones.jsx'
+import Video from './../components/Video/Video.jsx';
 //import Footer from './../components/Common/Footer.jsx';
 export default function Home() {
   const customers = [
@@ -38,8 +39,9 @@ export default function Home() {
       <NavbarSimple />
     <Hero />
     <Service />
+    <MostPopularDrones />    
     <Steps />
-    <MostPopularDrones />
+    <Video />
     <Customer  customers={customers} />
     <Footer />
     </div>

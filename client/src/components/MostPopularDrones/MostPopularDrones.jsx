@@ -5,20 +5,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { FaArrowRight } from 'react-icons/fa';
+import Explore from './../../assets/explore.png';
+import './style.css';
 
 const DroneCard = ({ image, name, price }) => {
-  return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
-      <div className="relative w-full h-48">
-        <Image src={image} alt={name} layout="fill" objectFit="cover" />
+    return (
+      <div className="drone-card">
+        <div className="relative w-full h-3/5">
+          <Image src={image} alt={name} layout="fill" objectFit="cover" />
+        </div>
+        <div className="pl-2">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">{name}</h3>
+          <p className="text-lg font-bold text-black">₹{price.toLocaleString()}</p>
+        </div>
       </div>
-      <div className="p-4 text-center">
-        <h3 className="text-xl font-semibold mb-2">{name}</h3>
-        <p className="text-lg text-blue-500">₹{price.toLocaleString()}</p>
-      </div>
-    </div>
-  );
-};
+    );
+  };
+  
+  
 
 const MostPopularDrones = () => {
   const [sliderRef, setSliderRef] = useState(null);
@@ -26,46 +31,43 @@ const MostPopularDrones = () => {
   const droneData = [
     {
       id: 1,
-      image: "https://www.dji.com/assets/img/drones/mavic-air-2.jpg",
-      name: "DJI Mavic Air 2",
-      price: 79999,
+      image: Explore,
+      name: "DJI_Phantom",
+      price: 3999,
     },
     {
       id: 2,
-      image: "https://www.dji.com/assets/img/drones/mini-3-pro.jpg",
-      name: "DJI Mini 3 Pro",
-      price: 49999,
+      image: Explore,
+      name: "Dji_Promises6",
+      price: 6999,
     },
     {
       id: 3,
-      image: "https://www.dji.com/assets/img/drones/air-2s.jpg",
-      name: "DJI Air 2S",
-      price: 99999,
-    },
-    {
-      id: 4,
-      image: "https://autelrobotics.com/wp-content/uploads/2022/05/EVO-Nano-Plus.jpg",
-      name: "Autel Robotics EVO Nano+",
-      price: 39999,
-    },
-    {
-      id: 5,
-      image: "https://www.parrot.com/images/anafi-usa.jpg",
-      name: "Parrot Anafi USA",
-      price: 49999,
+      image: Explore,
+      name: "DJI_Mavic Pro",
+      price: 12999,
     },
   ];
-  
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
     arrows: true,
-    nextArrow: <button className="slick-arrow slick-next bg-blue-500 text-white">Next</button>,
-    prevArrow: <button className="slick-arrow slick-prev bg-blue-500 text-white">Previous</button>,
+    nextArrow: (
+      <button className="slick-arrow slick-next bg-white text-black border border-gray-300 rounded-full shadow-lg p-2">
+        <FaArrowRight />
+      </button>
+    ),
+    prevArrow: (
+      <button className="slick-arrow slick-prev bg-white text-black border border-gray-300 rounded-full shadow-lg p-2">
+        <FaArrowRight className="transform rotate-180" />
+      </button>
+    ),
     responsive: [
       {
         breakpoint: 1024,
@@ -83,21 +85,40 @@ const MostPopularDrones = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Most Popular Drones</h2>
-        <Link href="/listview">
-          <div className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
-            Explore
+    <>
+    {/* <div className="flex justify-center mb-8">
+        <div className="w-9/12 border-t border-gray-300"></div>
+    </div> */}
+    <div
+      className="p-6 parallax"
+      style={{
+        backgroundImage: 'url(https://w0.peakpx.com/wallpaper/552/378/HD-wallpaper-flying-black-drone.jpg)',
+      }}
+    >
+      <div className="md:flex justify-between items-center mb-6">
+        <div className="md:w-[25%] mb-6 md:mb-0">
+          <h2 className="text2xl md:text-3xl lg:text-4xl font-bold text-white">Most Popular Drones</h2>
+          <div className="py-2">
+            <p className="text-lg text-gray-300 mb-4">Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.</p>
           </div>
-        </Link>
+          <div>
+            <Link href="/listview">
+              <div className="inline-block bg-red-500 text-white px-6 py-2 rounded-full shadow-xl hover:bg-red-600 transition duration-300 items-center text-center">
+                Explore
+              </div>
+            </Link>
+          </div>
+        </div>
+        <div className="md:w-[75%]">
+          <Slider ref={setSliderRef} {...settings} className="space-y-8">
+            {droneData.map((drone) => (
+              <DroneCard key={drone.id} {...drone} />
+            ))}
+          </Slider>
+        </div>
       </div>
-      <Slider ref={setSliderRef} {...settings} className="space-y-6">
-        {droneData.map((drone) => (
-          <DroneCard key={drone.id} {...drone} />
-        ))}
-      </Slider>
     </div>
+    </>
   );
 };
 

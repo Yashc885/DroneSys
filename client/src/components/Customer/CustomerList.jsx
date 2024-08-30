@@ -32,9 +32,9 @@ const CustomerList = ({ customers }) => {
 
   return (
     <>
-      <div className="flex justify-center mb-8">
+      {/* <div className="flex justify-center mb-8">
         <div className="w-9/12 border-t border-gray-300"></div>
-      </div>
+      </div> */}
       <div className="slider-container p-6 md:p-10">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-semibold text-red-500 mb-2">Testimonial</h2>
