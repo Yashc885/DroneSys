@@ -1,34 +1,57 @@
 import React from 'react';
-
+import Image from 'next/image';
+import Explore from './../../assets/explore.png';
+import './style.css'
 const Video = () => {
   return (
     <>
-      <div className="w-full flex flex-col items-center text-center py-8 px-4 ">
-      <h1 className="text-xl md:text-3xl font-extrabold text-red-500">Massive payload due to increase Thanks To</h1>
-        <h2 className="text-xl md:text-3xl font-extrabold mb-4">Coaxial Twin Router  </h2>
-        <div className="items-center text-center w-3/4">
-        <p className="text-md md:text-lg mb-4 text-black">
-          The Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fermentum purus eget leo suscipit, 
-          id luctus arcu pulvinar. Integer aliquet libero ne
-        </p>
+      <div className="parallax1-background relative w-full flex flex-col items-center text-center py-12 px-6">
+        <h1 className="text-xl md:text-3xl font-bold text-red-600">
+          Massive Payload Increase Thanks To The
+        </h1>
+        <h2 className="text-2xl md:text-4xl font-extrabold mb-6 text-white">
+          Coaxial Twin Rotor
+        </h2>
+        <div className="text-center w-full md:w-3/4 lg:w-2/3 mx-auto">
+          <p className="text-md md:text-lg mb-6 text-white leading-relaxed">
+            The AGRAS T40 features a coaxial twin rotor design that increases the payload capacity by 30% with a maximum payload of 50 kg and good.
+          </p>
         </div>
       </div>
-      <div className="py-4 "></div>
+      <div className="py-4"></div>
+      <div className="flex items-center justify-center mx-auto">
+  <div className="relative flex items-center justify-center w-3/4 py-10 md:py-12 px-4 bg-red-400 rounded-tl-[100px] rounded-br-[100px]">
+    <div className="relative w-3/4 max-w-5xl mx-auto">
+      <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden shadow-lg">
+        <iframe
+          className="w-full h-full"
+          src="https://www.youtube.com/embed/kcfs1-ryKWE?si=WuFHHDwZcP6-W8fd"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </div>
+    <div className="absolute left-4 md:left-12 top-4 md:top-8 w-20 md:w-32 h-auto">
+      <Image
+        src={Explore}
+        alt="Left Drone"
+        layout="responsive"
+        objectFit="contain"
+      />
+    </div>
+    <div className="absolute right-4 md:right-12 bottom-4 md:bottom-8 w-20 md:w-32 h-auto">
+      <Image
+        src={Explore}
+        alt="Right Drone"
+        layout="responsive"
+        objectFit="contain"
+      />
+    </div>
+  </div>
+</div>
 
-      <div className="relative w-full flex items-center justify-center py-8 md:py-12  px-4">
-        <div className="relative w-full max-w-3xl  h-48 md:h-60 bg-red-500 rounded-3xl shadow-xl flex flex-col items-center ">
-          <div className="absolute top-[-40%] left-1/2 transform -translate-x-1/2 w-3/4 max-w-4xl rounded-full">
-            <iframe
-              className="w-full h-56 rounded-3xl md:rounded-full"
-              src="https://www.youtube.com/embed/kcfs1-ryKWE?si=WuFHHDwZcP6-W8fd"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      </div>
     </>
   );
 };

@@ -1,0 +1,9 @@
+.parallax1-background {
+    background-image: url('https://w0.peakpx.com/wallpaper/552/378/HD-wallpaper-flying-black-drone.jpg'); /* Replace with your background image URL */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px; 
+  }
+  

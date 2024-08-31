@@ -71,9 +71,6 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
           />
           {showProfileMenu && (
             <div className="absolute -right-12 md:mt-48 w-36 bg-white shadow-lg rounded-lg z-1000 transition-opacity duration-300 opacity-100">
-              <Link href="/you/profile" className="block p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Your Profile">
-                Your Profile
-              </Link>
               <Link href="/you/orders" className="block p-2 text-black text-md md:text-lg hover:text-red-400" aria-label="Your Orders">
                 Your Orders
               </Link>
