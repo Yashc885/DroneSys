@@ -64,7 +64,7 @@ const RegisterVendor2 = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col justify-center sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')" }}>
       <div className="sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
           <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register Vendor</h1>

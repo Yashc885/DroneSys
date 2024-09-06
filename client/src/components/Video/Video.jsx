@@ -20,11 +20,11 @@ const Video = () => {
       </div>
       <div className="py-4"></div>
       <div className="flex items-center justify-center mx-auto">
-  <div className="relative flex items-center justify-center w-3/4 py-10 md:py-12 px-4 bg-red-400 rounded-tl-[100px] rounded-br-[100px]">
+  <div className="relative flex items-center justify-center w-3/4 py-20 px-4 bg-red-500 rounded-tl-[100px] rounded-br-[100px]">
     <div className="relative w-3/4 max-w-5xl mx-auto">
-      <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden shadow-lg">
+      <div className="aspect-w-16 aspect-h-32 rounded-3xl overflow-hidden shadow-lg">
         <iframe
-          className="w-full h-full"
+          className="w-full  h-56 md:h-96"
           src="https://www.youtube.com/embed/kcfs1-ryKWE?si=WuFHHDwZcP6-W8fd"
           title="YouTube video player"
           frameBorder="0"

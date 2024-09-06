@@ -52,7 +52,7 @@ const RegisterUser = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col justify-center  sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')" }}>
       <div className=" sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
           <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register</h1>
@@ -113,7 +113,7 @@ const RegisterUser = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -128,12 +128,12 @@ const RegisterUser = () => {
                   Accept our terms and privacy policy
                 </label>
               </div>
-            </div>
+            </div> */}
 
-            <div>
+            <div className="py-2 md:py-4 ">
               <button
                 type="submit"
-                className="flex w-full border border-black justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full border border-black justify-center rounded-md  bg-indigo-600 hover:bg-indigo-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Register
               </button>
@@ -142,7 +142,7 @@ const RegisterUser = () => {
               </p>
             </div>
             <div>
-            <div className="relative mt-10">
+            <div className="relative">
               <div
                 className="absolute inset-0 flex items-center"
                 aria-hidden="true"
@@ -202,7 +202,7 @@ const RegisterUser = () => {
           <h3 className="text-black">
             Already have an account? 
             <Link href="/login/user">
-              <span className="text-blue-300 cursor-pointer"> Login</span>
+              <span className="text-indigo-600 cursor-pointer"> Login</span>
             </Link>
           </h3>
         </div>

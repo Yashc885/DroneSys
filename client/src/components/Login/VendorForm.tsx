@@ -58,8 +58,34 @@ const VendorForm: React.FC = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', maxWidth: '600px', margin: 'auto' }}>
-            <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px', padding: '20px', border: '1px solid #ddd', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+        <div
+            style={{
+                backgroundImage: "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px',
+            }}
+        >
+            <form
+                onSubmit={handleSubmit}
+                style={{
+                    width: '100%',
+                    maxWidth: '600px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px',
+                    padding: '20px',
+                    border: '1px solid #ddd',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)' // Semi-transparent background for better readability
+                }}
+            >
                 <input
                     type="text"
                     placeholder="Company Name"

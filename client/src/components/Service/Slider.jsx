@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
 import Image from "next/image";
 import { priceFormat } from "@/lib/utils";
 import agricul from './../../assets/agricul.png';
@@ -18,9 +17,8 @@ const Slider = () => {
     <section className="relative">
       <Swiper
         slidesPerView={1}
-        navigation
         autoplay={{ delay: 3000, disableOnInteraction: false }} 
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
         loop={true}
         className="relative sm:h-[350px] h-[200px]"
@@ -38,11 +36,11 @@ const Slider = () => {
                 />
               </figure>
               <div className="absolute left-12 top-1/2 -translate-y-1/2 md:max-w-sm max-w-xs">
-                <h2 className="md:text-6xl text-4xl">{slide.title}</h2>
+                <h2 className="  md:text-6xl text-xl">{slide.title}</h2>
                 <div className="flex items-center gap-2 py-4">
-                  <span className="text-2xl">{priceFormat(slide.price)}</span>
+                  <span className="md:text-2xl text-lg ">{priceFormat(slide.price)}</span>
                   {slide.discountPrice && (
-                    <del className="text-gray-500 text-xl">
+                    <del className="text-gray-500 md:text-xl text-lg ">
                       {priceFormat(slide.discountPrice)}
                     </del>
                   )}
@@ -62,7 +60,7 @@ const slides = [
   {
     id: "1",
     img: agricul,
-    title: "Agriculture Drone",
+    title: "Agriculture ",
     price: 1799,
     discountPrice: 999,
     align: "left",
@@ -70,7 +68,7 @@ const slides = [
   {
     id: "2",
     img: mini,
-    title: "Mining Drone",
+    title: "Mining ",
     price: 1799,
     discountPrice: 999,
     align: "left",
@@ -78,7 +76,7 @@ const slides = [
   {
     id: "3",
     img: secu,
-    title: "Security Drone",
+    title: "Security ",
     price: 1799,
     discountPrice: 999,
     align: "left",
@@ -86,7 +84,7 @@ const slides = [
   {
     id: "4",
     img: video,
-    title: "Videography Drone",
+    title: "Videography ",
     price: 1799,
     discountPrice: 999,
     align: "left",
@@ -94,7 +92,7 @@ const slides = [
   {
     id: "5",
     img: photo,
-    title: "Photography Drone",
+    title: "Photography ",
     price: 1799,
     discountPrice: 999,
     align: "left",

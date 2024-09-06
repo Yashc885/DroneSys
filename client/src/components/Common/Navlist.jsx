@@ -55,8 +55,8 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
         </MenuList>
       </Menu>
       <li>
-        <Link href="/resources" className="flex items-center p-2 text-black text-md md:text-lg hover:text-red-400 rounded" aria-label="Resources">
-          Resources
+        <Link href="/contact" className="flex items-center p-2 text-black text-md md:text-lg hover:text-red-400 rounded" aria-label="Resources">
+          Contact
         </Link>
       </li>
       {user ? (

@@ -38,6 +38,8 @@ const InformationCard = ({ title, description, icon }) => (
 const Security = () => {
   const [goUp, setGoUp] = useState(false);
   const [review, setReview] = useState(0);
+  const [stats, setStats] = useState({ farms: 0, projects: 0, years: 0 });
+  const [showStats, setShowStats] = useState(false);
   const reviewsLength = customerReviews.length - 1;
 
   const scrollToTop = () => {
@@ -66,6 +68,35 @@ const Security = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Counter logic
+    let counterInterval;
+    if (!showStats) {
+      const startTime = Date.now();
+      const duration = 1000; // Duration of the counter animation in milliseconds
+
+      const initialStats = { farms: 0, projects: 0, years: 0 };
+      const targetStats = { farms: 1000, projects: 500, years: 8 };
+
+      counterInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1); // Normalize progress to 0-1
+        setStats({
+          farms: Math.floor(targetStats.farms * progress),
+          projects: Math.floor(targetStats.projects * progress),
+          years: Math.floor(targetStats.years * progress),
+        });
+
+        if (progress === 1) {
+          clearInterval(counterInterval);
+          setShowStats(true);
+        }
+      }, 20); 
+    }
+
+    return () => clearInterval(counterInterval);
+  }, [showStats]);
+
   const { name, location, message } = customerReviews[review] || {};
 
   return (
@@ -80,15 +111,15 @@ const Security = () => {
             </p>
             <div className="text-stats">
               <div className="text-stats-container">
-                <p>500+</p>
+              <p>{showStats ? `${stats.farms}+` : '...'}</p>
                 <p>Secure Installations</p>
               </div>
               <div className="text-stats-container">
-                <p>300+</p>
+              <p>{showStats ? `${stats.projects}+` : '...'}</p>
                 <p>Satisfied Clients</p>
               </div>
               <div className="text-stats-container">
-                <p>10+</p>
+              <p>{showStats ? `${stats.years}+` : '...'}</p>
                 <p>Years of Expertise</p>
               </div>
             </div>
@@ -142,42 +173,41 @@ const Security = () => {
       </div>
 
       {/* Reviews Section */}
-      <div className="review-section" id="reviews">
-        <div className="rw-text-content">
-          <p className="rw-text-title text-center items-center">
-            More over <span className="rw-text-num">1500+ Clients</span>
-          </p>
-          <p className="rw-text-desc text-center items-center">Hear from our satisfied clients</p>
-          <p className="rw-text-format py-4 flex items-center justify-center text-center w-[80%] mx-auto">
-          <span className="rw-text-quote1 text-2xl">[</span>
-          <span className="rw-review mx-2 text-lg">{message}</span>
-          <span className="rw-text-quote2 text-2xl">]</span>
-          </p>
-
-          <div className="rw-authors">
-            <div className="rw-names">
-              <p className="rw-reviewer-name">{name}</p>
-              <p className="rw-reviewer-place">{location}</p>
-            </div>
-            <div className="rw-btns">
-              <button
-                className="rw-next-btn"
-                type="button"
-                onClick={backBtnClick}
-              >
-                ←
-              </button>
-              <button
-                className="rw-next-btn"
-                type="button"
-                onClick={frontBtnClick}
-              >
-                →
-              </button>
-            </div>
+      <div className="review-section py-8" id="reviews">
+      <div className="rw-text-content text-center mx-auto max-w-4xl">
+        <p className="rw-text-title text-2xl font-bold mb-4">
+          More over <span className="rw-text-num font-bold">1500+ secured</span>
+        </p>
+        <p className="rw-text-desc text-lg mb-8">Hear from our satisfied clients</p>
+        <div className="rw-text-format py-4 flex flex-col items-center justify-center">
+          <span className="rw-text-quote1 text-4xl">"</span>
+          <p className="rw-review mx-4 text-lg">{message}</p>
+          <span className="rw-text-quote2 text-4xl">"</span>
+        </div>
+        <div className="rw-authors mt-8">
+          <div className="rw-names mb-4">
+            <p className="rw-reviewer-name text-lg font-semibold">{name}</p>
+            <p className="rw-reviewer-place text-sm text-gray-600">{location}</p>
+          </div>
+          <div className="rw-btns flex justify-center gap-4">
+            <button
+              className="rw-next-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-lg shadow-sm hover:bg-gray-300"
+              type="button"
+              onClick={backBtnClick}
+            >
+              ←
+            </button>
+            <button
+              className="rw-next-btn px-4 py-2 bg-gray-200 text-gray-800 rounded-lg shadow-sm hover:bg-gray-300"
+              type="button"
+              onClick={frontBtnClick}
+            >
+              →
+            </button>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

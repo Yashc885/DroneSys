@@ -31,12 +31,12 @@ const EmailForm = () => {
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full py-3 px-4 border-gray-600 text-black placeholder-gray-400 focus:outline-none rounded-sm shadow-sm "
+          className="w-full py-3 px-4 border-gray-600 text-black placeholder-gray-400 focus:outline-none  shadow-md "
           required
         />
         <button
           type="submit"
-          className="  bg-blue-400 py-3 px-4 text-white font-semibold "
+          className="  bg-red-500 py-3 px-4   text-white font-semibold "
           disabled={loading}
         >
           send

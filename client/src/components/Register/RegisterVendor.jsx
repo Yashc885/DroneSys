@@ -45,14 +45,14 @@ const RegisterVendor = () => {
       });
       
       toast.success("Registration successful");
-      router.push("/");
+      router.push("/register/vendor2");
     } catch (err) {
       toast.error(err.response?.data?.msg || "Registration failed");
     }
   };
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col justify-center sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')" }}>
       <div className="sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
           <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register</h1>
@@ -114,7 +114,7 @@ const RegisterVendor = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
                   id="accept-terms"
@@ -129,12 +129,12 @@ const RegisterVendor = () => {
                   Accept our terms and privacy policy
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button
                 type="submit"
-                className="flex w-full border border-black justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full border border-black justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Register
               </button>
@@ -193,7 +193,7 @@ const RegisterVendor = () => {
                 </span>
               </button>
             </div>
-            <p className="text-red-600 text-center text-[16px] my-4">
+            <p className="text-red-600 text-center text-[16px] ">
               {error && error}
             </p>
           </div>
@@ -201,7 +201,7 @@ const RegisterVendor = () => {
           <h3 className="text-black">
             Already have an account? 
             <Link href="/login/vendor">
-              <span className="text-blue-300 cursor-pointer"> Login</span>
+              <span className="text-indigo-500 cursor-pointer"> Login</span>
             </Link>
           </h3>
         </div>
