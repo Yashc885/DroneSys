@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone, FaClipboardList } from 'react-icons/fa';
 import axios from 'axios';
 import Sidebar from './Sidebar';
 
@@ -33,7 +33,10 @@ const Orders = () => {
                 setFilteredOrders(orders.filter(order => order.status === 'Pending'));
                 break;
             case 'past':
-                setFilteredOrders(orders.filter(order => order.status === 'Confirmed' || order.status === 'Rejected'));
+                setFilteredOrders(orders.filter(order => order.status === 'Confirmed' || order.status === 'Cancelled'));
+                break;
+                case 'upcoming':
+                setFilteredOrders(orders.filter(order => order.status === 'Confirmed'));
                 break;
             default:
                 setFilteredOrders(orders);
@@ -67,6 +70,10 @@ const Orders = () => {
                                 <div className="flex flex-col md:flex-row">
                                     <div className="md:w-1/2 mb-4 md:mb-0">
                                         <div className="flex items-center mb-3 text-gray-700">
+                                            <FaClipboardList className="text-yellow-500 mr-3" />
+                                            <span><span className="font-bold text-purple-600 text-xl md:text-2xl">Service: </span>{order.drone_services_info_id}</span>
+                                        </div>
+                                        <div className="flex items-center mb-3 text-gray-700">
                                             <FaCalendarAlt className="text-yellow-500 mr-3" />
                                             <span><span className="font-bold">Start Date:</span> {new Date(order.booking_info.start_date).toLocaleDateString()}</span>
                                         </div>
@@ -75,16 +82,16 @@ const Orders = () => {
                                             <span><span className="font-bold">End Date:</span> {new Date(order.booking_info.end_date).toLocaleDateString()}</span>
                                         </div>
                                         <div className="flex items-center mb-3 text-gray-700">
-                                            <span><span className="font-bold">Status:</span> 
-                                                <span className={`font-bold ${order.status === 'Pending' ? 'text-yellow-500' : order.status === 'Confirmed' ? 'text-green-500' : 'text-red-500'}`}> {order.status}</span>
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center mb-3 text-gray-700">
                                             <FaDollarSign className="text-green-500 mr-3" />
                                             <span><span className="font-bold">Price:</span> ${order.price}</span>
                                         </div>
                                     </div>
                                     <div className="md:w-1/2">
+                                        <div className="flex items-center mb-3 text-gray-700">
+                                            <span><span className="font-bold">Status:</span> 
+                                                <span className={`font-bold ${order.status === 'Pending' ? 'text-yellow-500' : order.status === 'Confirmed' ? 'text-green-500' : 'text-red-500'}`}> {order.status}</span>
+                                            </span>
+                                        </div>                                    
                                         <div className="flex items-center mb-3 text-gray-700">
                                             <FaUser className="text-blue-500 mr-3" />
                                             <span><span className="font-bold">Email:</span> {order.email}</span>
@@ -98,6 +105,10 @@ const Orders = () => {
                                             <span><span className="font-bold">Address:</span> {order.address.address1}, {order.address.city}, {order.address.state}, {order.address.country} - {order.address.pin}</span>
                                         </div>
                                     </div>
+                                </div>
+                                <div className="my-4 border-t border-gray-300"></div>
+                                <div className="text-center text-gray-400 font-semibold text-sm">
+                                    Booking ID: {order._id}
                                 </div>
                                 {order.status === 'Pending' && (
                                     <div className="flex justify-end mt-4 space-x-4">

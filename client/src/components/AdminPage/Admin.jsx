@@ -13,7 +13,7 @@ const Admin = () => {
     };
 
     return (
-        <div className='container-fluid mt-3 rounded-md shadow-lg' style={{ maxWidth: '100%', margin: "auto" }}>
+        <div className='container-fluid mt-3 rounded-md shadow-2xl' style={{ maxWidth: '100%', margin: "auto" }}>
             <div className='bg-white py-2 rounded-t-md shadow-md'>
                 <div className='container mx-auto px-4'>
                     <div className='flex justify-between items-center'>
@@ -27,7 +27,7 @@ const Admin = () => {
                             </button>
                             <Button
                                 variant="link"
-                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-blue-500 hover:text-white font-semibold"
+                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-red-500 hover:text-white font-semibold"
                             >
                                 <Link href="/admin/dashboard">
                                     Dashboard
@@ -35,7 +35,7 @@ const Admin = () => {
                             </Button>
                             <Button
                                 variant="link"
-                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-blue-500 hover:text-white font-semibold"
+                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-red-500 hover:text-white font-semibold"
                             >
                                 <Link href="/admin/orders">
                                     Orders
@@ -43,7 +43,7 @@ const Admin = () => {
                             </Button>
                             <Button
                                 variant="link"
-                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-blue-500 hover:text-white font-semibold"
+                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-red-500 hover:text-white font-semibold"
                             >
                                 <Link href="/admin/products">
                                     Products
@@ -51,7 +51,7 @@ const Admin = () => {
                             </Button>
                             <Button
                                 variant="link"
-                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-blue-500 hover:text-white font-semibold"
+                                className="text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:bg-red-500 hover:text-white font-semibold"
                             >
                                 <Link href="/admin/subscribe">
                                     Subscribe

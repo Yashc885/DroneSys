@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { FaClipboardList, FaArchive, FaList } from 'react-icons/fa';
+import { FaClipboardList, FaArchive, FaList, FaCalendarAlt } from 'react-icons/fa';
 
 const Sidebar = ({ onFilterChange }) => {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -11,7 +11,7 @@ const Sidebar = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="w-64 min-h-screen bg-white text-black h-full flex flex-col shadow-lg">
+        <div className="w-64 min-h-screen bg-white text-black h-full flex flex-col ">
             <div className="p-4 text-center font-bold text-lg border-b border-gray-300">
                 Orders
             </div>
@@ -39,6 +39,14 @@ const Sidebar = ({ onFilterChange }) => {
                 >
                     <FaArchive className="mr-3 text-lg" />
                     Past Orders
+                </button>
+                <button
+                    aria-label="Upcoming Orders"
+                    className={`p-4 flex items-center ${activeFilter === 'upcoming' ? 'bg-red-500 text-white' : 'hover:bg-red-400'} border-b border-gray-300 transition-colors duration-300`}
+                    onClick={() => handleFilterChange('upcoming')}
+                >
+                    <FaCalendarAlt className="mr-3 text-lg" />
+                    Upcoming Orders
                 </button>
             </div>
         </div>
