@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import DroneService from '../../../models/droneServiceModel'; // Adjust the path as needed
 import connect from '../../../Database/config.ts'; // Ensure you have a database connection function
-import { useParams } from 'next/navigation';
 connect();
+
 export async function GET(request: Request) {
     try {
         // console.log("Request:", request);
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
             // console.log('hello ')
             droneServices = await DroneService.find();
         } else {
-            droneServices = await DroneService.findById(query);
+            droneServices = await DroneService.find({ title: query });
         }
         
         return NextResponse.json(droneServices);
@@ -25,10 +25,11 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Failed to fetch drone services' }, { status: 500 });
     }
 }
+
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const { user_id, drone_services_id, title, description, price_info, images, location } = data;
+        const { user_id, drone_services_id, title, description, price_info, images, location, available } = data;
 
         if (!user_id || !drone_services_id || !title || !description || !price_info || !location) {
             return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
             price_info,
             images: images || [],
             location,
-            // move 
+            available, // Added available field here
         });
 
         await newDroneService.save();
@@ -53,12 +54,11 @@ export async function POST(request: Request) {
     }
 }
 
-
 // Handler for PUT requests (update)
 export async function PUT(request: Request) {
     try {
         const data = await request.json();
-        const { _id, user_id, drone_services_id, title, description, price_info, images, location, move } = data;
+        const { _id, user_id, drone_services_id, title, description, price_info, images, location, available } = data;
 
         if (!_id) {
             return NextResponse.json({ error: 'Drone service ID is required' }, { status: 400 });
@@ -72,7 +72,7 @@ export async function PUT(request: Request) {
             price_info,
             images,
             location,
-            move // Include the new field
+            available, // Added available field here
         };
         Object.keys(updateData).forEach(key => updateData[key] === undefined && delete updateData[key]);
 
@@ -87,6 +87,7 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: 'Failed to update drone service' }, { status: 500 });
     }
 }
+
 export async function DELETE(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
@@ -107,4 +108,3 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ error: 'Failed to delete drone service' }, { status: 500 });
     }
 }
-
