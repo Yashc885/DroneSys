@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         const data = await request.json();
 
         // Ensure the incoming data contains all the required fields
-        const { user_id, drone_services_info_id, address, is_fullday, booking_info, price, name, email, phone_number, status, cancelled_reason } = data;
+        const { user_id, drone_services_info_id, address, is_fullday, booking_info, price, name, email, phone_number, status, cancelled_reason , description , product_id , title , location  } = data;
         const booking = new Booking({
             user_id,
             drone_services_info_id,
@@ -50,7 +50,11 @@ export async function POST(request: Request) {
             email,
             phone_number,
             status,
-            cancelled_reason
+            cancelled_reason,
+            description,
+            product_id ,
+            title ,
+            location
         });
             console.log("booking" , booking)
         await booking.save();

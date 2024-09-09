@@ -1,7 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import ImageSlider from './ImageSlider';
-import withAuthUser from './../withAuthUser.js'
+import withAuthUser from './../withAuthUser.js';
+
 const Booking = ({ drone }) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -87,6 +88,8 @@ const Booking = ({ drone }) => {
             return;
         }
 
+        console.log( "GBP:" , drone.description.description , drone.title , drone.location , drone._id);
+
         const bookingData = {
             user_id: drone.user_id,
             drone_services_info_id: drone.drone_services_id,
@@ -108,9 +111,12 @@ const Booking = ({ drone }) => {
             email: email,
             phone_number: phone,
             status: 'Pending',
-            cancelled_reason: 'aise hee'
+            cancelled_reason: 'None',
+            description: drone.description.description,  // Ensure description is being correctly passed            
+            product_id: drone._id,  // Ensure that _id is being correctly passed
+            title: drone.title,     // Ensure title is being correctly passed
+            location: drone.location,  // Ensure location is being correctly passed
         };
-        console.log(bookingData)
 
         try {
             const response = await fetch('/api/booking', {
@@ -120,7 +126,6 @@ const Booking = ({ drone }) => {
             });
 
             const result = await response.json();
-            console.log(result)
             if (response.ok) {
                 alert('Booking confirmed successfully!');
                 setName('');
@@ -305,15 +310,12 @@ const Booking = ({ drone }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="mt-4 text-right">
-                            <p className="text-gray-700 font-medium">Total Price: ${calculateTotal().toFixed(2)}</p>
-                            <button
-                                type="submit"
-                                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                Confirm Booking
-                            </button>
-                        </div>
+                        <button
+                            type="submit"
+                            className="w-full py-2 px-4 bg-red-500 text-white font-bold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2"
+                        >
+                            Confirm Booking
+                        </button>
                     </form>
                 </div>
             </div>

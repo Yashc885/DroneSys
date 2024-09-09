@@ -23,8 +23,12 @@ const BookingSchema = new Schema({
     email: { type: String },
     phone_number: { type: String },
     status: { type: String, enum: ['Confirmed', 'Pending', 'Cancelled'] },
-    cancelled_reason: { type: String }, 
-} , { timestamps: true } );
+    cancelled_reason: { type: String },
+    description: { type: String },  // New field for description
+    product_id: { type: String },  // New field for product_id
+    title: { type: String },  // New field for title
+    location: { type: String },  // New field for location
+}, { timestamps: true });
 
 const Booking = mongoose.models.Booking || mongoose.model('Booking', BookingSchema);
 

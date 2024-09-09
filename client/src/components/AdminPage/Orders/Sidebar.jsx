@@ -11,7 +11,7 @@ const Sidebar = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="w-64 min-h-screen bg-white text-black h-full flex flex-col ">
+        <div className="w-64  md:min-h-screen bg-white text-black h-full flex flex-col ">
             <div className="p-4 text-center font-bold text-lg border-b border-gray-300">
                 Orders
             </div>
