@@ -13,28 +13,27 @@ const descriptionSchema = new mongoose.Schema({
     memory_storage: { type: String, required: true },
 }, { _id: false });
 
-// Define the price info schema
+
 const priceInfoSchema = new mongoose.Schema({
     hourly_price: { type: String, required: true },
     fullday_price: { type: String, required: true },
 }, { _id: false });
 
-// Define the image schema
 const imageSchema = new mongoose.Schema({
     type: { type: String, enum: ['url', 'file'], required: true }, // 'url' or 'file'
     path: { type: String, required: true }, // URL or file path
 }, { _id: false });
 
-// Define the drone service schema
 const droneServiceSchema = new mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     drone_services_id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: descriptionSchema, required: true },
     price_info: { type: priceInfoSchema, required: true },
-    images: [imageSchema], // Array of image objects
-    location: { type: String, required: true }, // Field for location
-    move: { type: String, required: true }, // Field for navigation
+    images: [imageSchema], 
+    location: { type: String, required: true }, 
+    // move: { type: String, required: true }, 
+    // Availablity: { type: String, enum: ['Available', 'Unavailable'] },
 }, { timestamps: true });
 
 const DroneService = mongoose.models.DroneService || mongoose.model('DroneService', droneServiceSchema);

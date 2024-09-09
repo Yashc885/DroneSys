@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone, FaInfoCircle, FaFileInvoice, FaBook } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone, FaInfoCircle, FaFileInvoice, FaBook , FaMobileAlt } from 'react-icons/fa';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineClockCircle } from 'react-icons/ai'; // New icons for status
 import { MdDescription } from 'react-icons/md'; // Description icon
 import axios from 'axios';
@@ -38,7 +38,7 @@ const Orders = () => {
                 setFilteredOrders(orders.filter(order => order.status === 'Confirmed' || order.status === 'Cancelled'));
                 break;
             case 'upcoming':
-                setFilteredOrders(orders.filter(order => order.status === 'Confirmed'));
+                setFilteredOrders(orders.filter(order => order.status === 'Confirmed' && order.booking_info.start_date >= new Date()));
                 break;
             default:
                 setFilteredOrders(orders);
@@ -105,6 +105,11 @@ const Orders = () => {
                                         </div>
                                     </div>
                                     <div className="space-y-4">
+                                    <div className="flex items-center text-gray-700">
+                                            <FaMobileAlt className="text-blue-500 text-lg mr-2" />
+                                            <span className="font-bold"> Product ID:  </span>
+                                            <span className="ml-2">{order.product_id}</span>
+                                        </div>                                    
                                         <div className="flex items-center text-gray-700">
                                             <span className="font-bold text-lg">Status: </span>
                                             <span className={`ml-2 font-bold ${order.status === 'Pending' ? 'text-yellow-500' : order.status === 'Confirmed' ? 'text-green-500' : 'text-red-500'}`}>
@@ -130,9 +135,9 @@ const Orders = () => {
                                     </div>
                                 </div>
 
-                                <div className="mt-4 w-[80%] ml-2 md:ml-12 text-center text-gray-700">
+                                <div className="mt-4 pl-2 pr-2  text-center text-gray-700">
                                     <div className="flex justify-center">
-                                        <MdDescription className="text-yellow-500 text-lg mr-2" />
+                                        <MdDescription className="text-yellow-500 text-xl mr-2" />
                                         <span className="font-bold">Description:</span>
                                         <span className="ml-2 text-justify">{order.description}</span>
                                     </div>

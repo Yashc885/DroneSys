@@ -4,7 +4,7 @@ import axios from "axios";
 import DroneCard from "./DroneCard";
 import { FaBox, FaPlus, FaTimes } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
-import withAuth from './../../withAuth.js';
+
 const ProductList = () => {
   const [droneServices, setDroneServices] = useState([]);
   const [formData, setFormData] = useState({
@@ -27,8 +27,6 @@ const ProductList = () => {
       fullday_price: ""
     },
     images: [{ type: "url", path: "" }],
-    category: "",
-    move: "",
     location: ""
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -105,7 +103,7 @@ const ProductList = () => {
     try {
       if (isEditing) {
         await axios.put(`/api/drone-services/${formData._id}`, formData);
-        setStatusMessage("Product updated successfully");  // yeh dhikega acchese after done 
+        setStatusMessage("Product updated successfully");
       } else {
         await axios.post("/api/drone-services", formData);
         setStatusMessage("Product added successfully");
@@ -133,8 +131,6 @@ const ProductList = () => {
           fullday_price: ""
         },
         images: [{ type: "url", path: "" }],
-        category: "",
-        move: "",
         location: ""
       });
     } catch (error) {
@@ -204,7 +200,7 @@ const ProductList = () => {
           <div className="mt-8 p-4 border border-gray-300 rounded bg-white">
             <h2 className="text-xl font-bold mb-4">{isEditing ? "Edit Drone Service" : "Add New Drone Service"}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex-1 mb-2">
+              <div>
                 <label htmlFor="drone_services_id" className="block text-sm font-medium text-gray-700">Drone Service Type</label>
                 <select
                   id="drone_services_id"
@@ -220,9 +216,9 @@ const ProductList = () => {
                     </option>
                   ))}
                 </select>
-                {selectedService && <span className="ml-2 text-gray-600">{selectedService.icon}</span>}
-              
-            </div>
+                {selectedService && <span className="ml-2 text-gray-600">{selectedService.label}</span>}
+              </div>
+
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
                 <input
@@ -347,7 +343,7 @@ const ProductList = () => {
                 <input
                   id="price_info.hourly_price"
                   name="price_info.hourly_price"
-                  type="number"
+                  type="text"
                   value={formData.price_info.hourly_price}
                   onChange={handleChange}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -359,48 +355,28 @@ const ProductList = () => {
                 <input
                   id="price_info.fullday_price"
                   name="price_info.fullday_price"
-                  type="number"
+                  type="text"
                   value={formData.price_info.fullday_price}
                   onChange={handleChange}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
 
-              <div>
-                <label htmlFor="images.0.path" className="block text-sm font-medium text-gray-700">Image URL</label>
-                <input
-                  id="images.0.path"
-                  name="images.0.path"
-                  type="url"
-                  value={formData.images[0].path}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
-                <input
-                  id="category"
-                  name="category"
-                  type="text"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="move" className="block text-sm font-medium text-gray-700">Move</label>
-                <input
-                  id="move"
-                  name="move"
-                  type="text"
-                  value={formData.move}
-                  onChange={handleChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
+              {formData.images.map((image, index) => (
+                <div key={index} className="mb-4">
+                  <label htmlFor={`images.${index}.path`} className="block text-sm font-medium text-gray-700">
+                    Image URL {index + 1}
+                  </label>
+                  <input
+                    id={`images.${index}.path`}
+                    name={`images.${index}.path`}
+                    type="text"
+                    value={image.path}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+              ))}
 
               <div>
                 <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
@@ -414,14 +390,12 @@ const ProductList = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                >
-                  {isEditing ? "Update" : "Add"}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                {isEditing ? "Update Product" : "Add Product"}
+              </button>
             </form>
           </div>
         )}
@@ -430,4 +404,4 @@ const ProductList = () => {
   );
 };
 
-export default withAuth(ProductList);
+export default ProductList;

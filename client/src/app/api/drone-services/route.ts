@@ -28,9 +28,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const data = await request.json();
-        const { user_id, drone_services_id, title, description, price_info, images, location, move } = data;
+        const { user_id, drone_services_id, title, description, price_info, images, location } = data;
 
-        if (!user_id || !drone_services_id || !title || !description || !price_info || !location || !move) {
+        if (!user_id || !drone_services_id || !title || !description || !price_info || !location) {
             return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
         }
 
@@ -40,9 +40,9 @@ export async function POST(request: Request) {
             title,
             description,
             price_info,
-            images: images || [], // Handle images field
+            images: images || [],
             location,
-            move // Include the new field
+            // move 
         });
 
         await newDroneService.save();
