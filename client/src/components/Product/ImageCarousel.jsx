@@ -1,26 +1,32 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
-const ImageCarousel = ({ images }) => {
-    // Extract URLs from image objects
+const ImageCarousel = ({ images = [] }) => {
+    // Ensure images array has valid data
     const imageUrls = images.map(image => image.path);
     
-    const [shown, setShown] = React.useState(imageUrls[0]);
+    // Set the initial image to the first in the array, if it exists
+    const [shown, setShown] = useState(imageUrls[0] || '');
 
+    // Handle image click to change the displayed image
     const onImageClick = (image) => {
         setShown(image);
     };
-   console.log("images",images);
+
     return (
         <div style={styles.container}>
             <div style={styles.mainDisplay}>
-                <Image
-                    src={shown}
-                    alt="Main display"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    fill
-                />
+                {shown ? (
+                    <Image
+                        src={shown}
+                        alt="Main display"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        fill
+                    />
+                ) : (
+                    <p>No image available</p>
+                )}
             </div>
             <div style={styles.miniDisplay}>
                 {imageUrls.map((image, key) => (

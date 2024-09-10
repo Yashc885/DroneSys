@@ -8,15 +8,15 @@ export async function GET(request: Request) {
         // console.log("Request:", request);
         const searchParams = request.nextUrl.searchParams;
         const query = searchParams.get('title');
-        // console.log("SearchParams:", searchParams);
-        // console.log("Query:", query);
+        console.log("SearchParams:", searchParams);
+        console.log("Query:", query);
         
         let droneServices;
         if (query === null || query === undefined) {
-            // console.log('hello ')
+             console.log('hello ')
             droneServices = await DroneService.find();
         } else {
-            droneServices = await DroneService.find({ title: query });
+            droneServices = await DroneService.findById(query);
         }
         
         return NextResponse.json(droneServices);
