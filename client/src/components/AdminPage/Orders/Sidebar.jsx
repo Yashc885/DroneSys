@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { FaClipboardList, FaArchive, FaList, FaCalendarAlt } from 'react-icons/fa';
 
-const Sidebar = ({ onFilterChange }) => {
+const Sidebar = ({ onFilterChange, counts }) => {
     const [activeFilter, setActiveFilter] = useState('all');
 
     const handleFilterChange = (filter) => {
@@ -11,7 +11,7 @@ const Sidebar = ({ onFilterChange }) => {
     };
 
     return (
-        <div className="w-64  md:min-h-screen bg-white text-black h-full flex flex-col ">
+        <div className="w-64 md:min-h-screen bg-white text-black h-full flex flex-col ">
             <div className="p-4 text-center font-bold text-lg border-b border-gray-300">
                 Orders
             </div>
@@ -22,7 +22,7 @@ const Sidebar = ({ onFilterChange }) => {
                     onClick={() => handleFilterChange('all')}
                 >
                     <FaList className="mr-3 text-lg" />
-                    All Orders
+                    All Orders ({counts.all})
                 </button>
                 <button
                     aria-label="New Orders"
@@ -30,7 +30,7 @@ const Sidebar = ({ onFilterChange }) => {
                     onClick={() => handleFilterChange('new')}
                 >
                     <FaClipboardList className="mr-3 text-lg" />
-                    New Orders
+                    New Orders ({counts.new})
                 </button>
                 <button
                     aria-label="Past Orders"
@@ -38,7 +38,7 @@ const Sidebar = ({ onFilterChange }) => {
                     onClick={() => handleFilterChange('past')}
                 >
                     <FaArchive className="mr-3 text-lg" />
-                    Past Orders
+                    Past Orders ({counts.past})
                 </button>
                 <button
                     aria-label="Upcoming Orders"
@@ -46,7 +46,7 @@ const Sidebar = ({ onFilterChange }) => {
                     onClick={() => handleFilterChange('upcoming')}
                 >
                     <FaCalendarAlt className="mr-3 text-lg" />
-                    Upcoming Orders
+                    Upcoming Orders ({counts.upcoming})
                 </button>
             </div>
         </div>
