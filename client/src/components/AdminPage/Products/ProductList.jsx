@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DroneCard from "./DroneCard";
@@ -6,9 +6,10 @@ import { FaBox, FaPlus, FaTimes } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 
 const ProductList = () => {
+  const [vendor_id, setVendor_id] = useState("");
   const [droneServices, setDroneServices] = useState([]);
   const [formData, setFormData] = useState({
-    user_id: localStorage.getItem('vendor_id') || "",
+    user_id: vendor_id,
     drone_services_id: "",
     title: "",
     description: {
@@ -45,7 +46,8 @@ const ProductList = () => {
   ];
 
   useEffect(() => {
-    if (productsFetched) {
+    setVendor_id( localStorage.getItem('vendor_id'));
+     if (productsFetched) {
       fetchDroneServices();
     }
   }, [productsFetched]);
@@ -113,6 +115,8 @@ const ProductList = () => {
         await axios.put(`/api/drone-services/${formData._id}`, formData);
         setStatusMessage("Product updated successfully");
       } else {
+        formData.user_id = vendor_id;
+        // console.log("FORMDATA: ",formData)
         await axios.post("/api/drone-services", formData);
         setStatusMessage("Product added successfully");
       }
@@ -120,7 +124,7 @@ const ProductList = () => {
       setShowForm(false);
       setIsEditing(false);
       setFormData({
-        user_id: localStorage.getItem('vendor_id') || "",
+        user_id: vendor_id,
         drone_services_id: "",
         title: "",
         description: {
@@ -188,7 +192,7 @@ const ProductList = () => {
         {statusMessage && <p className="text-sm text-green-600 mb-4">{statusMessage}</p>}
 
         {productsFetched && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {droneServices.map(drone => (
               <DroneCard
                 key={drone._id}
@@ -201,7 +205,7 @@ const ProductList = () => {
         )}
 
         {showForm && (
-          <div className="mt-8 bg-white p-6 border border-gray-300 rounded-lg shadow-md">
+          <div className="mt-8 bg-white p-6 border border-gray-300 rounded-lg shadow-sm">
             <h2 className="text-xl font-bold mb-4">{isEditing ? "Edit Drone Service" : "Add New Drone Service"}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="flex flex-col">
@@ -411,7 +415,7 @@ const ProductList = () => {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg shadow-md text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  className="inline-flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   {isEditing ? 'Update Product' : 'Add Product'}
                 </button>

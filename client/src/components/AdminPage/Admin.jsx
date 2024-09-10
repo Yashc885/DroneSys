@@ -3,7 +3,6 @@ import React from 'react';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import { useRouter } from 'next/navigation';
-import withAuth from './../withAuth.js'
 const Admin = () => {
     const router = useRouter(); 
 
@@ -65,4 +64,4 @@ const Admin = () => {
     );
 };
 
-export default withAuth(Admin);
+export default Admin;

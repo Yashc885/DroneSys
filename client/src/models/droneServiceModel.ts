@@ -32,7 +32,7 @@ const droneServiceSchema = new mongoose.Schema({
     price_info: { type: priceInfoSchema, required: true },
     images: [imageSchema], 
     location: { type: String, required: true }, 
-    available: { type: String, enum: ['true', 'false'] },
+    available: { type: Boolean , default: true},
 }, { timestamps: true });
 const DroneService = mongoose.models.DroneService || mongoose.model('DroneService', droneServiceSchema);
 export default DroneService;
