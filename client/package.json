@@ -35,6 +35,7 @@
     "next": "^14.2.4",
     "next-auth": "^4.24.7",
     "next-image-gallery": "^0.0.26",
+    "nodemailer": "^6.9.15",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-collapse": "^5.1.1",

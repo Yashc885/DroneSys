@@ -10,11 +10,11 @@ const connectToDatabase = async () => {
 
 export async function GET(request: Request) {
     try {
-        console.log("Request:", request);
+        // console.log("Request:", request);
         const searchParams = request.nextUrl.searchParams;
         const query = searchParams.get('title');
-        console.log("SearchParams:", searchParams);
-        console.log("Query:", query);
+        // console.log("SearchParams:", searchParams);
+        // console.log("Query:", query);
         
         let droneServices;
         if (query === null || query === undefined) {

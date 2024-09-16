@@ -1,6 +1,6 @@
-'use client';
+'use client'
 import React, { useEffect, useState } from 'react';
-import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone, FaInfoCircle, FaFileInvoice, FaBook, FaMobileAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendarAlt, FaDollarSign, FaUser, FaPhone, FaFileInvoice, FaBook, FaMobileAlt } from 'react-icons/fa';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineClockCircle } from 'react-icons/ai';
 import { MdDescription } from 'react-icons/md';
 import axios from 'axios';
@@ -66,7 +66,25 @@ const Orders = () => {
         }
     };
 
-    const handleStatusChange = async (orderId, newStatus) => {
+    // Function to handle sending email
+    const sendCancellationEmail = async (email) => {
+        try {
+            const subject = 'Your Order has been Cancelled';
+            const text = 'We regret to inform you that your order has been cancelled. Please contact us for more details.';
+
+            await axios.post('/api/send-email', {
+                to: email,
+                subject,
+                text,
+            });
+
+            console.log('Email sent successfully');
+        } catch (error) {
+            console.error('Error sending email:', error);
+        }
+    };
+
+    const handleStatusChange = async (orderId, newStatus, email) => {
         try {
             await axios.put('/api/booking', { orderId, status: newStatus });
             const updatedOrders = orders.map(order =>
@@ -74,7 +92,12 @@ const Orders = () => {
             );
             setOrders(updatedOrders);
             setFilteredOrders(updatedOrders);
-            calculateCounts(updatedOrders); // Recalculate counts after status change
+            calculateCounts(updatedOrders); 
+
+            // If the status is 'Cancelled', send an email
+            if (newStatus === 'Cancelled') {
+                sendCancellationEmail(email);
+            }
         } catch (error) {
             console.error('Error updating order status:', error);
         }
@@ -95,7 +118,7 @@ const Orders = () => {
                                 style={{
                                     background: 'linear-gradient(135deg, #f8f9fa, #e0e0e0)',
                                     boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
-                                }}
+                                }}                                
                             >
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6">
                                     <div className="space-y-4">
@@ -128,7 +151,7 @@ const Orders = () => {
                                             <FaDollarSign className="text-green-500 text-lg mr-2" />
                                             <span className="font-bold">Price:</span>
                                             <span className="ml-2 text-lg font-bold ">${order.price}</span>
-                                        </div>                                         
+                                        </div>                                                
                                     </div>
                                     <div className="space-y-4">
                                         <div className="flex items-center text-gray-700">
@@ -156,7 +179,7 @@ const Orders = () => {
                                             <FaMapMarkerAlt className="text-red-500 text-lg mr-2" />
                                             <span className="font-bold">Address: </span>
                                             <span className="ml-2">{`${order.address.address1}, ${order.address.city}, ${order.address.state}, ${order.address.country} - ${order.address.pin}`}</span>
-                                        </div>
+                                        </div>                                        
                                         {order.status === 'Pending' && (
                                             <div className="flex justify-start space-x-4">
                                                 <button
@@ -165,15 +188,15 @@ const Orders = () => {
                                                 >
                                                     Confirm
                                                 </button>
-                                                <button
-                                                    onClick={() => handleStatusChange(order._id, 'Cancelled')}
+                                                <button                                                
+                                                    onClick={() => handleStatusChange(order._id, 'Cancelled', order.email)}
                                                     className="bg-red-500 text-white px-4 py-2 rounded-md"
                                                 >
                                                     Cancel
                                                 </button>
                                             </div>
                                         )}
-                                    </div>                                
+                                    </div>
                                 </div>
                                 <div className="mt-4 pl-2 pr-2  text-center text-gray-700">
                                     <div className="flex justify-center">
@@ -186,7 +209,7 @@ const Orders = () => {
 
                                 <div className="text-center text-gray-400 font-semibold text-sm">
                                     Booking ID: {order._id}
-                                </div>
+                                </div>                                
                             </div>
                         ))
                     )}
