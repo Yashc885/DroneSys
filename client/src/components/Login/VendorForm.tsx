@@ -13,7 +13,7 @@ const VendorForm: React.FC = () => {
     const [country, setCountry] = useState('');
     const [pin, setPin] = useState('');
 
-    const userId = localStorage.getItem('user_id');
+    const userId = localStorage.getItem('vendor_id');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

@@ -20,42 +20,64 @@ const RegisterVendor = () => {
     const name = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-
+  
     if (!isValidEmail(email)) {
       setError("Email is invalid");
       toast.error("Email is invalid");
       return;
     }
-
+  
     if (!password || password.length < 8) {
-      setError("Password is invalid");
-      toast.error("Password is invalid");
+      setError("Password must be at least 8 characters long");
+      toast.error("Password must be at least 8 characters long");
       return;
     }
-
+  
     setError("");
-    
+  
     try {
-      console.log(name, email, password);
-      const response = await axios.post('/api/register', {
+      const response = await axios.post("/api/registerVendor", {
         name,
         email,
         password,
-        role: 'provider' 
+        role: "provider",
       });
-      
-      toast.success("Registration successful");
-      router.push("/register/vendor2");
+  
+      // Log the response object to see its structure
+      console.log(response.data);
+  
+      // Use the correct key to extract the vendorId
+      const vendorId = response.data?.vendorId;
+  
+      if (vendorId) {
+        // Store the vendor ID in localStorage
+        localStorage.setItem("vendor_id", vendorId);
+        toast.success("Registration successful");
+        // Redirect to the next step
+        router.push("/register/vendor2");
+      } else {
+        throw new Error("Vendor ID not found in the response");
+      }
     } catch (err) {
+      console.error(err);
       toast.error(err.response?.data?.msg || "Registration failed");
     }
   };
+  
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')" }}>
+    <div
+      className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage:
+          "url('https://img.freepik.com/free-photo/3d-render-drone-flying-sunset-ocean_1048-5824.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1724630400&semt=ais_hybrid')",
+      }}
+    >
       <div className="sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
-          <h1 className="font-extrabold text-2xl md:text-3xl text-center">Register</h1>
+          <h1 className="font-extrabold text-2xl md:text-3xl text-center">
+            Register
+          </h1>
           <form className="space-y-6 py-4" onSubmit={handleSubmit}>
             <div>
               <label
@@ -68,7 +90,7 @@ const RegisterVendor = () => {
                 <input
                   id="name"
                   name="name"
-                  type="name"
+                  type="text"
                   autoComplete="name"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -114,27 +136,10 @@ const RegisterVendor = () => {
               </div>
             </div>
 
-            {/* <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="accept-terms"
-                  name="accept-terms"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
-                />
-                <label
-                  htmlFor="accept-terms"
-                  className="ml-3 block text-sm leading-6 text-gray-900"
-                >
-                  Accept our terms and privacy policy
-                </label>
-              </div>
-            </div> */}
-
             <div>
               <button
                 type="submit"
-                className="flex w-full border border-black justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Register
               </button>
@@ -142,7 +147,7 @@ const RegisterVendor = () => {
                 {error && error}
               </p>
             </div>
-            <div>
+
             <div className="relative mt-10">
               <div
                 className="absolute inset-0 flex items-center"
@@ -159,22 +164,18 @@ const RegisterVendor = () => {
 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <button
-                onClick={() => {
-                  toast("Google sign-in is not configured");
-                }}
-                className="flex w-full items-center border border-gray-300 justify-center gap-3 rounded-md bg-white px-3 py-1.5 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                type="button"
+                onClick={() => toast("Google sign-in is not configured")}
+                className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <FcGoogle />
-                <span className="text-sm font-semibold leading-6">
-                  Google
-                </span>
+                <span className="text-sm font-semibold leading-6">Google</span>
               </button>
 
               <button
-                onClick={() => {
-                  toast("GitHub sign-in is not configured");
-                }}
-                className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+                type="button"
+                onClick={() => toast("GitHub sign-in is not configured")}
+                className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <svg
                   className="h-5 w-5"
@@ -188,22 +189,17 @@ const RegisterVendor = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm font-semibold leading-6">
-                  GitHub
-                </span>
+                <span className="text-sm font-semibold leading-6">GitHub</span>
               </button>
             </div>
-            <p className="text-red-600 text-center text-[16px] ">
-              {error && error}
-            </p>
-          </div>
+
+            <div className="text-sm font-medium text-center mt-4">
+              Already registered?{" "}
+              <Link href="/login" className="text-indigo-600">
+                Log in
+              </Link>
+            </div>
           </form>
-          <h3 className="text-black">
-            Already have an account? 
-            <Link href="/login/vendor">
-              <span className="text-indigo-500 cursor-pointer"> Login</span>
-            </Link>
-          </h3>
         </div>
       </div>
     </div>
