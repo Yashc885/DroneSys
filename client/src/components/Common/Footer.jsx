@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React,{useEffect} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,16 @@ import FooterSlider from './FooterSlider';
 import EmailForm from './EmailForm';
 
 const Footer = () => {
+
+  useEffect(() => {
+    try {
+      console.log("cnsoling")
+    } catch (error) {
+        console.error('Error ', error);
+    }
+  });
+
+
   return (
     <>
       <footer className="min-h-[20vh] px-8 pt-5 relative bg-cover bg-center bg-no-repeat text-white"

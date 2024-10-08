@@ -35,7 +35,12 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
           About
         </Link>
       </li>
-      <Menu>
+      <li>
+        <Link href="/listview" className="flex items-center p-2 text-black text-md md:text-lg hover:text-red-400 rounded" aria-label="About Us">
+          View
+        </Link>
+      </li>
+      {/* <Menu>
         <MenuHandler>
           <li className="flex items-center p-2 text-black text-md md:text-lg rounded cursor-pointer" aria-label="View">
             View
@@ -53,7 +58,7 @@ const NavList = ({ setOpenNav, onLoginUser, onLoginVendor, user }) => {
             </Link>
           </MenuItem>
         </MenuList>
-      </Menu>
+      </Menu> */}
       <li>
         <Link href="/contact" className="flex items-center p-2 text-black text-md md:text-lg hover:text-red-400 rounded" aria-label="Resources">
           Contact

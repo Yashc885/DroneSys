@@ -18,8 +18,8 @@ export async function POST(req: Request) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'yash.c@acceledge.ai', // Replace with your Gmail address
-                pass: 'nrkbcrfqfozxrqox',     // Replace with the app password you generated (without spaces)
+                user: 'subhashkasture@gmail.com', // Replace with your Gmail address
+                pass: 'vuknnhsnlonptcps',     // Replace with the app password you generated (without spaces)
             },
         });
         
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         try {
             // Send email
             await transporter.sendMail({
-                from: 'yash.c@acceledge.ai', // Sender address
+                from: 'subhashkasture@gmail.com', // Sender address
                 to, // Receiver email
                 subject, // Subject line
                 text, // Email body
